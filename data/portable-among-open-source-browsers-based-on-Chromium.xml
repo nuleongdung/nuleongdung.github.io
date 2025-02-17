@@ -1,115 +1,392 @@
-<?xml version="1.0" encoding="UTF-8"?>
 <browsers>
     <browser>
-        <name>Google Chrome</name>
-        <download_link>https://portableapps.com/apps/internet/google_chrome_portable</download_link>
-        <engine>Blink</engine>
-        <country>미국</country>
-        <advantages>빠른 속도, 다양한 확장 프로그램 지원</advantages>
-        <disadvantages>높은 메모리 사용량</disadvantages>
-    </browser>
-    <browser>
-        <name>Opera</name>
-        <download_link>https://portableapps.com/apps/internet/opera_portable</download_link>
-        <engine>Blink</engine>
-        <country>노르웨이</country>
-        <advantages>내장 광고 차단기 및 VPN 기능</advantages>
-        <disadvantages>일부 웹사이트와 호환성 문제</disadvantages>
+        <name>Brave</name>
+        <engine>Chromium</engine>
+        <country>USA</country>
+        <download_link>https://brave.com/download/</download_link>
+        <advantages>
+            <advantage>광고 차단 기능 내장</advantage>
+            <advantage>개인 정보 보호 강화</advantage>
+        </advantages>
+        <disadvantages>
+            <disadvantage>일부 사이트 호환성 문제</disadvantage>
+        </disadvantages>
     </browser>
     <browser>
         <name>Vivaldi</name>
+        <engine>Chromium</engine>
+        <country>Norway</country>
         <download_link>https://vivaldi.com/download/</download_link>
-        <engine>Blink</engine>
-        <country>노르웨이</country>
-        <advantages>높은 커스터마이징 가능, 강력한 탭 관리 기능</advantages>
-        <disadvantages>비교적 높은 시스템 자원 사용</disadvantages>
+        <advantages>
+            <advantage>고도로 사용자 정의 가능</advantage>
+            <advantage>탭 그룹화 및 스택 기능</advantage>
+        </advantages>
+        <disadvantages>
+            <disadvantage>초기 설정이 복잡할 수 있음</disadvantage>
+        </disadvantages>
     </browser>
     <browser>
-        <name>Brave</name>
-        <download_link>https://github.com/portapps/brave-portable/releases</download_link>
-        <engine>Blink</engine>
-        <country>미국</country>
-        <advantages>광고 및 추적 차단 기능 내장</advantages>
-        <disadvantages>일부 웹사이트에서 호환성 문제 발생</disadvantages>
+        <name>Opera</name>
+        <engine>Chromium</engine>
+        <country>Norway</country>
+        <download_link>https://www.opera.com/download</download_link>
+        <advantages>
+            <advantage>내장 VPN 제공</advantage>
+            <advantage>배터리 절약 모드</advantage>
+        </advantages>
+        <disadvantages>
+            <disadvantage>VPN이 완전한 프라이버시를 보장하지 않음</disadvantage>
+        </disadvantages>
     </browser>
     <browser>
-        <name>Slimjet</name>
-        <download_link>https://www.slimjet.com/en/dlpage.php</download_link>
-        <engine>Blink</engine>
-        <country>미국</country>
-        <advantages>빠른 속도, 다양한 내장 기능</advantages>
-        <disadvantages>구식 디자인</disadvantages>
+        <name>Epic Privacy Browser</name>
+        <engine>Chromium</engine>
+        <country>India</country>
+        <download_link>https://www.epicbrowser.com/</download_link>
+        <advantages>
+            <advantage>강력한 프라이버시 보호</advantage>
+            <advantage>자동 광고 및 트래커 차단</advantage>
+        </advantages>
+        <disadvantages>
+            <disadvantage>확장 기능 지원이 제한적</disadvantage>
+        </disadvantages>
     </browser>
     <browser>
-        <name>Microsoft Edge</name>
-        <download_link>https://portableapps.com/apps/internet/microsoft-edge-portable</download_link>
-        <engine>Blink</engine>
-        <country>미국</country>
-        <advantages>Windows와 높은 통합성</advantages>
-        <disadvantages>일부 사용자 정보 수집 우려</disadvantages>
-    </browser>
-    <browser>
-        <name>Yandex Browser</name>
-        <download_link>https://browser.yandex.com</download_link>
-        <engine>Blink</engine>
-        <country>러시아</country>
-        <advantages>보안 중심의 터보 모드 지원</advantages>
-        <disadvantages>일부 개인 정보 보호 문제</disadvantages>
+        <name>SRWare Iron</name>
+        <engine>Chromium</engine>
+        <country>Germany</country>
+        <download_link>https://www.srware.net/en/software_srware_iron.php</download_link>
+        <advantages>
+            <advantage>구글 트래킹 제거</advantage>
+            <advantage>가볍고 빠름</advantage>
+        </advantages>
+        <disadvantages>
+            <disadvantage>업데이트가 느림</disadvantage>
+        </disadvantages>
     </browser>
     <browser>
         <name>Comodo Dragon</name>
-        <download_link>https://www.comodo.com/home/browsers-toolbars/browser.php</download_link>
-        <engine>Blink</engine>
-        <country>미국</country>
-        <advantages>강화된 보안 및 개인 정보 보호 기능</advantages>
-        <disadvantages>업데이트 빈도가 낮음</disadvantages>
+        <engine>Chromium</engine>
+        <country>USA</country>
+        <download_link>https://browser.comodo.com/</download_link>
+        <advantages>
+            <advantage>보안 기능 강화</advantage>
+            <advantage>SSL 인증서 검증</advantage>
+        </advantages>
+        <disadvantages>
+            <disadvantage>사용자 인터페이스가 구식</disadvantage>
+        </disadvantages>
     </browser>
     <browser>
-        <name>Tor Browser</name>
-        <download_link>https://www.torproject.org/download/</download_link>
-        <engine>Gecko</engine>
-        <country>미국</country>
-        <advantages>높은 익명성 보장</advantages>
-        <disadvantages>느린 속도</disadvantages>
+        <name>Ungoogled Chromium</name>
+        <engine>Chromium</engine>
+        <country>USA</country>
+        <download_link>https://ungoogled-software.github.io/</download_link>
+        <advantages>
+            <advantage>구글 서비스와의 연동 제거</advantage>
+            <advantage>개인 정보 보호 강화</advantage>
+        </advantages>
+        <disadvantages>
+            <disadvantage>일부 기능 사용 불가</disadvantage>
+        </disadvantages>
     </browser>
     <browser>
-        <name>UC Browser</name>
-        <download_link>https://www.ucweb.com/ucbrowser/download/</download_link>
-        <engine>Blink</engine>
-        <country>중국</country>
-        <advantages>데이터 압축 기능 제공</advantages>
-        <disadvantages>개인정보 보호 우려</disadvantages>
+        <name>Yandex Browser</name>
+        <engine>Chromium</engine>
+        <country>Russia</country>
+        <download_link>https://browser.yandex.com/</download_link>
+        <advantages>
+            <advantage>터보 모드로 느린 네트워크에서 빠른 로딩</advantage>
+            <advantage>내장 번역기</advantage>
+        </advantages>
+        <disadvantages>
+            <disadvantage>러시아 서버 사용으로 인한 프라이버시 우려</disadvantage>
+        </disadvantages>
     </browser>
     <browser>
-        <name>Waterfox</name>
-        <download_link>https://www.waterfox.net/download/</download_link>
-        <engine>Gecko</engine>
-        <country>영국</country>
-        <advantages>빠른 속도, Firefox 기반의 높은 확장성</advantages>
-        <disadvantages>업데이트 속도가 느림</disadvantages>
+        <name>CentBrowser</name>
+        <engine>Chromium</engine>
+        <country>China</country>
+        <download_link>http://www.centbrowser.com/</download_link>
+        <advantages>
+            <advantage>마우스 제스처 지원</advantage>
+            <advantage>고도로 사용자 정의 가능</advantage>
+        </advantages>
+        <disadvantages>
+            <disadvantage>중국산 소프트웨어에 대한 신뢰 문제</disadvantage>
+        </disadvantages>
+    </browser>
+    <browser>
+        <name>Slimjet</name>
+        <engine>Chromium</engine>
+        <country>USA</country>
+        <download_link>https://www.slimjet.com/en/dlpage.php</download_link>
+        <advantages>
+            <advantage>내장 광고 차단기</advantage>
+            <advantage>빠른 다운로드 가속기</advantage>
+        </advantages>
+        <disadvantages>
+            <disadvantage>업데이트가 느림</disadvantage>
+        </disadvantages>
+    </browser>
+    <browser>
+        <name>Falkon</name>
+        <engine>Chromium</engine>
+        <country>Czech Republic</country>
+        <download_link>https://www.falkon.org/download/</download_link>
+        <advantages>
+            <advantage>가볍고 빠름</advantage>
+            <advantage>Qt 기반의 크로스 플랫폼 지원</advantage>
+        </advantages>
+        <disadvantages>
+            <disadvantage>확장 기능 지원이 제한적</disadvantage>
+        </disadvantages>
+    </browser>
+    <browser>
+        <name>Torch</name>
+        <engine>Chromium</engine>
+        <country>USA</country>
+        <download_link>https://www.torchbrowser.com/</download_link>
+        <advantages>
+            <advantage>미디어 다운로드 기능 내장</advantage>
+            <advantage>소셜 미디어 통합</advantage>
+        </advantages>
+        <disadvantages>
+            <disadvantage>개인 정보 보호에 대한 우려</disadvantage>
+        </disadvantages>
+    </browser>
+    <browser>
+        <name>Iron</name>
+        <engine>Chromium</engine>
+        <country>Germany</country>
+        <download_link>https://www.srware.net/en/software_srware_iron.php</download_link>
+        <advantages>
+            <advantage>구글 트래킹 제거</advantage>
+            <advantage>가볍고 빠름</advantage>
+        </advantages>
+        <disadvantages>
+            <disadvantage>업데이트가 느림</disadvantage>
+        </disadvantages>
+    </browser>
+    <browser>
+        <name>CoolNovo</name>
+        <engine>Chromium</engine>
+        <country>China</country>
+        <download_link>http://www.coolnovo.com/</download_link>
+        <advantages>
+            <advantage>마우스 제스처 지원</advantage>
+            <advantage>IE 탭 기능</advantage>
+        </advantages>
+        <disadvantages>
+            <disadvantage>중국산 소프트웨어에 대한 신뢰 문제</disadvantage>
+        </disadvantages>
+    </browser>
+    <browser>
+        <name>SuperBird</name>
+        <engine>Chromium</engine>
+        <country>Japan</country>
+        <download_link>https://www.superbird-browser.com/</download_link>
+        <advantages>
+            <advantage>가볍고 빠름</advantage>
+            <advantage>개인 정보 보호 강화</advantage>
+        </advantages>
+        <disadvantages>
+            <disadvantage>확장 기능 지원이 제한적</disadvantage>
+        </disadvantages>
+    </browser>
+    <browser>
+        <name>QupZilla</name>
+        <engine>Chromium</engine>
+        <country>Czech Republic</country>
+        <download_link>https://www.qupzilla.com/</download_link>
+        <advantages>
+            <advantage>가볍고 빠름</advantage>
+            <advantage>크로스 플랫폼 지원</advantage>
+        </advantages>
+        <disadvantages>
+            <disadvantage>확장 기능 지원이 제한적</disadvantage>
+        </disadvantages>
+    </browser>
+    <browser>
+        <name>Otter Browser</name>
+        <engine>Chromium</engine>
+        <country>Poland</country>
+        <download_link>https://www.otter-browser.org/</download_link>
+        <advantages>
+            <advantage>Opera 12.x 스타일 인터페이스</advantage>
+            <advantage>가볍고 빠름</advantage>
+        </advantages>
+        <disadvantages>
+            <disadvantage>아직 개발 중인 기능이 많음</disadvantage>
+        </disadvantages>
+    </browser>
+    <browser>
+        <name>Midori</name>
+        <engine>Chromium</engine>
+        <country>Japan</country>
+        <download_link>https://www.midori-browser.org/</download_link>
+        <advantages>
+            <advantage>가볍고 빠름</advantage>
+            <advantage>환경 친화적</advantage>
+        </advantages>
+        <disadvantages>
+            <disadvantage>확장 기능 지원이 제한적</disadvantage>
+        </disadvantages>
     </browser>
     <browser>
         <name>Pale Moon</name>
-        <download_link>https://www.palemoon.org/download.shtml</download_link>
-        <engine>Goanna</engine>
-        <country>네덜란드</country>
-        <advantages>가벼운 리소스 사용, 레거시 확장 지원</advantages>
-        <disadvantages>일부 최신 웹 표준 미지원</disadvantages>
+        <engine>Chromium</engine>
+        <country>Netherlands</country>
+        <download_link>https://www.palemoon.org/</download_link>
+        <advantages>
+            <advantage>고도로 사용자 정의 가능</advantage>
+            <advantage>낮은 시스템 요구 사항</advantage>
+        </advantages>
+        <disadvantages>
+            <disadvantage>일부 현대 웹 기술 지원 부족</disadvantage>
+        </disadvantages>
+    </browser>
+    <browser>
+        <name>Waterfox</name>
+        <engine>Chromium</engine>
+        <country>UK</country>
+        <download_link>https://www.waterfox.net/</download_link>
+        <advantages>
+            <advantage>개인 정보 보호 강화</advantage>
+            <advantage>64비트 최적화</advantage>
+        </advantages>
+        <disadvantages>
+            <disadvantage>업데이트가 느림</disadvantage>
+        </disadvantages>
+    </browser>
+    <browser>
+        <name>Basilisk</name>
+        <engine>Chromium</engine>
+        <country>USA</country>
+        <download_link>https://www.basilisk-browser.org/</download_link>
+        <advantages>
+            <advantage>고도로 사용자 정의 가능</advantage>
+            <advantage>레거시 확장 기능 지원</advantage>
+        </advantages>
+        <disadvantages>
+            <disadvantage>일부 현대 웹 기술 지원 부족</disadvantage>
+        </disadvantages>
+    </browser>
+    <browser>
+        <name>SeaMonkey</name>
+        <engine>Chromium</engine>
+        <country>USA</country>
+        <download_link>https://www.seamonkey-project.org/</download_link>
+        <advantages>
+            <advantage>통합 인터넷 슈트</advantage>
+            <advantage>레거시 지원</advantage>
+        </advantages>
+        <disadvantages>
+            <disadvantage>현대적인 디자인 부족</disadvantage>
+        </disadvantages>
+    </browser>
+    <browser>
+        <name>K-Meleon</name>
+        <engine>Chromium</engine>
+        <country>France</country>
+        <download_link>http://kmeleonbrowser.org/</download_link>
+        <advantages>
+            <advantage>가볍고 빠름</advantage>
+            <advantage>낮은 시스템 요구 사항</advantage>
+        </advantages>
+        <disadvantages>
+            <disadvantage>확장 기능 지원이 제한적</disadvantage>
+        </disadvantages>
+    </browser>
+    <browser>
+        <name>Dooble</name>
+        <engine>Chromium</engine>
+        <country>USA</country>
+        <download_link>https://textbrowser.github.io/dooble/</download_link>
+        <advantages>
+            <advantage>개인 정보 보호 강화</advantage>
+            <advantage>가볍고 빠름</advantage>
+        </advantages>
+        <disadvantages>
+            <disadvantage>사용자 인터페이스가 단순함</disadvantage>
+        </disadvantages>
+    </browser>
+    <browser>
+        <name>Wyzo</name>
+        <engine>Chromium</engine>
+        <country>USA</country>
+        <download_link>http://www.wyzo.com/</download_link>
+        <advantages>
+            <advantage>미디어 다운로드 기능 내장</advantage>
+            <advantage>빠른 다운로드 속도</advantage>
+        </advantages>
+        <disadvantages>
+            <disadvantage>업데이트가 느림</disadvantage>
+        </disadvantages>
     </browser>
     <browser>
         <name>Maxthon</name>
+        <engine>Chromium</engine>
+        <country>China</country>
         <download_link>https://www.maxthon.com/</download_link>
-        <engine>Blink</engine>
-        <country>중국</country>
-        <advantages>클라우드 동기화 기능 제공</advantages>
-        <disadvantages>개인정보 보호 논란</disadvantages>
+        <advantages>
+            <advantage>클라우드 동기화 지원</advantage>
+            <advantage>다양한 내장 기능</advantage>
+        </advantages>
+        <disadvantages>
+            <disadvantage>중국산 소프트웨어에 대한 신뢰 문제</disadvantage>
+        </disadvantages>
     </browser>
     <browser>
-        <name>Cent Browser</name>
-        <download_link>https://www.centbrowser.com/</download_link>
-        <engine>Blink</engine>
-        <country>중국</country>
-        <advantages>가벼운 크롬 기반 브라우저</advantages>
-        <disadvantages>업데이트 빈도가 낮음</disadvantages>
+        <name>Avast Secure Browser</name>
+        <engine>Chromium</engine>
+        <country>Czech Republic</country>
+        <download_link>https://www.avast.com/secure-browser</download_link>
+        <advantages>
+            <advantage>보안 기능 강화</advantage>
+            <advantage>내장 VPN 제공</advantage>
+        </advantages>
+        <disadvantages>
+            <disadvantage>Avast 제품과의 통합 필요</disadvantage>
+        </disadvantages>
+    </browser>
+    <browser>
+        <name>Comodo IceDragon</name>
+        <engine>Chromium</engine>
+        <country>USA</country>
+        <download_link>https://www.comodo.com/home/browsers-toolbars/browser.php</download_link>
+        <advantages>
+            <advantage>보안 기능 강화</advantage>
+            <advantage>SSL 인증서 검증</advantage>
+        </advantages>
+        <disadvantages>
+            <disadvantage>사용자 인터페이스가 구식</disadvantage>
+        </disadvantages>
+    </browser>
+    <browser>
+        <name>Coowon</name>
+        <engine>Chromium</engine>
+        <country>South Korea</country>
+        <download_link>http://coowon.com/</download_link>
+        <advantages>
+            <advantage>게임 최적화</advantage>
+            <advantage>마우스 제스처 지원</advantage>
+        </advantages>
+        <disadvantages>
+            <disadvantage>한국어 지원만 가능</disadvantage>
+        </disadvantages>
+    </browser>
+    <browser>
+        <name>Naver Whale</name>
+        <engine>Chromium</engine>
+        <country>South Korea</country>
+        <download_link>https://whale.naver.com/</download_link>
+        <advantages>
+            <advantage>네이버 서비스와의 통합</advantage>
+            <advantage>사용자 친화적 인터페이스</advantage>
+        </advantages>
+        <disadvantages>
+            <disadvantage>한국어 중심으로 제한적</disadvantage>
+        </disadvantages>
     </browser>
 </browsers>
