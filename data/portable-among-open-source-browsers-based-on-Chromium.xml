@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<browsers>
+    <browser>
+        <name>Google Chrome</name>
+        <download_link>https://portableapps.com/apps/internet/google_chrome_portable</download_link>
+        <engine>Blink</engine>
+        <country>미국</country>
+        <advantages>빠른 속도, 다양한 확장 프로그램 지원</advantages>
+        <disadvantages>높은 메모리 사용량</disadvantages>
+    </browser>
+    <browser>
+        <name>Opera</name>
+        <download_link>https://portableapps.com/apps/internet/opera_portable</download_link>
+        <engine>Blink</engine>
+        <country>노르웨이</country>
+        <advantages>내장 광고 차단기 및 VPN 기능</advantages>
+        <disadvantages>일부 웹사이트와 호환성 문제</disadvantages>
+    </browser>
+    <browser>
+        <name>Vivaldi</name>
+        <download_link>https://vivaldi.com/download/</download_link>
+        <engine>Blink</engine>
+        <country>노르웨이</country>
+        <advantages>높은 커스터마이징 가능, 강력한 탭 관리 기능</advantages>
+        <disadvantages>비교적 높은 시스템 자원 사용</disadvantages>
+    </browser>
+    <browser>
+        <name>Brave</name>
+        <download_link>https://github.com/portapps/brave-portable/releases</download_link>
+        <engine>Blink</engine>
+        <country>미국</country>
+        <advantages>광고 및 추적 차단 기능 내장</advantages>
+        <disadvantages>일부 웹사이트에서 호환성 문제 발생</disadvantages>
+    </browser>
+    <browser>
+        <name>Slimjet</name>
+        <download_link>https://www.slimjet.com/en/dlpage.php</download_link>
+        <engine>Blink</engine>
+        <country>미국</country>
+        <advantages>빠른 속도, 다양한 내장 기능</advantages>
+        <disadvantages>구식 디자인</disadvantages>
+    </browser>
+    <browser>
+        <name>Microsoft Edge</name>
+        <download_link>https://portableapps.com/apps/internet/microsoft-edge-portable</download_link>
+        <engine>Blink</engine>
+        <country>미국</country>
+        <advantages>Windows와 높은 통합성</advantages>
+        <disadvantages>일부 사용자 정보 수집 우려</disadvantages>
+    </browser>
+    <browser>
+        <name>Yandex Browser</name>
+        <download_link>https://browser.yandex.com</download_link>
+        <engine>Blink</engine>
+        <country>러시아</country>
+        <advantages>보안 중심의 터보 모드 지원</advantages>
+        <disadvantages>일부 개인 정보 보호 문제</disadvantages>
+    </browser>
+    <browser>
+        <name>Comodo Dragon</name>
+        <download_link>https://www.comodo.com/home/browsers-toolbars/browser.php</download_link>
+        <engine>Blink</engine>
+        <country>미국</country>
+        <advantages>강화된 보안 및 개인 정보 보호 기능</advantages>
+        <disadvantages>업데이트 빈도가 낮음</disadvantages>
+    </browser>
+    <browser>
+        <name>Tor Browser</name>
+        <download_link>https://www.torproject.org/download/</download_link>
+        <engine>Gecko</engine>
+        <country>미국</country>
+        <advantages>높은 익명성 보장</advantages>
+        <disadvantages>느린 속도</disadvantages>
+    </browser>
+    <browser>
+        <name>UC Browser</name>
+        <download_link>https://www.ucweb.com/ucbrowser/download/</download_link>
+        <engine>Blink</engine>
+        <country>중국</country>
+        <advantages>데이터 압축 기능 제공</advantages>
+        <disadvantages>개인정보 보호 우려</disadvantages>
+    </browser>
+    <browser>
+        <name>Waterfox</name>
+        <download_link>https://www.waterfox.net/download/</download_link>
+        <engine>Gecko</engine>
+        <country>영국</country>
+        <advantages>빠른 속도, Firefox 기반의 높은 확장성</advantages>
+        <disadvantages>업데이트 속도가 느림</disadvantages>
+    </browser>
+    <browser>
+        <name>Pale Moon</name>
+        <download_link>https://www.palemoon.org/download.shtml</download_link>
+        <engine>Goanna</engine>
+        <country>네덜란드</country>
+        <advantages>가벼운 리소스 사용, 레거시 확장 지원</advantages>
+        <disadvantages>일부 최신 웹 표준 미지원</disadvantages>
+    </browser>
+    <browser>
+        <name>Maxthon</name>
+        <download_link>https://www.maxthon.com/</download_link>
+        <engine>Blink</engine>
+        <country>중국</country>
+        <advantages>클라우드 동기화 기능 제공</advantages>
+        <disadvantages>개인정보 보호 논란</disadvantages>
+    </browser>
+    <browser>
+        <name>Cent Browser</name>
+        <download_link>https://www.centbrowser.com/</download_link>
+        <engine>Blink</engine>
+        <country>중국</country>
+        <advantages>가벼운 크롬 기반 브라우저</advantages>
+        <disadvantages>업데이트 빈도가 낮음</disadvantages>
+    </browser>
+</browsers>
