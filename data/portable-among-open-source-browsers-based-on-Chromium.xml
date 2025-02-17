@@ -1,5 +1,18 @@
 <browsers>
     <browser>
+        <name>Chromium</name>
+        <engine>Chromium</engine>
+        <country>USA</country>
+        <download_link>https://www.chromium.org/getting-involved/download-chromium/</download_link>
+        <advantages>
+            <advantage>오픈 소스</advantage>
+            <advantage>빠르고 가벼움</advantage>
+        </advantages>
+        <disadvantages>
+            <disadvantage>기본적으로 업데이트가 자동으로 제공되지 않음</disadvantage>
+        </disadvantages>
+    </browser>
+    <browser>
         <name>Brave</name>
         <engine>Chromium</engine>
         <country>USA</country>
@@ -387,6 +400,149 @@
         </advantages>
         <disadvantages>
             <disadvantage>한국어 중심으로 제한적</disadvantage>
+        </disadvantages>
+    </browser>
+    <browser>
+        <name>Iridium</name>
+        <engine>Chromium</engine>
+        <country>Germany</country>
+        <download_link>https://iridiumbrowser.de/</download_link>
+        <advantages>
+            <advantage>개인 정보 보호 강화</advantage>
+            <advantage>보안 최적화</advantage>
+        </advantages>
+        <disadvantages>
+            <disadvantage>업데이트가 느림</disadvantage>
+        </disadvantages>
+    </browser>
+    <browser>
+        <name>Coc Coc Browser</name>
+        <engine>Chromium</engine>
+        <country>Vietnam</country>
+        <download_link>https://coccoc.com/</download_link>
+        <advantages>
+            <advantage>베트남 사용자 최적화</advantage>
+            <advantage>비디오 다운로드 기능 내장</advantage>
+        </advantages>
+        <disadvantages>
+            <disadvantage>글로벌 지원 부족</disadvantage>
+        </disadvantages>
+    </browser>
+    <browser>
+        <name>Blisk</name>
+        <engine>Chromium</engine>
+        <country>USA</country>
+        <download_link>https://blisk.io/</download_link>
+        <advantages>
+            <advantage>개발자 도구 내장</advantage>
+            <advantage>반응형 디자인 테스트 기능</advantage>
+        </advantages>
+        <disadvantages>
+            <disadvantage>일반 사용자에게 적합하지 않음</disadvantage>
+        </disadvantages>
+    </browser>
+    <browser>
+        <name>Cliqz</name>
+        <engine>Chromium</engine>
+        <country>Germany</country>
+        <download_link>https://cliqz.com/</download_link>
+        <advantages>
+            <advantage>개인 정보 보호 강화</advantage>
+            <advantage>빠른 검색 기능</advantage>
+        </advantages>
+        <disadvantages>
+            <disadvantage>2020년 서비스 중단</disadvantage>
+        </disadvantages>
+    </browser>
+    <browser>
+        <name>Colibri</name>
+        <engine>Chromium</engine>
+        <country>USA</country>
+        <download_link>https://colibribrowser.com/</download_link>
+        <advantages>
+            <advantage>북마크 없는 미니멀한 브라우징</advantage>
+            <advantage>가벼운 성능</advantage>
+        </advantages>
+        <disadvantages>
+            <disadvantage>탭 기능 부족</disadvantage>
+        </disadvantages>
+    </browser>
+    <browser>
+        <name>Ghost Browser</name>
+        <engine>Chromium</engine>
+        <country>USA</country>
+        <download_link>https://ghostbrowser.com/</download_link>
+        <advantages>
+            <advantage>다중 계정 관리 기능</advantage>
+            <advantage>프라이버시 보호 강화</advantage>
+        </advantages>
+        <disadvantages>
+            <disadvantage>유료 구독 필요</disadvantage>
+        </disadvantages>
+    </browser>
+    <browser>
+        <name>Kinza</name>
+        <engine>Chromium</engine>
+        <country>Japan</country>
+        <download_link>https://www.kinza.jp/</download_link>
+        <advantages>
+            <advantage>일본 사용자 친화적</advantage>
+            <advantage>마우스 제스처 지원</advantage>
+        </advantages>
+        <disadvantages>
+            <disadvantage>글로벌 지원 부족</disadvantage>
+        </disadvantages>
+    </browser>
+    <browser>
+        <name>QuteBrowser</name>
+        <engine>Chromium</engine>
+        <country>Unknown</country>
+        <download_link>https://qutebrowser.org/</download_link>
+        <advantages>
+            <advantage>키보드 중심 브라우징</advantage>
+            <advantage>가벼운 성능</advantage>
+        </advantages>
+        <disadvantages>
+            <disadvantage>일반 사용자에게 익숙하지 않음</disadvantage>
+        </disadvantages>
+    </browser>
+    <browser>
+        <name>SlimBrowser</name>
+        <engine>Chromium</engine>
+        <country>USA</country>
+        <download_link>https://www.slimbrowser.net/</download_link>
+        <advantages>
+            <advantage>빠른 속도</advantage>
+            <advantage>광고 차단 기능 내장</advantage>
+        </advantages>
+        <disadvantages>
+            <disadvantage>인터페이스가 구식</disadvantage>
+        </disadvantages>
+    </browser>
+    <browser>
+        <name>UC Browser</name>
+        <engine>Chromium</engine>
+        <country>China</country>
+        <download_link>https://www.ucweb.com/</download_link>
+        <advantages>
+            <advantage>빠른 로딩 속도</advantage>
+            <advantage>데이터 절약 기능</advantage>
+        </advantages>
+        <disadvantages>
+            <disadvantage>개인 정보 보호 우려</disadvantage>
+        </disadvantages>
+    </browser>
+    <browser>
+        <name>Xvast</name>
+        <engine>Chromium</engine>
+        <country>China</country>
+        <download_link>http://www.xvast.com/</download_link>
+        <advantages>
+            <advantage>DRM 지원</advantage>
+            <advantage>빠른 속도</advantage>
+        </advantages>
+        <disadvantages>
+            <disadvantage>중국산 소프트웨어에 대한 신뢰 문제</disadvantage>
         </disadvantages>
     </browser>
 </browsers>
