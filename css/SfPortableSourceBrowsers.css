@@ -6,7 +6,8 @@
     text-align: left;
 }
 
-#browser-table th, #browser-table td {
+#browser-table th,
+#browser-table td {
     padding: 10px;
     border-bottom: 1px solid #ddd;
 }
@@ -15,12 +16,26 @@
     background-color: #4CAF50;
     color: white;
     cursor: pointer;
+    position: relative;
 }
 
+/* 정렬 화살표 스타일 */
+.sort-arrow {
+    font-size: 14px;
+    color: #ccc;
+}
+
+/* 정렬된 컬럼의 화살표 강조 */
+th[data-key].sorted .sort-arrow {
+    color: #fff;
+}
+
+/* 행 hover 효과 */
 #browser-table tr:hover {
     background-color: #f1f1f1;
 }
 
+/* 팝업 스타일 */
 #browser-popup {
     position: absolute;
     background-color: rgba(0, 0, 0, 0.8);
@@ -38,7 +53,9 @@
     #browser-table {
         font-size: 14px;
     }
-    #browser-table th, #browser-table td {
+
+    #browser-table th,
+    #browser-table td {
         padding: 8px;
     }
 }

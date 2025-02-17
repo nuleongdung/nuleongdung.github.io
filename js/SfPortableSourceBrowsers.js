@@ -26,7 +26,6 @@ class SfPortableSourceBrowsers {
         const browsers = xml.getElementsByTagName("browser");
         this.data = Array.from(browsers).map(browser => ({
             name: browser.getElementsByTagName("name")[0].textContent,
-            engine: browser.getElementsByTagName("engine")[0].textContent,
             country: browser.getElementsByTagName("country")[0].textContent,
             download: browser.getElementsByTagName("download_link")[0].textContent,
             advantages: Array.from(browser.getElementsByTagName("advantage")).map(a => a.textContent),
@@ -44,9 +43,8 @@ class SfPortableSourceBrowsers {
                 <thead>
                     <tr>
                         ${this.createHeaderCell("name", "브라우저명")}
-                        ${this.createHeaderCell("engine", "엔진")}
                         ${this.createHeaderCell("country", "국가")}
-                        ${this.createHeaderCell("download", "다운로드")}
+                        <th>다운로드</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -58,7 +56,9 @@ class SfPortableSourceBrowsers {
 
     // 테이블 헤더 셀 생성 (정렬 기능 포함)
     createHeaderCell(key, label) {
-        return `<th onclick="browserTable.sortTable('${key}')">${label} 🔽</th>`;
+        return `<th onclick="browserTable.sortTable('${key}')" data-key="${key}">
+                    ${label} <span class="sort-arrow"></span>
+                </th>`;
     }
 
     // 테이블 행 생성 (팝업 이벤트 포함)
@@ -67,7 +67,6 @@ class SfPortableSourceBrowsers {
             <tr onmouseover="browserTable.showPopup(event, '${browser.advantages.join(", ")}', '${browser.disadvantages.join(", ")}')" 
                 onmouseout="browserTable.hidePopup()">
                 <td>${browser.name}</td>
-                <td>${browser.engine}</td>
                 <td>${browser.country}</td>
                 <td><a href="${browser.download}" target="_blank">다운로드</a></td>
             </tr>
@@ -78,12 +77,23 @@ class SfPortableSourceBrowsers {
     sortTable(key) {
         const order = this.sortOrder[key] === "asc" ? "desc" : "asc";
         this.sortOrder[key] = order;
+
+        // 정렬 실행
         this.data.sort((a, b) => {
             if (a[key] < b[key]) return order === "asc" ? -1 : 1;
             if (a[key] > b[key]) return order === "asc" ? 1 : -1;
             return 0;
         });
+
         this.renderTable();
+        this.updateSortArrow(key, order);
+    }
+
+    // 정렬 화살표 업데이트
+    updateSortArrow(key, order) {
+        document.querySelectorAll(".sort-arrow").forEach(el => el.textContent = ""); // 기존 화살표 제거
+        const th = document.querySelector(`th[data-key="${key}"] .sort-arrow`);
+        if (th) th.textContent = order === "asc" ? " ▲" : " ▼";
     }
 
     // 팝업 표시
@@ -109,7 +119,7 @@ class SfPortableSourceBrowsers {
     }
 }
 
-// 클래스 인스턴스 생성 및 실행2222
+// 클래스 인스턴스 생성 및 실행
 const browserTable = new SfPortableSourceBrowsers(
     "https://nuleongdung.github.io/data/portable-among-open-source-browsers-based-on-Chromium.xml",
     "sf-portable-source-browsers"
