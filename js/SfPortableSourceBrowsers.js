@@ -109,7 +109,7 @@ class SfPortableSourceBrowsers {
     }
 }
 
-// 클래스 인스턴스 생성 및 실행
+// 클래스 인스턴스 생성 및 실행2222
 const browserTable = new SfPortableSourceBrowsers(
     "https://nuleongdung.github.io/data/portable-among-open-source-browsers-based-on-Chromium.xml",
     "sf-portable-source-browsers"
