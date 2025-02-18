@@ -65,8 +65,7 @@ class SfPortableSourceBrowsers {
     createRow(browser) {
         const browserId = browser.name.toLowerCase().replace(/\s+/g, "-"); // 소문자로 변환 후 공백을 '-'로 변경
         return `
-        <tr id="${browserId}" 
-            onmouseover="browserTable.showPopup(event, '${browser.advantages.join(", ")}', '${browser.disadvantages.join(", ")}')" 
+        <tr onmouseover="browserTable.showPopup(event, '${browser.advantages.join(", ")}', '${browser.disadvantages.join(", ")}')" 
             onmouseout="browserTable.hidePopup()">
             <td><a href="#${browserId}" class="browser-link">${browser.name}</a></td>
             <td>${browser.country}</td>
@@ -74,6 +73,7 @@ class SfPortableSourceBrowsers {
         </tr>
     `;
     }
+
 
     // 테이블 정렬 기능
     sortTable(key) {
