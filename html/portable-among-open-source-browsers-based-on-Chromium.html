@@ -5,436 +5,139 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>브라우저 종류</title>
-    <link href="https://nuleongdung.github.io/css/SfPortableSourceBrowsers.css?v=4" rel="stylesheet" type="text/css" />
+
 </head>
 
 <body>
     <h2>크로미움 기반 오픈소스 포터블 브라우저 목록</h2>
     <div id="sf-portable-source-browsers"></div>
-    <script src="https://nuleongdung.github.io/js/SfPortableSourceBrowsers.js?v=5"></script>
-
-
-
-    <h1>크로미움 기반 브라우저</h1>
-
+    <link href="https://nuleongdung.github.io/css/SfPortableSourceBrowsers.css" rel="stylesheet" type="text/css" />
+    <script src="https://nuleongdung.github.io/js/SfPortableSourceBrowsers.js"></script>
+    <!-- 문서가 다 로드된 후 JS 실행 -->
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            window.browserTable = new SfPortableSourceBrowsers();
+        });
+    </script>
+    <p data-ke-size="size16">&nbsp;</p>
     <section id="chromium">
-        <h1 id="chromium">Chromium</h1>
+        <h1>Chromium</h1>
         <h2>장점</h2>
-        <p>오픈소스 기반으로 누구나 코드 수정 가능, 빠른 속도 및 최신 웹 표준 적용.</p>
+        <ul>
+            <li>오픈 소스이므로 누구나 검토하고 수정 가능</li>
+            <li>빠른 속도와 높은 안정성</li>
+            <li>구글 생태계와의 뛰어난 호환성</li>
+        </ul>
         <h2>단점</h2>
-        <p>자동 업데이트 기능 없음, 일부 기능(코덱, DRM 등) 제한됨.</p>
-        <h2>이슈</h2>
-        <p>구글 서비스 종속성 문제, 일부 기능 크롬과 차이 존재.</p>
+        <ul>
+            <li>개인정보 보호 설정이 부족할 수 있음</li>
+            <li>자원 소모가 많음</li>
+            <li>구글 서비스 의존도가 높음</li>
+        </ul>
+        <h2>주요 소스코드 문제점</h2>
+        <ul>
+            <li>거대한 코드베이스로 인한 관리 어려움</li>
+            <li>오래된 코드의 잔존 가능성</li>
+            <li>취약점 패치 속도에 따라 보안 위험</li>
+        </ul>
+        <h2>보안 등급</h2>
+        <p>8/10</p>
     </section>
 
     <section id="brave">
-        <h1 id="brave">Brave</h1>
+        <h1>Brave</h1>
         <h2>장점</h2>
-        <p>광고 및 트래커 차단 기본 제공, 빠른 속도.</p>
+        <ul>
+            <li>광고 차단 기능 기본 내장</li>
+            <li>빠른 페이지 로딩 속도</li>
+            <li>높은 프라이버시 보호 기능</li>
+        </ul>
         <h2>단점</h2>
-        <p>일부 웹사이트에서 문제 발생 가능.</p>
-        <h2>이슈</h2>
-        <p>기본 검색 엔진 및 광고 수익 모델 논란.</p>
+        <ul>
+            <li>일부 사이트와의 호환성 문제</li>
+            <li>광고 기반 수익 모델에 대한 논란</li>
+            <li>사용자 기반이 적어 피드백 수집 어려움</li>
+        </ul>
+        <h2>주요 소스코드 문제점</h2>
+        <ul>
+            <li>비교적 새로운 코드로 검증 시간 부족</li>
+            <li>광고 차단 기능이 일부 사이트에서 오작동</li>
+            <li>빠른 업데이트 주기로 인한 잠재적 버그</li>
+        </ul>
+        <h2>보안 등급</h2>
+        <p>9/10</p>
     </section>
 
     <section id="vivaldi">
-        <h1 id="vivaldi">Vivaldi</h1>
+        <h1>Vivaldi</h1>
         <h2>장점</h2>
-        <p>높은 커스터마이징 가능, 다양한 내장 기능.</p>
+        <ul>
+            <li>고도로 사용자화 가능한 UI</li>
+            <li>생산성 기능이 풍부 (노트, 탭 스택)</li>
+            <li>강력한 개인정보 보호 기능</li>
+        </ul>
         <h2>단점</h2>
-        <p>다소 무거운 성능.</p>
-        <h2>이슈</h2>
-        <p>기능이 많아 학습 곡선이 필요함.</p>
+        <ul>
+            <li>복잡한 인터페이스로 인한 초기 학습 곡선</li>
+            <li>다소 느린 성능</li>
+            <li>모바일 버전의 기능 부족</li>
+        </ul>
+        <h2>주요 소스코드 문제점</h2>
+        <ul>
+            <li>크로미움 기반으로 독창적 코드 제한</li>
+            <li>커스터마이징 코드의 복잡성</li>
+            <li>새로운 기능 추가 시 발생하는 잠재적 버그</li>
+        </ul>
+        <h2>보안 등급</h2>
+        <p>8/10</p>
     </section>
 
     <section id="opera">
-        <h1 id="opera">Opera</h1>
+        <h1>Opera</h1>
         <h2>장점</h2>
-        <p>VPN 및 배터리 절약 모드 제공.</p>
+        <ul>
+            <li>무료 VPN 기능 내장</li>
+            <li>시각적으로 매력적인 인터페이스</li>
+            <li>빠른 성능과 배터리 절약 모드</li>
+        </ul>
         <h2>단점</h2>
-        <p>중국 기업 인수 후 개인정보 보호 논란.</p>
-        <h2>이슈</h2>
-        <p>일부 기능이 불필요하게 많음.</p>
+        <ul>
+            <li>중국 소유권에 대한 보안 우려</li>
+            <li>광고 차단 기능이 제한적</li>
+            <li>사용자 커뮤니티가 작음</li>
+        </ul>
+        <h2>주요 소스코드 문제점</h2>
+        <ul>
+            <li>폐쇄된 코드로 인한 투명성 부족</li>
+            <li>VPN의 신뢰성 문제</li>
+            <li>크로미움 업데이트 지연 가능성</li>
+        </ul>
+        <h2>보안 등급</h2>
+        <p>7/10</p>
     </section>
 
     <section id="epic-privacy-browser">
-        <h1 id="epic-privacy-browser">Epic Privacy Browser</h1>
+        <h1>Epic Privacy Browser</h1>
         <h2>장점</h2>
-        <p>추적 방지 기능 강화, 프라이버시 보호.</p>
+        <ul>
+            <li>강력한 추적 방지 기능</li>
+            <li>VPN 및 프록시 기능 기본 내장</li>
+            <li>광고 차단 기능 제공</li>
+        </ul>
         <h2>단점</h2>
-        <p>일부 기능 제한적.</p>
-        <h2>이슈</h2>
-        <p>오픈소스 아님, 신뢰성 논란.</p>
-    </section>
-
-    <section id="srware-iron">
-        <h1 id="srware-iron">SRWare Iron</h1>
-        <h2>장점</h2>
-        <p>구글 추적 기능 제거, 빠른 속도.</p>
-        <h2>단점</h2>
-        <p>업데이트가 느림.</p>
-        <h2>이슈</h2>
-        <p>보안 패치 적용이 느릴 수 있음.</p>
-    </section>
-
-    <section id="comodo-dragon">
-        <h1 id="comodo-dragon">Comodo Dragon</h1>
-        <h2>장점</h2>
-        <p>보안 기능 강화.</p>
-        <h2>단점</h2>
-        <p>추가 기능 부족.</p>
-        <h2>이슈</h2>
-        <p>활발한 개발 여부 불분명.</p>
-    </section>
-
-    <section id="ungoogled-chromium">
-        <h1 id="ungoogled-chromium">Ungoogled Chromium</h1>
-        <h2>장점</h2>
-        <p>구글 서비스 완전 제거.</p>
-        <h2>단점</h2>
-        <p>자동 업데이트 없음.</p>
-        <h2>이슈</h2>
-        <p>일반 사용자에게 설정이 어려울 수 있음.</p>
-    </section>
-
-    <section id="yandex-browser">
-        <h1 id="yandex-browser">Yandex Browser</h1>
-        <h2>장점</h2>
-        <p>빠른 속도, 러시아 시장 최적화.</p>
-        <h2>단점</h2>
-        <p>개인정보 보호 논란.</p>
-        <h2>이슈</h2>
-        <p>러시아 정부와의 연계 가능성.</p>
-    </section>
-
-    <section id="centbrowser">
-        <h1 id="centbrowser">CentBrowser</h1>
-        <h2>장점</h2>
-        <p>메모리 관리 최적화.</p>
-        <h2>단점</h2>
-        <p>업데이트가 불규칙함.</p>
-        <h2>이슈</h2>
-        <p>구형 크로미움 기반.</p>
-    </section>
-
-    <section id="slimjet">
-        <h1 id="slimjet">Slimjet</h1>
-        <h2>장점</h2>
-        <p>빠른 속도와 내장 다운로드 가속 기능.</p>
-        <h2>단점</h2>
-        <p>일부 웹사이트와의 호환성 문제.</p>
-        <h2>이슈</h2>
-        <p>업데이트가 크롬보다 느릴 수 있음.</p>
-    </section>
-
-    <section id="falkon">
-        <h1 id="falkon">Falkon</h1>
-        <h2>장점</h2>
-        <p>가벼운 브라우저, 낮은 시스템 자원 사용.</p>
-        <h2>단점</h2>
-        <p>확장 프로그램 지원 부족.</p>
-        <h2>이슈</h2>
-        <p>개발 속도가 느림.</p>
-    </section>
-
-    <section id="torch">
-        <h1 id="torch">Torch</h1>
-        <h2>장점</h2>
-        <p>미디어 다운로드 및 토렌트 기능 내장.</p>
-        <h2>단점</h2>
-        <p>다소 무거운 성능.</p>
-        <h2>이슈</h2>
-        <p>보안 및 프라이버시 관련 논란.</p>
-    </section>
-
-    <section id="iron">
-        <h1 id="iron">Iron</h1>
-        <h2>장점</h2>
-        <p>구글 추적 기능 제거.</p>
-        <h2>단점</h2>
-        <p>업데이트 속도가 느림.</p>
-        <h2>이슈</h2>
-        <p>보안 패치 적용이 늦을 수 있음.</p>
-    </section>
-
-    <section id="coolnovo">
-        <h1 id="coolnovo">CoolNovo</h1>
-        <h2>장점</h2>
-        <p>사용자 친화적 인터페이스.</p>
-        <h2>단점</h2>
-        <p>개발 중단됨.</p>
-        <h2>이슈</h2>
-        <p>최신 웹 표준 지원 부족.</p>
-    </section>
-
-    <section id="superbird">
-        <h1 id="superbird">SuperBird</h1>
-        <h2>장점</h2>
-        <p>빠른 속도와 개인 정보 보호 강화.</p>
-        <h2>단점</h2>
-        <p>확장 프로그램 지원이 부족할 수 있음.</p>
-        <h2>이슈</h2>
-        <p>업데이트가 크롬보다 늦을 수 있음.</p>
-    </section>
-
-    <section id="qupzilla">
-        <h1 id="qupzilla">QupZilla</h1>
-        <h2>장점</h2>
-        <p>가벼운 브라우저, 다양한 플랫폼 지원.</p>
-        <h2>단점</h2>
-        <p>개발이 중단됨.</p>
-        <h2>이슈</h2>
-        <p>대체 브라우저로 Falkon이 등장.</p>
-    </section>
-
-    <section id="otter-browser">
-        <h1 id="otter-browser">Otter Browser</h1>
-        <h2>장점</h2>
-        <p>Opera 12 스타일의 클래식 UI 제공.</p>
-        <h2>단점</h2>
-        <p>일부 최신 웹 기술 지원 부족.</p>
-        <h2>이슈</h2>
-        <p>개발 속도가 느림.</p>
-    </section>
-
-    <section id="midori">
-        <h1 id="midori">Midori</h1>
-        <h2>장점</h2>
-        <p>가벼운 설계, 빠른 로딩 속도.</p>
-        <h2>단점</h2>
-        <p>확장 프로그램 지원 부족.</p>
-        <h2>이슈</h2>
-        <p>개발 방향이 자주 변경됨.</p>
-    </section>
-
-    <section id="pale-moon">
-        <h1 id="pale-moon">Pale Moon</h1>
-        <h2>장점</h2>
-        <p>최적화된 성능과 클래식 UI.</p>
-        <h2>단점</h2>
-        <p>일부 최신 웹 표준 미지원.</p>
-        <h2>이슈</h2>
-        <p>확장 프로그램 호환성 문제 발생 가능.</p>
-    </section>
-
-    <section id="waterfox">
-        <h1 id="waterfox">Waterfox</h1>
-        <h2>장점</h2>
-        <p>Firefox 기반으로 확장성 좋음, 구형 애드온 지원.</p>
-        <h2>단점</h2>
-        <p>업데이트가 Firefox보다 느릴 수 있음.</p>
-        <h2>이슈</h2>
-        <p>개인정보 보호 논란 발생 가능.</p>
-    </section>
-
-    <section id="basilisk">
-        <h1 id="basilisk">Basilisk</h1>
-        <h2>장점</h2>
-        <p>클래식 XUL 기반 인터페이스 제공.</p>
-        <h2>단점</h2>
-        <p>보안 패치 지원이 부족할 수 있음.</p>
-        <h2>이슈</h2>
-        <p>Firefox와의 호환성 문제 발생 가능.</p>
-    </section>
-
-    <section id="seamonkey">
-        <h1 id="seamonkey">SeaMonkey</h1>
-        <h2>장점</h2>
-        <p>올인원 인터넷 스위트 제공 (브라우저, 메일 클라이언트 등).</p>
-        <h2>단점</h2>
-        <p>인터페이스가 다소 구식.</p>
-        <h2>이슈</h2>
-        <p>활발한 개발 여부가 불확실함.</p>
-    </section>
-
-    <section id="k-meleon">
-        <h1 id="k-meleon">K-Meleon</h1>
-        <h2>장점</h2>
-        <p>매우 가볍고 빠른 성능.</p>
-        <h2>단점</h2>
-        <p>확장 프로그램 지원 부족.</p>
-        <h2>이슈</h2>
-        <p>최신 웹 표준 지원이 부족할 수 있음.</p>
-    </section>
-
-    <section id="dooble">
-        <h1 id="dooble">Dooble</h1>
-        <h2>장점</h2>
-        <p>보안과 프라이버시 중심 설계.</p>
-        <h2>단점</h2>
-        <p>일부 웹사이트와의 호환성 문제.</p>
-        <h2>이슈</h2>
-        <p>사용자층이 적어 정보가 부족함.</p>
-    </section>
-
-    <section id="wyzo">
-        <h1 id="wyzo">Wyzo</h1>
-        <h2>장점</h2>
-        <p>미디어 다운로드 기능 내장.</p>
-        <h2>단점</h2>
-        <p>최신 업데이트가 없음.</p>
-        <h2>이슈</h2>
-        <p>보안 패치가 적용되지 않음.</p>
-    </section>
-
-    <section id="maxthon">
-        <h1 id="maxthon">Maxthon</h1>
-        <h2>장점</h2>
-        <p>클라우드 동기화 기능 제공.</p>
-        <h2>단점</h2>
-        <p>일부 사용자 데이터 수집 논란.</p>
-        <h2>이슈</h2>
-        <p>보안 관련 논란 발생 가능.</p>
-    </section>
-
-    <section id="avast-secure-browser">
-        <h1 id="avast-secure-browser">Avast Secure Browser</h1>
-        <h2>장점</h2>
-        <p>보안 기능이 강화된 브라우저.</p>
-        <h2>단점</h2>
-        <p>추가 기능이 무겁게 느껴질 수 있음.</p>
-        <h2>이슈</h2>
-        <p>일부 기능이 Avast 제품과 연동됨.</p>
-    </section>
-
-    <section id="comodo-icedragon">
-        <h1 id="comodo-icedragon">Comodo IceDragon</h1>
-        <h2>장점</h2>
-        <p>Comodo의 보안 기능 포함.</p>
-        <h2>단점</h2>
-        <p>Firefox 기반으로 확장성 제한.</p>
-        <h2>이슈</h2>
-        <p>업데이트 속도가 느릴 수 있음.</p>
-    </section>
-
-    <section id="coowon">
-        <h1 id="coowon">Coowon</h1>
-        <h2>장점</h2>
-        <p>게임 기능이 포함된 크로미움 기반 브라우저.</p>
-        <h2>단점</h2>
-        <p>일반 사용자를 위한 기능 부족.</p>
-        <h2>이슈</h2>
-        <p>업데이트 중단됨.</p>
-    </section>
-
-    <section id="naver-whale">
-        <h1 id="naver-whale">Naver Whale</h1>
-        <h2>장점</h2>
-        <p>다양한 기능과 한국 사용자 최적화.</p>
-        <h2>단점</h2>
-        <p>한국 이외 지역에서는 인지도 낮음.</p>
-        <h2>이슈</h2>
-        <p>일부 기능이 네이버 서비스에 종속됨.</p>
-    </section>
-
-    <section id="iridium">
-        <h1 id="iridium">Iridium</h1>
-        <h2>장점</h2>
-        <p>보안과 프라이버시 강화.</p>
-        <h2>단점</h2>
-        <p>업데이트가 느릴 수 있음.</p>
-        <h2>이슈</h2>
-        <p>일부 확장 프로그램과의 호환성 문제.</p>
-    </section>
-
-    <section id="coc-coc-browser">
-        <h1 id="coc-coc-browser">Coc Coc Browser</h1>
-        <h2>장점</h2>
-        <p>베트남 사용자 중심의 기능 제공.</p>
-        <h2>단점</h2>
-        <p>글로벌 확장성이 낮음.</p>
-        <h2>이슈</h2>
-        <p>일부 기능이 지역 서비스와 종속됨.</p>
-    </section>
-
-    <section id="blisk">
-        <h1 id="blisk">Blisk</h1>
-        <h2>장점</h2>
-        <p>개발자 친화적인 기능 제공.</p>
-        <h2>단점</h2>
-        <p>일반 사용자에게 불필요한 기능 포함.</p>
-        <h2>이슈</h2>
-        <p>유료 기능이 많음.</p>
-    </section>
-
-    <section id="cliqz">
-        <h1 id="cliqz">Cliqz</h1>
-        <h2>장점</h2>
-        <p>개인 정보 보호 기능 강화.</p>
-        <h2>단점</h2>
-        <p>개발이 중단됨.</p>
-        <h2>이슈</h2>
-        <p>기존 사용자는 대체 브라우저를 찾아야 함.</p>
-    </section>
-
-    <section id="colibri">
-        <h1 id="colibri">Colibri</h1>
-        <h2>장점</h2>
-        <p>간결한 UI와 빠른 성능 제공.</p>
-        <h2>단점</h2>
-        <p>탭 기능이 없음.</p>
-        <h2>이슈</h2>
-        <p>일부 사용자에게 불편할 수 있음.</p>
-    </section>
-
-    <section id="ghost-browser">
-        <h1 id="ghost-browser">Ghost Browser</h1>
-        <h2>장점</h2>
-        <p>멀티 계정 관리 및 작업 흐름 최적화.</p>
-        <h2>단점</h2>
-        <p>무료 기능이 제한적.</p>
-        <h2>이슈</h2>
-        <p>유료 모델로 인해 접근성이 떨어질 수 있음.</p>
-    </section>
-
-    <section id="kinza">
-        <h1 id="kinza">Kinza</h1>
-        <h2>장점</h2>
-        <p>일본 사용자 맞춤형 기능 제공.</p>
-        <h2>단점</h2>
-        <p>글로벌 사용자 지원 부족.</p>
-        <h2>이슈</h2>
-        <p>개발이 중단됨.</p>
-    </section>
-
-    <section id="qutebrowser">
-        <h1 id="qutebrowser">QuteBrowser</h1>
-        <h2>장점</h2>
-        <p>키보드 중심의 경량 브라우저.</p>
-        <h2>단점</h2>
-        <p>GUI 사용자가 적응하기 어려울 수 있음.</p>
-        <h2>이슈</h2>
-        <p>특정 웹사이트에서의 호환성 문제.</p>
-    </section>
-
-    <section id="slimbrowser">
-        <h1 id="slimbrowser">SlimBrowser</h1>
-        <h2>장점</h2>
-        <p>빠르고 가벼운 웹 브라우징 경험.</p>
-        <h2>단점</h2>
-        <p>최신 기능 부족.</p>
-        <h2>이슈</h2>
-        <p>업데이트가 느릴 수 있음.</p>
-    </section>
-
-    <section id="uc-browser">
-        <h1 id="uc-browser">UC Browser</h1>
-        <h2>장점</h2>
-        <p>데이터 절약 모드와 빠른 속도 제공.</p>
-        <h2>단점</h2>
-        <p>광고 및 개인 정보 보호 이슈.</p>
-        <h2>이슈</h2>
-        <p>일부 국가에서 보안 문제로 차단됨.</p>
-    </section>
-
-    <section id="xvast">
-        <h1 id="xvast">Xvast</h1>
-        <h2>장점</h2>
-        <p>DRM 보호 기능 지원.</p>
-        <h2>단점</h2>
-        <p>일반 사용자보다는 특정 용도에 최적화됨.</p>
-        <h2>이슈</h2>
-        <p>일부 웹사이트와의 호환성 문제.</p>
+        <ul>
+            <li>느린 브라우징 속도</li>
+            <li>확장 기능 사용 제한</li>
+            <li>일부 사이트와의 호환성 문제</li>
+        </ul>
+        <h2>주요 소스코드 문제점</h2>
+        <ul>
+            <li>폐쇄된 코드로 인한 투명성 부족</li>
+            <li>VPN 기능의 신뢰성 문제</li>
+            <li>느린 업데이트 주기로 인한 보안 위험</li>
+        </ul>
+        <h2>보안 등급</h2>
+        <p>8/10</p>
     </section>
 </body>
 
