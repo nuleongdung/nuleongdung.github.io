@@ -63,16 +63,16 @@ class SfPortableSourceBrowsers {
 
     // 테이블 행 생성 (브라우저명 클릭 시 앵커 이동 기능 포함)
     createRow(browser) {
-        const browserId = browser.name.replace(/\s+/g, "-"); // 공백을 '-'로 변환
+        const browserId = browser.name.toLowerCase().replace(/\s+/g, "-"); // 소문자로 변환 후 공백을 '-'로 변경
         return `
-            <tr id="${browserId}" 
-                onmouseover="browserTable.showPopup(event, '${browser.advantages.join(", ")}', '${browser.disadvantages.join(", ")}')" 
-                onmouseout="browserTable.hidePopup()">
-                <td><a href="#${browserId}" class="browser-link">${browser.name}</a></td>
-                <td>${browser.country}</td>
-                <td><a href="${browser.download}" target="_blank">다운로드</a></td>
-            </tr>
-        `;
+        <tr id="${browserId}" 
+            onmouseover="browserTable.showPopup(event, '${browser.advantages.join(", ")}', '${browser.disadvantages.join(", ")}')" 
+            onmouseout="browserTable.hidePopup()">
+            <td><a href="#${browserId}" class="browser-link">${browser.name}</a></td>
+            <td>${browser.country}</td>
+            <td><a href="${browser.download}" target="_blank">다운로드</a></td>
+        </tr>
+    `;
     }
 
     // 테이블 정렬 기능
