@@ -61,12 +61,14 @@ class SfPortableSourceBrowsers {
                 </th>`;
     }
 
-    // 테이블 행 생성 (팝업 이벤트 포함)
+    // 테이블 행 생성 (브라우저명 클릭 시 앵커 이동 기능 포함)
     createRow(browser) {
+        const browserId = browser.name.replace(/\s+/g, "-"); // 공백을 '-'로 변환
         return `
-            <tr onmouseover="browserTable.showPopup(event, '${browser.advantages.join(", ")}', '${browser.disadvantages.join(", ")}')" 
+            <tr id="${browserId}" 
+                onmouseover="browserTable.showPopup(event, '${browser.advantages.join(", ")}', '${browser.disadvantages.join(", ")}')" 
                 onmouseout="browserTable.hidePopup()">
-                <td>${browser.name}</td>
+                <td><a href="#${browserId}" class="browser-link">${browser.name}</a></td>
                 <td>${browser.country}</td>
                 <td><a href="${browser.download}" target="_blank">다운로드</a></td>
             </tr>

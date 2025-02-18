@@ -48,6 +48,24 @@ th[data-key].sorted .sort-arrow {
     word-wrap: break-word;
 }
 
+/* 브라우저명 클릭 시 앵커 이동 효과 */
+:target {
+    background-color: rgba(255, 235, 59, 0.3);
+    /* 노란색 강조 */
+    transition: background-color 0.5s ease-in-out;
+}
+
+/* 브라우저명 링크 스타일 */
+.browser-link {
+    color: #007BFF;
+    text-decoration: none;
+    font-weight: bold;
+}
+
+.browser-link:hover {
+    text-decoration: underline;
+}
+
 /* 반응형 스타일 */
 @media screen and (max-width: 600px) {
     #browser-table {
