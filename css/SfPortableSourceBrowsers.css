@@ -82,60 +82,58 @@ th[data-key].sorted .sort-arrow {
 
 /* 자세한 내용*/
 .sf-browsers-comparison {
-    font-family: Arial, sans-serif;
-    line-height: 1.6;
-    padding: 20px;
-    background-color: #f4f4f9;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 20px;
 }
 
-.sf-browsers-comparison section {
-    margin-bottom: 40px;
-    padding: 20px;
-    background-color: #ffffff;
-    border-radius: 8px;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-}
-
-.sf-browsers-comparison h1 {
-    font-size: 24px;
-    color: #333333;
-}
-
-.sf-browsers-comparison table {
-    width: 100%;
-    border-collapse: collapse;
-    margin-top: 20px;
-    table-layout: fixed;
-}
-
-.sf-browsers-comparison th {
-    background-color: #f4f4f4;
-    font-weight: bold;
-    width: 200px;
-}
-
-.sf-browsers-comparison th,
-.sf-browsers-comparison td {
+.sf-browser-section {
     border: 1px solid #ddd;
-    padding: 12px;
-    text-align: left;
-    word-wrap: break-word;
+    padding: 20px;
+    border-radius: 10px;
+    transition: background-color 0.3s, box-shadow 0.3s;
 }
 
-.sf-browsers-comparison .security-container {
-    position: relative;
-    width: 100%;
-    background-color: #ddd;
-    border-radius: 4px;
-    height: 20px;
+.sf-browser-section:focus-within {
+    background-color: #f0f8ff;
+    box-shadow: 0 0 10px rgba(0, 0, 255, 0.2);
+}
+
+/* Highlight selected section for anchor links */
+.sf-browser-section:target {
+    background-color: #e0ffe0;
+    border-color: #4caf50;
+    box-shadow: 0 0 10px rgba(76, 175, 80, 0.5);
+}
+
+.sf-security-container {
+    background: #ddd;
+    border-radius: 5px;
     overflow: hidden;
+    position: relative;
 }
 
-.sf-browsers-comparison .security-bar {
-    height: 100%;
-    background-color: #4caf50;
-    text-align: center;
+.sf-security-bar {
+    background: #4caf50;
     color: white;
-    line-height: 20px;
-    font-size: 14px;
+    text-align: center;
+    padding: 5px 0;
+}
+
+@media (max-width: 768px) {
+    .sf-browsers-comparison {
+        display: grid;
+        grid-template-columns: 1fr;
+    }
+
+    .sf-browser-section h2,
+    .sf-browser-section ul {
+        margin: 10px 0;
+    }
+}
+
+@media (max-width: 480px) {
+    .sf-browsers-comparison {
+        display: block;
+    }
 }
