@@ -285,5 +285,4 @@ class SfOpenSourceBrowsers {
  *        new SfOpenSourceBrowsers('sf-opensource-browsers-bws');
  *    });
  * 3. XML 파일의 URL을 loadXml() 메서드에 전달하여 XML 데이터를 로드합니다.
- * 4. CSS 파일을 수정하여 웹 페이지의 디자인을 변경할 수 있습니다.
  */

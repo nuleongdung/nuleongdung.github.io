@@ -186,7 +186,7 @@ body {
     background-color: #007bff;
 }
 
-/* 반응형 스타일 */
+/* 반응형 스타일   */
 @media (max-width: 480px) {
     .sf-browser-card-bws {
         width: 100%;
