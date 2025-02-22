@@ -203,26 +203,36 @@ class SfOpenSourceBrowsers {
         });
         content.appendChild(languagesList);
 
+        // 링크 수정: span으로 묶음
+        const downloadLinkSpan = document.createElement('span');
+        downloadLinkSpan.classList.add('sf-link-span-bws');
         const downloadLink = document.createElement('a');
         downloadLink.href = browser.download_url;
         downloadLink.textContent = 'Download';
         downloadLink.classList.add('sf-download-link-bws');
         downloadLink.target = '_blank';
-        content.appendChild(downloadLink);
+        downloadLinkSpan.appendChild(downloadLink);
+        content.appendChild(downloadLinkSpan);
 
+        const installationLinkSpan = document.createElement('span');
+        installationLinkSpan.classList.add('sf-link-span-bws');
         const installationLink = document.createElement('a');
         installationLink.href = browser.installation_url;
         installationLink.textContent = 'Installation';
         installationLink.classList.add('sf-installation-link-bws');
         installationLink.target = '_blank';
-        content.appendChild(installationLink);
+        installationLinkSpan.appendChild(installationLink);
+        content.appendChild(installationLinkSpan);
 
+        const gitUrlLinkSpan = document.createElement('span');
+        gitUrlLinkSpan.classList.add('sf-link-span-bws');
         const gitUrlLink = document.createElement('a');
         gitUrlLink.href = browser.git_url;
         gitUrlLink.textContent = 'Git Repository';
         gitUrlLink.classList.add('sf-git-link-bws');
         gitUrlLink.target = '_blank';
-        content.appendChild(gitUrlLink);
+        gitUrlLinkSpan.appendChild(gitUrlLink);
+        content.appendChild(gitUrlLinkSpan);
 
         const gitCloneCommandDiv = document.createElement('div');
         gitCloneCommandDiv.classList.add('sf-git-clone-command-bws');
@@ -285,4 +295,5 @@ class SfOpenSourceBrowsers {
  *        new SfOpenSourceBrowsers('sf-opensource-browsers-bws');
  *    });
  * 3. XML 파일의 URL을 loadXml() 메서드에 전달하여 XML 데이터를 로드합니다.
+ * 4. CSS 파일을 수정하여 웹 페이지의 디자인을 변경할 수 있습니다.
  */

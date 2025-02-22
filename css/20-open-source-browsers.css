@@ -139,8 +139,6 @@ body {
 .sf-download-link-bws,
 .sf-git-link-bws,
 .sf-installation-link-bws {
-    display: block;
-    margin-top: 10px;
     color: #007bff;
     text-decoration: none;
     transition: color 0.3s ease;
@@ -150,6 +148,14 @@ body {
 .sf-git-link-bws:hover,
 .sf-installation-link-bws:hover {
     color: #0056b3;
+}
+
+.sf-link-span-bws {
+    display: inline-block;
+    margin-top: 10px;
+    padding: 5px 10px;
+    border-radius: 5px;
+    background-color: #f0f0f0;
 }
 
 /* Git 클론 명령어 스타일 */
@@ -186,7 +192,7 @@ body {
     background-color: #007bff;
 }
 
-/* 반응형 스타일   */
+/* 반응형 스타일 */
 @media (max-width: 480px) {
     .sf-browser-card-bws {
         width: 100%;
