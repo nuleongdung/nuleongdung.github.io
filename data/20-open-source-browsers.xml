@@ -1,0 +1,243 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<browsers>
+    <browser>
+        <name>Chromium</name>
+        <description>Chromium은 Google Chrome의 기반이 되는 오픈 소스 브라우저 프로젝트입니다.</description>
+        <features>빠른 속도, 확장성, 다양한 기능</features>
+        <download_url>https://www.chromium.org/getting-involved/download-chromium/</download_url>
+        <installation_url>https://commondatastorage.googleapis.com/chromium-browser-snapshots/index.html</installation_url>
+        <git_url>https://chromium.googlesource.com/chromium/src.git</git_url>
+        <git_clone_command>git clone https://chromium.googlesource.com/chromium/src.git</git_clone_command>
+        <os>Windows, macOS, Linux, Android</os>
+        <installation_size>수백 MB (설치 후 크기는 사용량에 따라 다름)</installation_size>
+        <programming_languages>C++, JavaScript, HTML, CSS</programming_languages> <!-- 사용 언어 추가 -->
+    </browser>
+    <browser>
+        <name>Mozilla Firefox</name>
+        <description>Mozilla에서 개발한 오픈 소스 웹 브라우저입니다.</description>
+        <features>개인 정보 보호, 확장 기능 지원, 강력한 사용자 정의</features>
+        <download_url>https://www.mozilla.org/firefox/</download_url>
+        <installation_url>https://www.mozilla.org/firefox/all/#product-desktop-release</installation_url>
+        <git_url>https://github.com/mozilla/firefox-central</git_url>
+        <git_clone_command>git clone https://github.com/mozilla/firefox-central.git</git_clone_command>
+        <os>Windows, macOS, Linux, Android</os>
+        <installation_size>약 200MB</installation_size>
+        <programming_languages>C++, JavaScript, HTML, CSS, Rust</programming_languages> <!-- 사용 언어 추가 -->
+    </browser>
+    <browser>
+        <name>Pale Moon</name>
+        <description>Firefox 기반으로 최적화된 오픈 소스 웹 브라우저입니다.</description>
+        <features>성능, 사용자 정의, 안정성</features>
+        <download_url>https://www.palemoon.org/</download_url>
+        <installation_url>https://www.palemoon.org/download.shtml</installation_url>
+        <git_url>https://github.com/MoonchildProductions/Pale-Moon</git_url>
+        <git_clone_command>git clone https://github.com/MoonchildProductions/Pale-Moon.git</git_clone_command>
+        <os>Windows, Linux</os>
+        <installation_size>약 100MB</installation_size>
+        <programming_languages>C++, JavaScript, HTML, CSS</programming_languages> <!-- 사용 언어 추가 -->
+    </browser>
+    <browser>
+        <name>Basilisk</name>
+        <description>Pale Moon 개발팀에서 만든 또 다른 Firefox 기반 브라우저입니다.</description>
+        <features>XUL 확장 지원, 유연성</features>
+        <download_url>https://www.basilisk-browser.org/</download_url>
+        <installation_url>https://www.basilisk-browser.org/download.shtml</installation_url>
+        <git_url>https://github.com/MoonchildProductions/Basilisk</git_url>
+        <git_clone_command>git clone https://github.com/MoonchildProductions/Basilisk.git</git_clone_command>
+        <os>Windows, Linux</os>
+        <installation_size>약 100MB</installation_size>
+        <programming_languages>C++, JavaScript, HTML, CSS</programming_languages> <!-- 사용 언어 추가 -->
+    </browser>
+    <browser>
+        <name>Waterfox</name>
+        <description>Firefox 기반으로 64비트 시스템에 최적화된 브라우저입니다.</description>
+        <features>성능, 사용자 정의, 개인 정보 보호</features>
+        <download_url>https://www.waterfox.net/</download_url>
+        <installation_url>https://www.waterfox.net/download/</installation_url>
+        <git_url>https://github.com/WaterfoxCo/Waterfox</git_url>
+        <git_clone_command>git clone https://github.com/WaterfoxCo/Waterfox.git</git_clone_command>
+        <os>Windows, macOS, Linux</os>
+        <installation_size>약 200MB</installation_size>
+        <programming_languages>C++, JavaScript, HTML, CSS</programming_languages> <!-- 사용 언어 추가 -->
+    </browser>
+    <browser>
+        <name>LibreWolf</name>
+        <description>개인 정보 보호에 중점을 둔 Firefox 기반 브라우저입니다.</description>
+        <features>개인 정보 보호 강화, 기본 설정 변경</features>
+        <download_url>https://librewolf.net/</download_url>
+        <installation_url>https://librewolf.net/installation/</installation_url>
+        <git_url>https://gitlab.com/librewolf-community/browser</git_url>
+        <git_clone_command>git clone https://gitlab.com/librewolf-community/browser.git</git_clone_command>
+        <os>Windows, macOS, Linux</os>
+        <installation_size>약 200MB</installation_size>
+        <programming_languages>C++, JavaScript, HTML, CSS</programming_languages> <!-- 사용 언어 추가 -->
+    </browser>
+    <browser>
+        <name>Falkon</name>
+        <description>QtWebEngine을 사용하는 KDE 프로젝트의 브라우저입니다.</description>
+        <features>Qt 통합, 사용자 정의, 광고 차단</features>
+        <download_url>https://www.falkon.org/</download_url>
+        <installation_url>https://www.falkon.org/download/</installation_url>
+        <git_url>https://invent.kde.org/network/falkon</git_url>
+        <git_clone_command>git clone https://invent.kde.org/network/falkon.git</git_clone_command>
+        <os>Windows, Linux</os>
+        <installation_size>약 150MB</installation_size>
+        <programming_languages>C++, Qt</programming_languages> <!-- 사용 언어 추가 -->
+    </browser>
+    <browser>
+        <name>Konqueror</name>
+        <description>KDE 데스크톱 환경의 파일 관리자 겸 웹 브라우저입니다.</description>
+        <features>파일 관리, 웹 브라우징, 다양한 프로토콜 지원</features>
+        <download_url>https://konqueror.org/</download_url>
+        <installation_url>KDE 패키지 관리 시스템을 통해 설치</installation_url>
+        <git_url>https://invent.kde.org/network/konqueror</git_url>
+        <git_clone_command>git clone https://invent.kde.org/network/konqueror.git</git_clone_command>
+        <os>Linux</os>
+        <installation_size>약 100MB (KDE 환경에 따라 다름)</installation_size>
+        <programming_languages>C++, Qt</programming_languages> <!-- 사용 언어 추가 -->
+    </browser>
+    <browser>
+        <name>Otter Browser</name>
+        <description>Opera 12 스타일을 지향하는 Qt 기반 브라우저입니다.</description>
+        <features>사용자 정의, Opera 스타일, 확장성</features>
+        <download_url>https://otter-browser.org/</download_url>
+        <installation_url>https://otter-browser.org/download/</installation_url>
+        <git_url>https://github.com/OtterBrowser/otter-browser</git_url>
+        <git_clone_command>git clone https://github.com/OtterBrowser/otter-browser.git</git_clone_command>
+        <os>Windows, Linux</os>
+        <installation_size>약 50MB</installation_size>
+        <programming_languages>C++, Qt</programming_languages> <!-- 사용 언어 추가 -->
+    </browser>
+    <browser>
+        <name>Qutebrowser</name>
+        <description>키보드 중심의 미니멀한 브라우저입니다.</description>
+        <features>키보드 중심, Vim 스타일, PyQtWebEngine 사용</features>
+        <download_url>https://www.qutebrowser.org/</download_url>
+        <installation_url>https://www.qutebrowser.org/download/</installation_url>
+        <git_url>https://github.com/qutebrowser/qutebrowser</git_url>
+        <git_clone_command>git clone https://github.com/qutebrowser/qutebrowser.git</git_clone_command>
+        <os>Windows, macOS, Linux</os>
+        <installation_size>약 30MB</installation_size>
+        <programming_languages>Python</programming_languages> <!-- 사용 언어 추가 -->
+    </browser>
+    <browser>
+        <name>Midori</name>
+        <description>가볍고 빠른 웹 브라우저입니다.</description>
+        <features>GTK 인터페이스, 가벼움, HTML5 지원</features>
+        <download_url>https://astian.org/en/midori_browser/</download_url>
+        <installation_url>https://astian.org/en/midori_browser/#download</installation_url>
+        <git_url>https://github.com/midori-browser/midori</git_url>
+        <git_clone_command>git clone https://github.com/midori-browser/midori.git</git_clone_command>
+        <os>Linux</os>
+        <installation_size>약 20MB</installation_size>
+        <programming_languages>C, Vala</programming_languages> <!-- 사용 언어 추가 -->
+    </browser>
+    <browser>
+        <name>GNOME Web (Epiphany)</name>
+        <description>GNOME 데스크톱 환경의 기본 웹 브라우저입니다.</description>
+        <features>GNOME 통합, 웹앱 지원, 간결한 인터페이스</features>
+        <download_url>https://wiki.gnome.org/Apps/Web</download_url>
+        <installation_url>GNOME 패키지 관리 시스템을 통해 설치</installation_url>
+        <git_url>https://gitlab.gnome.org/GNOME/epiphany</git_url>
+        <git_clone_command>git clone https://gitlab.gnome.org/GNOME/epiphany.git</git_clone_command>
+        <os>Linux</os>
+        <installation_size>약 50MB (GNOME 환경에 따라 다름)</installation_size>
+        <programming_languages>C, Vala</programming_languages> <!-- 사용 언어 추가 -->
+    </browser>
+    <browser>
+        <name>Lynx</name>
+        <description>텍스트 기반 웹 브라우저입니다.</description>
+        <features>텍스트 기반, 가벼움, 빠른 속도</features>
+        <download_url>https://invisible-island.net/lynx/</download_url>
+        <installation_url>https://invisible-island.net/lynx/lynx_download.html</installation_url>
+        <git_url>https://invisible-island.net/datafiles/lynx/patches/</git_url>
+        <git_clone_command>git clone https://invisible-island.net/datafiles/lynx/patches/</git_clone_command>
+        <os>Windows, macOS, Linux</os>
+        <installation_size>약 5MB</installation_size>
+        <programming_languages>C</programming_languages> <!-- 사용 언어 추가 -->
+    </browser>
+    <browser>
+        <name>Links</name>
+        <description>텍스트 기반 웹 브라우저로, 프레임과 테이블을 지원합니다.</description>
+        <features>텍스트 기반, 프레임 및 테이블 지원, 가벼움</features>
+        <download_url>http://links.twibright.net/</download_url>
+        <installation_url>http://links.twibright.net/download/</installation_url>
+        <git_url>https://github.com/twibright/links</git_url>
+        <git_clone_command>git clone https://github.com/twibright/links.git</git_clone_command>
+        <os>Windows, macOS, Linux</os>
+        <installation_size>약 5MB</installation_size>
+        <programming_languages>C</programming_languages> <!-- 사용 언어 추가 -->
+    </browser>
+    <browser>
+        <name>ELinks</name>
+        <description>Links의 고급 버전으로, 다양한 기능이 추가되었습니다.</description>
+        <features>텍스트 기반, 스크립팅 지원, 고급 기능</features>
+        <download_url>http://elinks.or.cz/</download_url>
+        <installation_url>http://elinks.or.cz/download/</installation_url>
+        <git_url>git://elinks.or.cz/elinks.git</git_url>
+        <git_clone_command>git clone git://elinks.or.cz/elinks.git</git_clone_command>
+        <os>Windows, macOS, Linux</os>
+        <installation_size>약 5MB</installation_size>
+        <programming_languages>C</programming_languages> <!-- 사용 언어 추가 -->
+    </browser>
+    <browser>
+        <name>Dillo</name>
+        <description>매우 작고 빠른 그래픽 웹 브라우저입니다.</description>
+        <features>가벼움, 빠른 속도, FLTK 라이브러리 사용</features>
+        <download_url>http://www.dillo.org/</download_url>
+        <installation_url>http://www.dillo.org/download.html</installation_url>
+        <git_url>git://git.dillo.org/dillo</git_url>
+        <git_clone_command>git clone git://git.dillo.org/dillo</git_clone_command>
+        <os>Linux, BSD</os>
+        <installation_size>약 1MB</installation_size>
+        <programming_languages>C</programming_languages> <!-- 사용 언어 추가 -->
+    </browser>
+    <browser>
+        <name>Browsh</name>
+        <description>터미널에서 실행되는 현대적인 브라우저입니다.</description>
+        <features>텍스트 기반, 현대적인 웹 지원, 터미널 사용</features>
+        <download_url>https://www.brow.sh/</download_url>
+        <installation_url>https://www.brow.sh/docs/installation/</installation_url>
+        <git_url>https://github.com/browsh-org/browsh</git_url>
+        <git_clone_command>git clone https://github.com/browsh-org/browsh.git</git_clone_command>
+        <os>Linux, macOS</os>
+        <installation_size>약 10MB</installation_size>
+        <programming_languages>Go</programming_languages> <!-- 사용 언어 추가 -->
+    </browser>
+    <browser>
+        <name>Luakit</name>
+        <description>WebKitGTK+를 사용하는 확장 가능한 브라우저 프레임워크입니다.</description>
+        <features>WebKitGTK+, 확장성, Lua 스크립팅</features>
+        <download_url>https://luakit.org/</download_url>
+        <installation_url>https://luakit.org/download/</installation_url>
+        <git_url>https://github.com/luakit/luakit</git_url>
+        <git_clone_command>git clone https://github.com/luakit/luakit.git</git_clone_command>
+        <os>Linux</os>
+        <installation_size>약 5MB</installation_size>
+        <programming_languages>C, Lua</programming_languages> <!-- 사용 언어 추가 -->
+    </browser>
+    <browser>
+        <name>Nyxt</name>
+        <description>키보드 중심의 사용자 정의 가능한 브라우저입니다.</description>
+        <features>키보드 중심, Common Lisp 설정, 강력한 사용자 정의</features>
+        <download_url>https://nyxt.atlas.engineer/</download_url>
+        <installation_url>https://nyxt.atlas.engineer/download</installation_url>
+        <git_url>https://github.com/atlas-engineer/nyxt</git_url>
+        <git_clone_command>git clone https://github.com/atlas-engineer/nyxt.git</git_clone_command>
+        <os>Linux, macOS</os>
+        <installation_size>약 20MB</installation_size>
+        <programming_languages>Common Lisp</programming_languages> <!-- 사용 언어 추가 -->
+    </browser>
+    <browser>
+        <name>Servo</name>
+        <description>Mozilla에서 개발한 실험적인 브라우저 엔진입니다.</description>
+        <features>러스트 기반, 병렬 처리, 웹 표준 준수</features>
+        <download_url>https://servo.org/</download_url>
+        <installation_url>https://servo.org/download/</installation_url>
+        <git_url>https://github.com/servo/servo</git_url>
+        <git_clone_command>git clone https://github.com/servo/servo.git</git_clone_command>
+        <os>Windows, macOS, Linux</os>
+        <installation_size>수백 MB (빌드 후 크기는 다름)</installation_size>
+        <programming_languages>Rust</programming_languages> <!-- 사용 언어 추가 -->
+    </browser>
+</browsers>
