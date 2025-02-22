@@ -1,84 +1,108 @@
 /* 전체 스타일 */
 body {
     font-family: Arial, sans-serif;
-    /* 기본 글꼴 설정 */
     margin: 0;
-    /* body 기본 마진 제거 */
     padding: 0;
-    /* body 기본 패딩 제거 */
     background-color: #f4f4f4;
-    /* 배경색 설정 */
 }
 
 /* 메인 컨테이너 스타일 */
 #sf-opensource-browsers-bws {
     display: flex;
-    /* flexbox 레이아웃 사용 */
-    flex-wrap: wrap;
-    /* 내용이 넘치면 다음 줄로 넘김 */
-    justify-content: center;
-    /* 가로 방향으로 가운데 정렬 */
+    flex-direction: column;
+    /* 세로 방향으로 배치 */
+    align-items: center;
     padding: 20px;
-    /* 컨테이너 내부 여백 */
+}
+
+/* 필터 옵션 스타일 */
+#sf-filter-options-bws {
+    display: flex;
+    flex-wrap: wrap;
+    /* 화면 크기에 따라 여러 줄로 배치 */
+    justify-content: center;
+    align-items: center;
+    padding: 10px;
+    background-color: #f0f0f0;
+    margin-bottom: 20px;
+    width: 100%;
+    /* 부모 컨테이너에 맞게 넓이 설정 */
+    box-sizing: border-box;
+    /* padding, border가 넓이에 포함되도록 설정 */
+}
+
+#sf-filter-options-bws label {
+    margin: 5px;
+    /* 라벨 주변 여백 */
+}
+
+#sf-filter-options-bws button {
+    padding: 5px 10px;
+    /* 버튼 내부 여백 */
+    margin: 5px;
+    /* 버튼 주변 여백 */
+    border: 1px solid #ccc;
+    /* 테두리 */
+    border-radius: 5px;
+    /* 모서리 둥글게 */
+    background-color: white;
+    /* 배경색 */
+    cursor: pointer;
+}
+
+#sf-filter-options-bws button.sf-selected-filter-bws {
+    background-color: #c0dfff;
+    /* 선택된 버튼 배경색 */
+}
+
+/* 브라우저 목록 스타일 */
+#sf-browser-list-bws {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    width: 100%;
+    /* 부모 컨테이너에 맞게 넓이 설정 */
+    box-sizing: border-box;
+    /* padding, border가 넓이에 포함되도록 설정 */
 }
 
 /* 카드 스타일 */
 .sf-browser-card-bws {
     background-color: #fff;
-    /* 카드 배경색 */
     border-radius: 8px;
-    /* 카드 모서리 둥글게 */
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-    /* 그림자 효과 */
     margin: 10px;
-    /* 카드 간 간격 */
     width: 300px;
-    /* 카드 너비 */
     overflow: hidden;
-    /* 내용이 넘치면 숨김 */
     transition: transform 0.3s ease;
-    /* hover 시 부드러운 트랜지션 효과 */
 }
 
-/* 카드 hover 시 스타일 */
 .sf-browser-card-bws:hover {
     transform: translateY(-5px);
-    /* 카드를 약간 위로 이동 */
 }
 
-/* 선택된 카드 스타일 */
 .sf-browser-card-bws.sf-selected-bws {
     background-color: #e0e0e0;
-    /* 선택된 카드 배경색 */
 }
 
 /* 카드 헤더 스타일 */
 .sf-card-header-bws {
     background-color: #0056b3;
-    /* 헤더 배경색 */
     color: #fff;
-    /* 헤더 글자색 */
     padding: 15px;
-    /* 헤더 내부 여백 */
     text-align: center;
-    /* 헤더 내용 가운데 정렬 */
     font-size: 1.2em;
-    /* 헤더 글자 크기 */
     font-weight: bold;
-    /* 헤더 글자 굵게 */
 }
 
 /* 카드 내용 스타일 */
 .sf-card-content-bws {
     padding: 15px;
-    /* 내용 내부 여백 */
 }
 
 .sf-card-content-bws p {
     color: #555;
-    /* 내용 글자색 */
     line-height: 1.6;
-    /* 줄 간격 */
 }
 
 /* 특징 목록 스타일 */
@@ -86,36 +110,25 @@ body {
 .sf-os-list-bws,
 .sf-languages-list-bws {
     padding: 0;
-    /* 목록 기본 패딩 제거 */
     margin: 10px 0;
-    /* 목록 상하 마진 설정 */
     list-style: none;
-    /* 목록 기본 스타일 제거 */
 }
 
 .sf-features-list-bws li,
 .sf-os-list-bws li,
 .sf-languages-list-bws li {
     margin-bottom: 8px;
-    /* 목록 아이템 간 간격 */
     padding-left: 25px;
-    /* 목록 아이템 왼쪽 패딩 */
     position: relative;
-    /* 목록 아이템 위치 설정 */
 }
 
-/* 목록 아이템 앞에 체크 표시 추가 */
 .sf-features-list-bws li::before,
 .sf-os-list-bws li::before,
 .sf-languages-list-bws li::before {
     content: "✓";
-    /* 체크 표시 내용 */
     position: absolute;
-    /* 절대 위치 설정 */
     left: 0;
-    /* 왼쪽 정렬 */
     color: #007bff;
-    /* 체크 표시 색상 */
 }
 
 /* 링크 스타일 */
@@ -123,143 +136,67 @@ body {
 .sf-git-link-bws,
 .sf-installation-link-bws {
     display: block;
-    /* 링크를 블록 요소로 설정 */
     margin-top: 10px;
-    /* 링크 상단 마진 설정 */
     color: #007bff;
-    /* 링크 글자색 */
     text-decoration: none;
-    /* 밑줄 제거 */
     transition: color 0.3s ease;
-    /* hover 시 부드러운 트랜지션 효과 */
 }
 
-/* 링크 hover 시 스타일 */
 .sf-download-link-bws:hover,
 .sf-git-link-bws:hover,
 .sf-installation-link-bws:hover {
     color: #0056b3;
-    /* 링크 글자색 변경 */
 }
 
 /* Git 클론 명령어 스타일 */
 .sf-git-clone-command-bws {
     background-color: #f9f9f9;
-    /* 배경색 */
     padding: 10px;
-    /* 내부 여백 */
     border: 1px solid #ddd;
-    /* 테두리 */
     border-radius: 4px;
-    /* 모서리 둥글게 */
     margin-top: 10px;
-    /* 상단 마진 */
     font-family: monospace;
-    /* 고정폭 글꼴 사용 */
     font-size: 0.9em;
-    /* 글자 크기 */
     overflow-x: auto;
-    /* 가로 스크롤 활성화 */
     white-space: nowrap;
-    /* 줄바꿈 방지 */
 }
 
-/* 복사 버튼 스타일 */
+/* 복사 버튼 스타일  */
 .sf-copy-button-bws {
     background-color: #4CAF50;
-    /* 배경색 */
     color: white;
-    /* 글자색 */
     padding: 8px 12px;
-    /* 내부 여백 */
     border: none;
-    /* 테두리 제거 */
     border-radius: 4px;
-    /* 모서리 둥글게 */
     cursor: pointer;
-    /* 마우스 커서 변경 */
     font-size: 0.9em;
-    /* 글자 크기 */
     transition: background-color 0.3s ease;
-    /* hover 시 부드러운 트랜지션 효과 */
     margin-left: 10px;
-    /* 왼쪽 마진 */
 }
 
-/* 복사 버튼 hover 시 스타일 */
 .sf-copy-button-bws:hover {
     background-color: #367c39;
-    /* 배경색 변경 */
 }
 
-/* 복사 완료된 버튼 스타일 */
 .sf-copy-button-bws.sf-copied-bws {
     background-color: #007bff;
-    /* 배경색 변경 */
 }
 
-/* 반응형 디자인 */
-/* 작은 모바일 장치 */
+/* 반응형 스타일 */
 @media (max-width: 480px) {
     .sf-browser-card-bws {
         width: 100%;
-        /* 카드 너비를 100%로 설정 */
-        margin: 10px 0;
-        /* 상하 마진 설정 */
     }
 }
 
-/* 큰 모바일 장치 */
 @media (min-width: 481px) and (max-width: 768px) {
     .sf-browser-card-bws {
         width: calc(50% - 20px);
-        /* 카드 너비를 50%로 설정 */
     }
 }
 
-/* 태블릿 및 데스크탑 */
 @media (min-width: 769px) {
     .sf-browser-card-bws {
-        width: calc(33.333% - 20px);
-        /* 카드 너비를 33.333%로 설정 */
+        width: calc(33.33% - 20px);
     }
-}
-
-/*
-    사용 예시:
-    1. .sf-browser-card-bws 클래스를 수정하여 카드 디자인을 변경할 수 있습니다.
-    2. 미디어 쿼리를 수정하여 다양한 화면 크기에서 레이아웃을 조정할 수 있습니다.
-*/
-
-/* 필터 옵션 스타일 */
-.sf-filter-options-bws {
-    /* 클래스 선택자로 변경 */
-    display: flex;
-    /* flexbox 레이아웃 사용 */
-    justify-content: center;
-    /* 가로 방향으로 가운데 정렬 */
-    align-items: center;
-    /* 세로 방향으로 가운데 정렬 */
-    padding: 10px;
-    /* 내부 여백 */
-    background-color: #f0f0f0;
-    /* 배경색 */
-    margin-bottom: 20px;
-    /* 하단 마진 */
-}
-
-.sf-filter-options-bws label {
-    /* 클래스 선택자로 변경 */
-    margin-right: 10px;
-    /* 라벨 오른쪽 마진 */
-}
-
-.sf-filter-options-bws select {
-    /* 클래스 선택자로 변경 */
-    padding: 5px;
-    /* 셀렉트 박스 내부 여백 */
-    border-radius: 5px;
-    /* 모서리 둥글게 */
-    border: 1px solid #ccc;
-    /* 테두리 */
 }

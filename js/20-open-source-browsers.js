@@ -8,11 +8,13 @@ class SfOpenSourceBrowsers {
      * @param {string} containerId 브라우저 목록을 표시할 HTML 컨테이너의 ID
      */
     constructor(containerId) {
-        this.containerId = containerId; // 컨테이너 ID 저장
-        this.browsers = []; // 브라우저 데이터를 저장할 배열 초기화
-        this.osOptions = new Set(); // 운영체제 옵션 저장 Set
-        this.languageOptions = new Set(); // 빌드 언어 옵션 저장 Set
-        this.loadXml('https://nuleongdung.github.io/data/20-open-source-browsers.xml'); // XML 데이터 로드
+        this.containerId = containerId;
+        this.browsers = [];
+        this.osFilters = ['Windows', 'macOS', 'Linux', 'Android'];
+        this.languageFilters = ['C', 'C++', 'Go', 'Common Lisp', 'Python', 'Rust', '[C++, Qt]', '[C, Vala]', '[C, Lua]'];
+        this.selectedOsFilters = new Set();
+        this.selectedLanguageFilters = new Set();
+        this.loadXml('https://nuleongdung.github.io/data/20-open-source-browsers.xml');
     }
 
     /**
@@ -21,16 +23,16 @@ class SfOpenSourceBrowsers {
      */
     async loadXml(url) {
         try {
-            const response = await fetch(url); // XML 파일 가져오기
-            const xmlText = await response.text(); // XML 데이터를 텍스트로 변환
-            const parser = new DOMParser(); // XML 파서 생성
-            const xmlDoc = parser.parseFromString(xmlText, 'text/xml'); // XML 텍스트를 XML 문서로 파싱
-            this.parseXml(xmlDoc); // XML 데이터 파싱
-            this.renderFilters(); // 필터 옵션 렌더링
-            this.render(); // 브라우저 목록 렌더링
+            const response = await fetch(url);
+            const xmlText = await response.text();
+            const parser = new DOMParser();
+            const xmlDoc = parser.parseFromString(xmlText, 'text/xml');
+            this.parseXml(xmlDoc);
+            this.renderFilters();
+            this.render();
         } catch (error) {
-            console.error('XML 파일 로딩 오류:', error); // 오류 메시지 콘솔에 출력
-            document.getElementById(this.containerId).innerText = 'XML 파일 로딩 실패.'; // 컨테이너에 오류 메시지 표시
+            console.error('XML 파일 로딩 오류:', error);
+            document.getElementById(this.containerId).innerText = 'XML 파일 로딩 실패.';
         }
     }
 
@@ -39,25 +41,20 @@ class SfOpenSourceBrowsers {
      * @param {XMLDocument} xmlDoc 파싱할 XML 문서
      */
     parseXml(xmlDoc) {
-        const browserNodes = xmlDoc.querySelectorAll('browser'); // 모든 'browser' 노드 선택
-        browserNodes.forEach(browserNode => {
-            const browser = {
-                name: browserNode.querySelector('name').textContent, // 브라우저 이름
-                description: browserNode.querySelector('description').textContent, // 브라우저 설명
-                features: Array.from(browserNode.querySelectorAll('features')).map(feature => feature.textContent), // 브라우저 특징 목록
-                download_url: browserNode.querySelector('download_url').textContent, // 다운로드 URL
-                installation_url: browserNode.querySelector('installation_url').textContent, // 설치 URL
-                git_url: browserNode.querySelector('git_url').textContent, // Git 저장소 URL
-                git_clone_command: browserNode.querySelector('git_clone_command').textContent, // Git 클론 명령어
-                os: Array.from(browserNode.querySelectorAll('os')).map(os => os.textContent), // 지원 운영체제 목록
-                installation_size: browserNode.querySelector('installation_size').textContent, // 설치 크기
-                programming_languages: Array.from(browserNode.querySelectorAll('programming_languages')).map(lang => lang.textContent) // 사용 언어 목록
+        const browserNodes = xmlDoc.querySelectorAll('browser');
+        this.browsers = Array.from(browserNodes).map(browserNode => {
+            return {
+                name: browserNode.querySelector('name').textContent,
+                description: browserNode.querySelector('description').textContent,
+                features: Array.from(browserNode.querySelectorAll('features')).map(feature => feature.textContent),
+                download_url: browserNode.querySelector('download_url').textContent,
+                installation_url: browserNode.querySelector('installation_url').textContent,
+                git_url: browserNode.querySelector('git_url').textContent,
+                git_clone_command: browserNode.querySelector('git_clone_command').textContent,
+                os: Array.from(browserNode.querySelectorAll('os')).map(os => os.textContent),
+                installation_size: browserNode.querySelector('installation_size').textContent,
+                programming_languages: Array.from(browserNode.querySelectorAll('programming_languages')).map(lang => lang.textContent)
             };
-            this.browsers.push(browser); // 브라우저 객체를 배열에 추가
-
-            // 운영체제 및 빌드 언어 옵션 추가
-            browser.os.forEach(os => this.osOptions.add(os));
-            browser.programming_languages.forEach(lang => this.languageOptions.add(lang));
         });
     }
 
@@ -65,86 +62,84 @@ class SfOpenSourceBrowsers {
      * 필터 옵션을 렌더링합니다.
      */
     renderFilters() {
-        const container = document.getElementById(this.containerId); // 컨테이너 요소 가져오기
+        const container = document.getElementById(this.containerId);
+        const filterOptionsContainer = document.createElement('div');
+        filterOptionsContainer.id = 'sf-filter-options-bws';
 
-        // 필터 옵션 컨테이너 생성
-        const filterOptions = document.createElement('div');
-        filterOptions.classList.add('sf-filter-options-bws');
-
-        // 운영체제 필터 생성
-        const osLabel = document.createElement('label');
-        osLabel.textContent = '운영체제:';
-        filterOptions.appendChild(osLabel);
-
-        this.osFilter = document.createElement('select');
-        this.osFilter.id = 'sf-os-filter-bws';
-        const osAllOption = document.createElement('option');
-        osAllOption.value = 'all';
-        osAllOption.textContent = '전체';
-        this.osFilter.appendChild(osAllOption);
-        this.osOptions.forEach(os => {
-            const option = document.createElement('option');
-            option.value = os.toLowerCase();
-            option.textContent = os;
-            this.osFilter.appendChild(option);
+        // 운영체제 필터 렌더링
+        this.osFilters.forEach(os => {
+            const button = document.createElement('button');
+            button.textContent = os;
+            button.addEventListener('click', () => {
+                if (this.selectedOsFilters.has(os)) {
+                    this.selectedOsFilters.delete(os);
+                } else {
+                    this.selectedOsFilters.add(os);
+                }
+                button.classList.toggle('sf-selected-filter-bws');
+                this.render();
+            });
+            filterOptionsContainer.appendChild(button);
         });
-        filterOptions.appendChild(this.osFilter);
 
-        // 빌드 언어 필터 생성
-        const languageLabel = document.createElement('label');
-        languageLabel.textContent = '빌드 언어:';
-        filterOptions.appendChild(languageLabel);
-
-        this.languageFilter = document.createElement('select');
-        this.languageFilter.id = 'sf-language-filter-bws';
-        const languageAllOption = document.createElement('option');
-        languageAllOption.value = 'all';
-        languageAllOption.textContent = '전체';
-        this.languageFilter.appendChild(languageAllOption);
-        this.languageOptions.forEach(lang => {
-            const option = document.createElement('option');
-            option.value = lang.toLowerCase();
-            option.textContent = lang;
-            this.languageFilter.appendChild(option);
+        // 빌드 언어 필터 렌더링
+        this.languageFilters.forEach(lang => {
+            const button = document.createElement('button');
+            button.textContent = lang;
+            button.addEventListener('click', () => {
+                if (this.selectedLanguageFilters.has(lang)) {
+                    this.selectedLanguageFilters.delete(lang);
+                } else {
+                    this.selectedLanguageFilters.add(lang);
+                }
+                button.classList.toggle('sf-selected-filter-bws');
+                this.render();
+            });
+            filterOptionsContainer.appendChild(button);
         });
-        filterOptions.appendChild(this.languageFilter);
 
-        // 이벤트 리스너 설정
-        this.osFilter.addEventListener('change', () => this.render());
-        this.languageFilter.addEventListener('change', () => this.render());
-
-        // 컨테이너에 필터 옵션 추가
-        container.appendChild(filterOptions);
+        container.appendChild(filterOptionsContainer);
     }
 
     /**
      * 브라우저 목록을 렌더링합니다.
      */
     render() {
-        const container = document.getElementById(this.containerId); // 컨테이너 요소 가져오기
+        const container = document.getElementById(this.containerId);
+        const browserListContainer = document.getElementById('sf-browser-list-bws');
 
-        // 기존 컨텐츠 삭제 (필터 컨테이너는 유지)
-        const existingFilterContainer = container.querySelector('.sf-filter-options-bws');
-        container.innerHTML = '';
-        if (existingFilterContainer) {
-            container.appendChild(existingFilterContainer);
-        }
-
-        const osFilterValue = this.osFilter.value; // 선택된 운영체제 필터 값 가져오기
-        const languageFilterValue = this.languageFilter.value; // 선택된 빌드 언어 필터 값 가져오기
+        // 기존 목록 삭제
+        browserListContainer.innerHTML = '';
 
         // 필터링된 브라우저 목록 생성
         const filteredBrowsers = this.browsers.filter(browser => {
-            const osMatch = osFilterValue === 'all' || browser.os.some(os => os.toLowerCase() === osFilterValue); // 운영체제 일치 여부 확인
-            const languageMatch = languageFilterValue === 'all' || browser.programming_languages.some(lang => lang.toLowerCase() === languageFilterValue); // 빌드 언어 일치 여부 확인
-            return osMatch && languageMatch; // 모든 조건이 일치하는 경우
+            const osMatch = this.selectedOsFilters.size === 0 || browser.os.some(os => this.selectedOsFilters.has(os));
+            const languageMatch = this.selectedLanguageFilters.size === 0 || browser.programming_languages.some(lang => this.selectedLanguageFilters.has(lang));
+            return osMatch && languageMatch;
         });
+
+        // 선택된 필터가 있는 경우 선택된 것을 먼저 표시
+        if (this.selectedOsFilters.size > 0 || this.selectedLanguageFilters.size > 0) {
+            filteredBrowsers.sort((a, b) => {
+                const aOsMatch = a.os.some(os => this.selectedOsFilters.has(os));
+                const bOsMatch = b.os.some(os => this.selectedOsFilters.has(os));
+                const aLanguageMatch = a.programming_languages.some(lang => this.selectedLanguageFilters.has(lang));
+                const bLanguageMatch = b.programming_languages.some(lang => this.selectedLanguageFilters.has(lang));
+
+                if ((aOsMatch || aLanguageMatch) && !(bOsMatch || bLanguageMatch)) return -1;
+                if (!(aOsMatch || aLanguageMatch) && (bOsMatch || bLanguageMatch)) return 1;
+                return 0;
+            });
+        }
 
         // 필터링된 브라우저 목록을 순회하며 카드 생성
         filteredBrowsers.forEach(browser => {
-            const card = this.createCard(browser); // 각 브라우저에 대한 카드 생성
-            container.appendChild(card); // 컨테이너에 카드 추가
+            const card = this.createCard(browser);
+            browserListContainer.appendChild(card);
         });
+
+        // 컨테이너에 브라우저 목록 추가
+        container.appendChild(browserListContainer);
     }
 
     /**
@@ -153,96 +148,96 @@ class SfOpenSourceBrowsers {
      * @returns {HTMLDivElement} 생성된 카드 요소
      */
     createCard(browser) {
-        const card = document.createElement('div'); // 카드 요소 생성
-        card.classList.add('sf-browser-card-bws'); // 카드 클래스 추가
+        const card = document.createElement('div');
+        card.classList.add('sf-browser-card-bws');
 
-        const header = document.createElement('div'); // 헤더 요소 생성
-        header.classList.add('sf-card-header-bws'); // 헤더 클래스 추가
-        header.textContent = browser.name; // 헤더 텍스트 설정
-        card.appendChild(header); // 카드에 헤더 추가
+        const header = document.createElement('div');
+        header.classList.add('sf-card-header-bws');
+        header.textContent = browser.name;
+        card.appendChild(header);
 
-        const content = document.createElement('div'); // 내용 요소 생성
-        content.classList.add('sf-card-content-bws'); // 내용 클래스 추가
+        const content = document.createElement('div');
+        content.classList.add('sf-card-content-bws');
 
-        const description = document.createElement('p'); // 설명 요소 생성
-        description.textContent = browser.description; // 설명 텍스트 설정
-        content.appendChild(description); // 내용에 설명 추가
+        const description = document.createElement('p');
+        description.textContent = browser.description;
+        content.appendChild(description);
 
-        const featuresList = document.createElement('ul'); // 특징 목록 요소 생성
-        featuresList.classList.add('sf-features-list-bws'); // 특징 목록 클래스 추가
+        const featuresList = document.createElement('ul');
+        featuresList.classList.add('sf-features-list-bws');
         browser.features.forEach(feature => {
-            const li = document.createElement('li'); // 목록 아이템 생성
-            li.textContent = feature; // 목록 아이템 텍스트 설정
-            featuresList.appendChild(li); // 특징 목록에 아이템 추가
+            const li = document.createElement('li');
+            li.textContent = feature;
+            featuresList.appendChild(li);
         });
-        content.appendChild(featuresList); // 내용에 특징 목록 추가
+        content.appendChild(featuresList);
 
-        const osList = document.createElement('ul'); // 운영체제 목록 요소 생성
-        osList.classList.add('sf-os-list-bws'); // 운영체제 목록 클래스 추가
+        const osList = document.createElement('ul');
+        osList.classList.add('sf-os-list-bws');
         browser.os.forEach(os => {
-            const li = document.createElement('li'); // 목록 아이템 생성
-            li.textContent = os; // 목록 아이템 텍스트 설정
-            osList.appendChild(li); // 운영체제 목록에 아이템 추가
+            const li = document.createElement('li');
+            li.textContent = os;
+            osList.appendChild(li);
         });
-        content.appendChild(osList); // 내용에 운영체제 목록 추가
+        content.appendChild(osList);
 
-        const languagesList = document.createElement('ul'); // 사용 언어 목록 요소 생성
-        languagesList.classList.add('sf-languages-list-bws'); // 사용 언어 목록 클래스 추가
+        const languagesList = document.createElement('ul');
+        languagesList.classList.add('sf-languages-list-bws');
         browser.programming_languages.forEach(lang => {
-            const li = document.createElement('li'); // 목록 아이템 생성
-            li.textContent = lang; // 목록 아이템 텍스트 설정
-            languagesList.appendChild(li); // 사용 언어 목록에 아이템 추가
+            const li = document.createElement('li');
+            li.textContent = lang;
+            languagesList.appendChild(li);
         });
-        content.appendChild(languagesList); // 내용에 사용 언어 목록 추가
+        content.appendChild(languagesList);
 
-        const downloadLink = document.createElement('a'); // 다운로드 링크 요소 생성
-        downloadLink.href = browser.download_url; // 다운로드 링크 URL 설정
-        downloadLink.textContent = 'Download'; // 다운로드 링크 텍스트 설정
-        downloadLink.classList.add('sf-download-link-bws'); // 다운로드 링크 클래스 추가
-        downloadLink.target = '_blank'; // 새 탭에서 열기
-        content.appendChild(downloadLink); // 내용에 다운로드 링크 추가
+        const downloadLink = document.createElement('a');
+        downloadLink.href = browser.download_url;
+        downloadLink.textContent = 'Download';
+        downloadLink.classList.add('sf-download-link-bws');
+        downloadLink.target = '_blank';
+        content.appendChild(downloadLink);
 
-        const installationLink = document.createElement('a'); // 설치 링크 요소 생성
-        installationLink.href = browser.installation_url; // 설치 링크 URL 설정
-        installationLink.textContent = 'Installation'; // 설치 링크 텍스트 설정
-        installationLink.classList.add('sf-installation-link-bws'); // 설치 링크 클래스 추가
-        installationLink.target = '_blank'; // 새 탭에서 열기
-        content.appendChild(installationLink); // 내용에 설치 링크 추가
+        const installationLink = document.createElement('a');
+        installationLink.href = browser.installation_url;
+        installationLink.textContent = 'Installation';
+        installationLink.classList.add('sf-installation-link-bws');
+        installationLink.target = '_blank';
+        content.appendChild(installationLink);
 
-        const gitUrlLink = document.createElement('a'); // Git 저장소 링크 요소 생성
-        gitUrlLink.href = browser.git_url; // Git 저장소 링크 URL 설정
-        gitUrlLink.textContent = 'Git Repository'; // Git 저장소 링크 텍스트 설정
-        gitUrlLink.classList.add('sf-git-link-bws'); // Git 저장소 링크 클래스 추가
-        gitUrlLink.target = '_blank'; // 새 탭에서 열기
-        content.appendChild(gitUrlLink); // 내용에 Git 저장소 링크 추가
+        const gitUrlLink = document.createElement('a');
+        gitUrlLink.href = browser.git_url;
+        gitUrlLink.textContent = 'Git Repository';
+        gitUrlLink.classList.add('sf-git-link-bws');
+        gitUrlLink.target = '_blank';
+        content.appendChild(gitUrlLink);
 
-        const gitCloneCommandDiv = document.createElement('div'); // Git 클론 명령어 요소 생성
-        gitCloneCommandDiv.classList.add('sf-git-clone-command-bws'); // Git 클론 명령어 클래스 추가
-        gitCloneCommandDiv.textContent = browser.git_clone_command; // Git 클론 명령어 텍스트 설정
+        const gitCloneCommandDiv = document.createElement('div');
+        gitCloneCommandDiv.classList.add('sf-git-clone-command-bws');
+        gitCloneCommandDiv.textContent = browser.git_clone_command;
 
-        const copyButton = document.createElement('button'); // 복사 버튼 요소 생성
-        copyButton.textContent = 'Copy'; // 복사 버튼 텍스트 설정
-        copyButton.classList.add('sf-copy-button-bws'); // 복사 버튼 클래스 추가
+        const copyButton = document.createElement('button');
+        copyButton.textContent = 'Copy';
+        copyButton.classList.add('sf-copy-button-bws');
         copyButton.addEventListener('click', (event) => {
-            this.copyToClipboard(browser.git_clone_command, copyButton); // 클릭 시 클립보드에 복사
-            event.stopPropagation(); // 카드 선택 방지
+            this.copyToClipboard(browser.git_clone_command, copyButton);
+            event.stopPropagation();
         });
 
-        const gitCloneContainer = document.createElement('div'); // Git 클론 컨테이너 요소 생성
-        gitCloneContainer.style.display = 'flex'; // flexbox 레이아웃 사용
-        gitCloneContainer.style.alignItems = 'center'; // 세로 방향으로 가운데 정렬
-        gitCloneContainer.appendChild(gitCloneCommandDiv); // 컨테이너에 명령어 추가
-        gitCloneContainer.appendChild(copyButton); // 컨테이너에 복사 버튼 추가
+        const gitCloneContainer = document.createElement('div');
+        gitCloneContainer.style.display = 'flex';
+        gitCloneContainer.style.alignItems = 'center';
+        gitCloneContainer.appendChild(gitCloneCommandDiv);
+        gitCloneContainer.appendChild(copyButton);
 
-        content.appendChild(gitCloneContainer); // 내용에 Git 클론 컨테이너 추가
+        content.appendChild(gitCloneContainer);
 
-        card.appendChild(content); // 카드에 내용 추가
+        card.appendChild(content);
 
         // 카드 선택 효과
-        card.addEventListener('mouseover', () => card.classList.add('sf-selected-bws')); // 마우스 오버 시 선택 클래스 추가
-        card.addEventListener('mouseout', () => card.classList.remove('sf-selected-bws')); // 마우스 아웃 시 선택 클래스 제거
+        card.addEventListener('mouseover', () => card.classList.add('sf-selected-bws'));
+        card.addEventListener('mouseout', () => card.classList.remove('sf-selected-bws'));
 
-        return card; // 생성된 카드 요소 반환
+        return card;
     }
 
     /**
@@ -251,18 +246,18 @@ class SfOpenSourceBrowsers {
      * @param {HTMLButtonElement} button 클릭된 복사 버튼
      */
     copyToClipboard(text, button) {
-        navigator.clipboard.writeText(text) // 텍스트를 클립보드에 복사
+        navigator.clipboard.writeText(text)
             .then(() => {
-                button.textContent = 'Copied!'; // 버튼 텍스트 변경
-                button.classList.add('sf-copied-bws'); // 복사 완료 클래스 추가
+                button.textContent = 'Copied!';
+                button.classList.add('sf-copied-bws');
                 setTimeout(() => {
-                    button.textContent = 'Copy'; // 버튼 텍스트 복구
-                    button.classList.remove('sf-copied-bws'); // 복사 완료 클래스 제거
-                }, 2000); // 2초 후 복구
+                    button.textContent = 'Copy';
+                    button.classList.remove('sf-copied-bws');
+                }, 2000);
             })
             .catch(err => {
-                console.error('클립보드 복사 실패:', err); // 오류 메시지 콘솔에 출력
-                button.textContent = 'Copy 실패'; // 버튼 텍스트 변경
+                console.error('클립보드 복사 실패:', err);
+                button.textContent = 'Copy 실패';
             });
     }
 }
