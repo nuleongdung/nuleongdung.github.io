@@ -231,3 +231,36 @@ body {
     2. 미디어 쿼리를 수정하여 다양한 화면 크기에서 레이아웃을 조정할 수 있습니다.
     3. 새로운 CSS 클래스를 추가하여 특정 요소에 스타일을 적용할 수 있습니다.
 */
+
+/* 필터 옵션 스타일 */
+.sf-filter-options-bws {
+    /* 클래스 선택자로 변경 */
+    display: flex;
+    /* flexbox 레이아웃 사용 */
+    justify-content: center;
+    /* 가로 방향으로 가운데 정렬 */
+    align-items: center;
+    /* 세로 방향으로 가운데 정렬 */
+    padding: 10px;
+    /* 내부 여백 */
+    background-color: #f0f0f0;
+    /* 배경색 */
+    margin-bottom: 20px;
+    /* 하단 마진 */
+}
+
+.sf-filter-options-bws label {
+    /* 클래스 선택자로 변경 */
+    margin-right: 10px;
+    /* 라벨 오른쪽 마진 */
+}
+
+.sf-filter-options-bws select {
+    /* 클래스 선택자로 변경 */
+    padding: 5px;
+    /* 셀렉트 박스 내부 여백 */
+    border-radius: 5px;
+    /* 모서리 둥글게 */
+    border: 1px solid #ccc;
+    /* 테두리 */
+}

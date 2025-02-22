@@ -1,6 +1,6 @@
 /**
  * SfOpenSourceBrowsers 클래스
- * XML 데이터를 로드하여 오픈 소스 브라우저 목록을 표시하는 기능을 제공합니다.
+ * XML 데이터를 로드하여 오픈 소스 브라우저 목록을 표시하고 필터링하는 기능을 제공합니다.
  */
 class SfOpenSourceBrowsers {
     /**
@@ -10,6 +10,8 @@ class SfOpenSourceBrowsers {
     constructor(containerId) {
         this.containerId = containerId; // 컨테이너 ID 저장
         this.browsers = []; // 브라우저 데이터를 저장할 배열 초기화
+        this.osOptions = new Set(); // 운영체제 옵션 저장 Set
+        this.languageOptions = new Set(); // 빌드 언어 옵션 저장 Set
         this.loadXml('https://nuleongdung.github.io/data/20-open-source-browsers.xml'); // XML 데이터 로드
     }
 
@@ -24,6 +26,7 @@ class SfOpenSourceBrowsers {
             const parser = new DOMParser(); // XML 파서 생성
             const xmlDoc = parser.parseFromString(xmlText, 'text/xml'); // XML 텍스트를 XML 문서로 파싱
             this.parseXml(xmlDoc); // XML 데이터 파싱
+            this.renderFilters(); // 필터 옵션 렌더링
             this.render(); // 브라우저 목록 렌더링
         } catch (error) {
             console.error('XML 파일 로딩 오류:', error); // 오류 메시지 콘솔에 출력
@@ -38,8 +41,7 @@ class SfOpenSourceBrowsers {
     parseXml(xmlDoc) {
         const browserNodes = xmlDoc.querySelectorAll('browser'); // 모든 'browser' 노드 선택
         browserNodes.forEach(browserNode => {
-            // 각 브라우저 노드에서 데이터 추출하여 브라우저 객체 생성 후 배열에 추가
-            this.browsers.push({
+            const browser = {
                 name: browserNode.querySelector('name').textContent, // 브라우저 이름
                 description: browserNode.querySelector('description').textContent, // 브라우저 설명
                 features: Array.from(browserNode.querySelectorAll('features')).map(feature => feature.textContent), // 브라우저 특징 목록
@@ -50,8 +52,69 @@ class SfOpenSourceBrowsers {
                 os: Array.from(browserNode.querySelectorAll('os')).map(os => os.textContent), // 지원 운영체제 목록
                 installation_size: browserNode.querySelector('installation_size').textContent, // 설치 크기
                 programming_languages: Array.from(browserNode.querySelectorAll('programming_languages')).map(lang => lang.textContent) // 사용 언어 목록
-            });
+            };
+            this.browsers.push(browser); // 브라우저 객체를 배열에 추가
+
+            // 운영체제 및 빌드 언어 옵션 추가
+            browser.os.forEach(os => this.osOptions.add(os));
+            browser.programming_languages.forEach(lang => this.languageOptions.add(lang));
         });
+    }
+
+    /**
+     * 필터 옵션을 렌더링합니다.
+     */
+    renderFilters() {
+        const container = document.getElementById(this.containerId); // 컨테이너 요소 가져오기
+
+        // 필터 옵션 컨테이너 생성
+        const filterOptions = document.createElement('div');
+        filterOptions.classList.add('sf-filter-options-bws');
+
+        // 운영체제 필터 생성
+        const osLabel = document.createElement('label');
+        osLabel.textContent = '운영체제:';
+        filterOptions.appendChild(osLabel);
+
+        this.osFilter = document.createElement('select');
+        this.osFilter.id = 'sf-os-filter-bws';
+        const osAllOption = document.createElement('option');
+        osAllOption.value = 'all';
+        osAllOption.textContent = '전체';
+        this.osFilter.appendChild(osAllOption);
+        this.osOptions.forEach(os => {
+            const option = document.createElement('option');
+            option.value = os.toLowerCase();
+            option.textContent = os;
+            this.osFilter.appendChild(option);
+        });
+        filterOptions.appendChild(this.osFilter);
+
+        // 빌드 언어 필터 생성
+        const languageLabel = document.createElement('label');
+        languageLabel.textContent = '빌드 언어:';
+        filterOptions.appendChild(languageLabel);
+
+        this.languageFilter = document.createElement('select');
+        this.languageFilter.id = 'sf-language-filter-bws';
+        const languageAllOption = document.createElement('option');
+        languageAllOption.value = 'all';
+        languageAllOption.textContent = '전체';
+        this.languageFilter.appendChild(languageAllOption);
+        this.languageOptions.forEach(lang => {
+            const option = document.createElement('option');
+            option.value = lang.toLowerCase();
+            option.textContent = lang;
+            this.languageFilter.appendChild(option);
+        });
+        filterOptions.appendChild(this.languageFilter);
+
+        // 이벤트 리스너 설정
+        this.osFilter.addEventListener('change', () => this.render());
+        this.languageFilter.addEventListener('change', () => this.render());
+
+        // 컨테이너에 필터 옵션 추가
+        container.appendChild(filterOptions);
     }
 
     /**
@@ -59,8 +122,26 @@ class SfOpenSourceBrowsers {
      */
     render() {
         const container = document.getElementById(this.containerId); // 컨테이너 요소 가져오기
-        container.innerHTML = ''; // 컨테이너 내용 초기화
-        this.browsers.forEach(browser => {
+
+        // 기존 컨텐츠 삭제 (필터 컨테이너는 유지)
+        const existingFilterContainer = container.querySelector('.sf-filter-options-bws');
+        container.innerHTML = '';
+        if (existingFilterContainer) {
+            container.appendChild(existingFilterContainer);
+        }
+
+        const osFilterValue = this.osFilter.value; // 선택된 운영체제 필터 값 가져오기
+        const languageFilterValue = this.languageFilter.value; // 선택된 빌드 언어 필터 값 가져오기
+
+        // 필터링된 브라우저 목록 생성
+        const filteredBrowsers = this.browsers.filter(browser => {
+            const osMatch = osFilterValue === 'all' || browser.os.some(os => os.toLowerCase() === osFilterValue); // 운영체제 일치 여부 확인
+            const languageMatch = languageFilterValue === 'all' || browser.programming_languages.some(lang => lang.toLowerCase() === languageFilterValue); // 빌드 언어 일치 여부 확인
+            return osMatch && languageMatch; // 모든 조건이 일치하는 경우
+        });
+
+        // 필터링된 브라우저 목록을 순회하며 카드 생성
+        filteredBrowsers.forEach(browser => {
             const card = this.createCard(browser); // 각 브라우저에 대한 카드 생성
             container.appendChild(card); // 컨테이너에 카드 추가
         });
