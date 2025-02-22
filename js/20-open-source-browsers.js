@@ -63,13 +63,27 @@ class SfOpenSourceBrowsers {
      */
     renderFilters() {
         const container = document.getElementById(this.containerId);
-        const filterOptionsContainer = document.createElement('div');
-        filterOptionsContainer.id = 'sf-filter-options-bws';
+        const filterOptionsContainer = document.getElementById('sf-filter-options-bws');
+
+        // 기존 필터 버튼 삭제
+        filterOptionsContainer.innerHTML = `
+            <div id="sf-os-filters-bws">
+                <h3>운영체제</h3>
+            </div>
+            <div id="sf-language-filters-bws">
+                <h3>소스 언어</h3>
+            </div>
+        `;
+
+        const osFiltersContainer = document.getElementById('sf-os-filters-bws');
+        const languageFiltersContainer = document.getElementById('sf-language-filters-bws');
 
         // 운영체제 필터 렌더링
         this.osFilters.forEach(os => {
             const button = document.createElement('button');
             button.textContent = os;
+            button.classList.toggle('sf-selected-filter-bws', this.selectedOsFilters.has(os)); // 초기 선택 상태 반영
+
             button.addEventListener('click', () => {
                 if (this.selectedOsFilters.has(os)) {
                     this.selectedOsFilters.delete(os);
@@ -79,13 +93,15 @@ class SfOpenSourceBrowsers {
                 button.classList.toggle('sf-selected-filter-bws');
                 this.render();
             });
-            filterOptionsContainer.appendChild(button);
+            osFiltersContainer.appendChild(button);
         });
 
         // 빌드 언어 필터 렌더링
         this.languageFilters.forEach(lang => {
             const button = document.createElement('button');
             button.textContent = lang;
+            button.classList.toggle('sf-selected-filter-bws', this.selectedLanguageFilters.has(lang)); // 초기 선택 상태 반영
+
             button.addEventListener('click', () => {
                 if (this.selectedLanguageFilters.has(lang)) {
                     this.selectedLanguageFilters.delete(lang);
@@ -95,7 +111,7 @@ class SfOpenSourceBrowsers {
                 button.classList.toggle('sf-selected-filter-bws');
                 this.render();
             });
-            filterOptionsContainer.appendChild(button);
+            languageFiltersContainer.appendChild(button);
         });
 
         container.appendChild(filterOptionsContainer);
@@ -105,41 +121,38 @@ class SfOpenSourceBrowsers {
      * 브라우저 목록을 렌더링합니다.
      */
     render() {
-        const container = document.getElementById(this.containerId);
         const browserListContainer = document.getElementById('sf-browser-list-bws');
 
         // 기존 목록 삭제
         browserListContainer.innerHTML = '';
 
         // 필터링된 브라우저 목록 생성
-        const filteredBrowsers = this.browsers.filter(browser => {
+        let filteredBrowsers = this.browsers.filter(browser => {
             const osMatch = this.selectedOsFilters.size === 0 || browser.os.some(os => this.selectedOsFilters.has(os));
             const languageMatch = this.selectedLanguageFilters.size === 0 || browser.programming_languages.some(lang => this.selectedLanguageFilters.has(lang));
             return osMatch && languageMatch;
         });
 
-        // 선택된 필터가 있는 경우 선택된 것을 먼저 표시
-        if (this.selectedOsFilters.size > 0 || this.selectedLanguageFilters.size > 0) {
-            filteredBrowsers.sort((a, b) => {
-                const aOsMatch = a.os.some(os => this.selectedOsFilters.has(os));
-                const bOsMatch = b.os.some(os => this.selectedOsFilters.has(os));
-                const aLanguageMatch = a.programming_languages.some(lang => this.selectedLanguageFilters.has(lang));
-                const bLanguageMatch = b.programming_languages.some(lang => this.selectedLanguageFilters.has(lang));
+        // 정렬: 선택된 필터 우선, 나머지는 뒤로
+        filteredBrowsers.sort((a, b) => {
+            const aOsMatch = a.os.some(os => this.selectedOsFilters.has(os));
+            const bOsMatch = b.os.some(os => this.selectedOsFilters.has(os));
+            const aLanguageMatch = a.programming_languages.some(lang => this.selectedLanguageFilters.has(lang));
+            const bLanguageMatch = b.programming_languages.some(lang => this.selectedLanguageFilters.has(lang));
 
-                if ((aOsMatch || aLanguageMatch) && !(bOsMatch || bLanguageMatch)) return -1;
-                if (!(aOsMatch || aLanguageMatch) && (bOsMatch || bLanguageMatch)) return 1;
-                return 0;
-            });
-        }
+            const aSelected = aOsMatch || aLanguageMatch;
+            const bSelected = bOsMatch || bLanguageMatch;
+
+            if (aSelected && !bSelected) return -1; // a가 선택되었고 b는 선택되지 않았으면 a를 앞으로
+            if (!aSelected && bSelected) return 1; // b가 선택되었고 a는 선택되지 않았으면 b를 앞으로
+            return 0; // 둘 다 선택되었거나 선택되지 않았으면 순서 변경 없음
+        });
 
         // 필터링된 브라우저 목록을 순회하며 카드 생성
         filteredBrowsers.forEach(browser => {
             const card = this.createCard(browser);
             browserListContainer.appendChild(card);
         });
-
-        // 컨테이너에 브라우저 목록 추가
-        container.appendChild(browserListContainer);
     }
 
     /**
@@ -265,11 +278,12 @@ class SfOpenSourceBrowsers {
 /**
  * 사용 예시:
  *
- * 1. HTML 파일에 <div id="sf-opensource-browsers-bws"> </div> 요소를 추가합니다.
+ * 1. HTML 파일에 <div id="sf-opensource-browsers-bws"></div> 요소를 추가합니다.
  * 2. JavaScript 파일에서 SfOpenSourceBrowsers 클래스의 인스턴스를 생성하고 실행합니다.
  *    예:
  *    document.addEventListener('DOMContentLoaded', () => {
  *        new SfOpenSourceBrowsers('sf-opensource-browsers-bws');
  *    });
  * 3. XML 파일의 URL을 loadXml() 메서드에 전달하여 XML 데이터를 로드합니다.
+ * 4. CSS 파일을 수정하여 웹 페이지의 디자인을 변경할 수 있습니다.
  */

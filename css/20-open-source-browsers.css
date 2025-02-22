@@ -18,35 +18,41 @@ body {
 /* 필터 옵션 스타일 */
 #sf-filter-options-bws {
     display: flex;
-    flex-wrap: wrap;
-    /* 화면 크기에 따라 여러 줄로 배치 */
-    justify-content: center;
-    align-items: center;
+    flex-direction: column;
+    /* 세로로 필터 그룹 배치 */
+    align-items: flex-start;
+    /* 왼쪽 정렬 */
     padding: 10px;
     background-color: #f0f0f0;
     margin-bottom: 20px;
     width: 100%;
-    /* 부모 컨테이너에 맞게 넓이 설정 */
     box-sizing: border-box;
-    /* padding, border가 넓이에 포함되도록 설정 */
 }
 
-#sf-filter-options-bws label {
-    margin: 5px;
-    /* 라벨 주변 여백 */
+#sf-os-filters-bws,
+#sf-language-filters-bws {
+    display: flex;
+    flex-wrap: wrap;
+    /* 필터 버튼들을 여러 줄로 배치 */
+    margin-bottom: 10px;
+    width: 100%;
+    /* 부모 컨테이너에 맞게 넓이 설정 */
+}
+
+#sf-filter-options-bws h3 {
+    width: 100%;
+    /* 제목이 전체 넓이를 차지하도록 설정 */
+    text-align: left;
+    /* 제목 왼쪽 정렬 */
+    margin: 5px 0;
 }
 
 #sf-filter-options-bws button {
     padding: 5px 10px;
-    /* 버튼 내부 여백 */
     margin: 5px;
-    /* 버튼 주변 여백 */
     border: 1px solid #ccc;
-    /* 테두리 */
     border-radius: 5px;
-    /* 모서리 둥글게 */
     background-color: white;
-    /* 배경색 */
     cursor: pointer;
 }
 
@@ -61,9 +67,7 @@ body {
     flex-wrap: wrap;
     justify-content: center;
     width: 100%;
-    /* 부모 컨테이너에 맞게 넓이 설정 */
     box-sizing: border-box;
-    /* padding, border가 넓이에 포함되도록 설정 */
 }
 
 /* 카드 스타일 */
@@ -161,7 +165,7 @@ body {
     white-space: nowrap;
 }
 
-/* 복사 버튼 스타일   */
+/* 복사 버튼 스타일 */
 .sf-copy-button-bws {
     background-color: #4CAF50;
     color: white;
