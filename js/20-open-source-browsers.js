@@ -265,7 +265,7 @@ class SfOpenSourceBrowsers {
 /**
  * 사용 예시:
  *
- * 1. HTML 파일에 <div id="sf-opensource-browsers-bws"></div> 요소를 추가합니다.
+ * 1. HTML 파일에 <div id="sf-opensource-browsers-bws"> </div> 요소를 추가합니다.
  * 2. JavaScript 파일에서 SfOpenSourceBrowsers 클래스의 인스턴스를 생성하고 실행합니다.
  *    예:
  *    document.addEventListener('DOMContentLoaded', () => {
