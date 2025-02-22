@@ -199,18 +199,21 @@ class SfOpenSourceBrowsers {
         downloadLink.href = browser.download_url; // 다운로드 링크 URL 설정
         downloadLink.textContent = 'Download'; // 다운로드 링크 텍스트 설정
         downloadLink.classList.add('sf-download-link-bws'); // 다운로드 링크 클래스 추가
+        downloadLink.target = '_blank'; // 새 탭에서 열기
         content.appendChild(downloadLink); // 내용에 다운로드 링크 추가
 
         const installationLink = document.createElement('a'); // 설치 링크 요소 생성
         installationLink.href = browser.installation_url; // 설치 링크 URL 설정
         installationLink.textContent = 'Installation'; // 설치 링크 텍스트 설정
         installationLink.classList.add('sf-installation-link-bws'); // 설치 링크 클래스 추가
+        installationLink.target = '_blank'; // 새 탭에서 열기
         content.appendChild(installationLink); // 내용에 설치 링크 추가
 
         const gitUrlLink = document.createElement('a'); // Git 저장소 링크 요소 생성
         gitUrlLink.href = browser.git_url; // Git 저장소 링크 URL 설정
         gitUrlLink.textContent = 'Git Repository'; // Git 저장소 링크 텍스트 설정
         gitUrlLink.classList.add('sf-git-link-bws'); // Git 저장소 링크 클래스 추가
+        gitUrlLink.target = '_blank'; // 새 탭에서 열기
         content.appendChild(gitUrlLink); // 내용에 Git 저장소 링크 추가
 
         const gitCloneCommandDiv = document.createElement('div'); // Git 클론 명령어 요소 생성
@@ -274,5 +277,4 @@ class SfOpenSourceBrowsers {
  *        new SfOpenSourceBrowsers('sf-opensource-browsers-bws');
  *    });
  * 3. XML 파일의 URL을 loadXml() 메서드에 전달하여 XML 데이터를 로드합니다.
- * 4. CSS 파일을 수정하여 웹 페이지의 디자인을 변경할 수 있습니다.
  */
