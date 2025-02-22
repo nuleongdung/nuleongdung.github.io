@@ -4,130 +4,17 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>오픈 소스 브라우저 목록</title>
-    <style>
-        .sf-container-bws {
-            max-width: 800px;
-            margin: 0 auto;
-            padding: 20px;
-            font-family: Arial, sans-serif;
-        }
-
-        .sf-card-bws {
-            background: #f9f9f9;
-            border-radius: 10px;
-            padding: 15px;
-            margin: 10px 0;
-            box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.1);
-            transition: background 0.3s;
-        }
-
-        .sf-card-bws:hover {
-            background: #e0f7fa;
-        }
-
-        .sf-copy-btn-bws {
-            background: #007bff;
-            color: white;
-            border: none;
-            padding: 5px 10px;
-            cursor: pointer;
-            border-radius: 5px;
-            margin-left: 10px;
-            transition: background 0.3s;
-        }
-
-        .sf-copy-btn-bws:hover {
-            background: #0056b3;
-        }
-
-        .sf-copied-bws {
-            background: #28a745 !important;
-        }
-
-        @media (max-width: 600px) {
-            .sf-container-bws {
-                padding: 10px;
-            }
-        }
-    </style>
+    <title>Open Source Browsers</title>
+    <link rel="stylesheet" href="style.css">
 </head>
 
 <body>
-    <div id="sf-opensource-browsers-bws" class="sf-container-bws">
-        <h2>오픈 소스 브라우저 목록</h2>
+    <div id="sf-opensource-browsers-bws"></div>
 
-        <div class="sf-card-bws">
-            <h3>Chromium</h3>
-            <p>Google Chrome의 기반이 되는 오픈 소스 브라우저.</p>
-            <p>운영체제: Windows, Linux, Mac</p>
-            <p>설치 용량: 약 200MB</p>
-            <a href="https://www.chromium.org/getting-involved/download-chromium/" target="_blank">다운로드</a>
-            <p>Git 설치: <code
-                    id="sf-chromium-git-bws">git clone https://chromium.googlesource.com/chromium/src.git</code><button
-                    class="sf-copy-btn-bws" data-clipboard="sf-chromium-git-bws">복사</button></p>
-        </div>
-
-        <div class="sf-card-bws">
-            <h3>Mozilla Firefox</h3>
-            <p>강력한 보안과 커스터마이징 기능을 제공하는 오픈 소스 브라우저.</p>
-            <p>운영체제: Windows, Linux, Mac</p>
-            <p>설치 용량: 약 250MB</p>
-            <a href="https://www.mozilla.org/firefox/all/" target="_blank">다운로드</a>
-            <p>Git 설치: <code id="sf-firefox-git-bws">git clone https://github.com/mozilla/gecko-dev.git</code><button
-                    class="sf-copy-btn-bws" data-clipboard="sf-firefox-git-bws">복사</button></p>
-        </div>
-
-        <div class="sf-card-bws">
-            <h3>Pale Moon</h3>
-            <p>경량화된 Firefox 기반 브라우저.</p>
-            <p>운영체제: Windows, Linux</p>
-            <p>설치 용량: 약 70MB</p>
-            <a href="https://www.palemoon.org/download.shtml" target="_blank">다운로드</a>
-            <p>Git 설치: <code
-                    id="sf-palemoon-git-bws">git clone https://github.com/MoonchildProductions/Pale-Moon.git</code><button
-                    class="sf-copy-btn-bws" data-clipboard="sf-palemoon-git-bws">복사</button></p>
-        </div>
-
-        <div class="sf-card-bws">
-            <h3>Basilisk</h3>
-            <p>Firefox 기반의 최신 웹 표준을 지원하는 브라우저.</p>
-            <p>운영체제: Windows, Linux</p>
-            <p>설치 용량: 약 80MB</p>
-            <a href="https://www.basilisk-browser.org/download.shtml" target="_blank">다운로드</a>
-            <p>Git 설치: <code
-                    id="sf-basilisk-git-bws">git clone https://github.com/MoonchildProductions/UXP.git</code><button
-                    class="sf-copy-btn-bws" data-clipboard="sf-basilisk-git-bws">복사</button></p>
-        </div>
-    </div>
-
+    <script src="script.js"></script>
     <script>
-        class SfOpensourceBrowsersListBws {
-            static copyToClipboard(button) {
-                const id = button.getAttribute("data-clipboard");
-                const copyText = document.getElementById(id);
-                const textArea = document.createElement("textarea");
-                textArea.value = copyText.innerText;
-                document.body.appendChild(textArea);
-                textArea.select();
-                document.execCommand("copy");
-                document.body.removeChild(textArea);
-
-                button.textContent = "복사됨";
-                button.classList.add("sf-copied-bws");
-                setTimeout(() => {
-                    button.textContent = "복사";
-                    button.classList.remove("sf-copied-bws");
-                }, 1500);
-            }
-        }
-
-        document.addEventListener("DOMContentLoaded", function () {
-            document.querySelectorAll(".sf-copy-btn-bws").forEach(button => {
-                button.addEventListener("click", function () {
-                    SfOpensourceBrowsersListBws.copyToClipboard(this);
-                });
-            });
+        document.addEventListener('DOMContentLoaded', () => {
+            new SfOpenSourceBrowsers('sf-opensource-browsers-bws');
         });
     </script>
 </body>
