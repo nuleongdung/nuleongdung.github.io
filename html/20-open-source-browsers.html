@@ -5,32 +5,1167 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>오픈 소스 브라우저</title>
-    <link rel="stylesheet" href="https://nuleongdung.github.io/css/20-open-source-browsers.css?v=4">
+    <!-- <link rel="stylesheet" href="https://nuleongdung.github.io/css/20-open-source-browsers.css?v=4.1"> -->
+    <link rel="stylesheet" href="../css/20-open-source-browsers.css?v=5">
 </head>
 
 <body>
-
-
-    <div id="sf-opensource-browsers-bws">
-        <!-- 필터 옵션 컨테이너 -->
-        <div id="sf-filter-options-bws">
-            <div id="sf-os-filters-bws">
-                <h3>운영체제</h3>
-            </div>
-            <div id="sf-language-filters-bws">
-                <h3>소스 언어</h3>
-            </div>
-        </div>
-        <!-- 브라우저 카드들이 표시될 컨테이너 -->
-        <div id="sf-browser-list-bws"></div>
+    <!-- 필터 옵션 컨테이너 -->
+    <div id="sf-opensource-browsers-bws"></div>
+    <!-- 브라우저 카드들이 표시될 컨테이너 (이제 JavaScript에서 생성) -->
     </div>
 
-    <script src="https://nuleongdung.github.io/js/20-open-source-browsers.js?v=4"></script>
+    <!-- <script src="https://nuleongdung.github.io/js/20-open-source-browsers.js?v=4"></script> -->
+    <script src="../js/20-open-source-browsers.js?v=1.1"></script>
     <script>
         document.addEventListener('DOMContentLoaded', () => {
             new SfOpenSourceBrowsers('sf-opensource-browsers-bws');
         });
     </script>
+
+    <h2>브라우저별 소스 코드 이슈 및 개선 사항</h2>
+    <div class="sf-browser-dev-info">
+        <section id="sf-chromium-info" class="sf-browser-section">
+            <h3>Chromium</h3>
+            <p>Chromium은 개발자 친화적인 구조를 가진 오픈 소스 브라우저 엔진으로, 다양한 브라우저의 기반이 됩니다. 대표적으로 Google Chrome, Microsoft Edge, Brave,
+                Opera 등의 브라우저가 Chromium을 기반으로 개발되었습니다.</p>
+            <p>그러나 Chromium은 무거운 메모리 사용량과 구글 중심의 생태계라는 단점이 지적됩니다. 이는 저사양 기기에서 성능 저하를 유발할 수 있으며, 사용자의 데이터가 구글의 서비스와 강하게
+                연계될 가능성을 높입니다.</p>
+
+            <h4>개선 필요 사항</h4>
+            <ul>
+                <li>경량화된 메모리 관리: 불필요한 리소스 사용을 줄이고, 성능을 최적화하는 기술 도입</li>
+                <li>더 나은 확장 API 관리: 개발자 친화적인 API 제공 및 보안 강화</li>
+                <li>보다 개방적인 개발 환경 조성: 구글 의존도를 줄이고, 커뮤니티 중심의 개발 활성화</li>
+            </ul>
+
+            <h4>프라이버시 및 보안 우려</h4>
+            <p>Chromium은 구글이 주도하는 프로젝트로, 구글 서비스와 밀접한 연계로 인해 프라이버시 우려가 존재합니다. 사용자의 브라우징 데이터가 구글의 서버로 전송될 가능성이 있으며, 이는
+                개인정보 보호를 중요시하는 사용자들에게 우려를 불러일으킵니다.</p>
+            <p>이를 해결하기 위해 Brave, Ungoogled Chromium, Vivaldi 등의 프로젝트에서는 데이터 수집을 최소화하거나 제거하는 방법을 적용하여 사용자의 프라이버시 보호를 강화하고
+                있습니다.</p>
+
+
+            <article>
+                <div class="sf-detail-source">
+                    <h4>데이터 수집 최소화 또는 제거</h4>
+                    <p>Chromium 소스 코드를 수정하여 데이터 수집을 최소화하거나 제거하는 방법은 다음과 같습니다:</p>
+
+                    <h4>사용자 데이터 전송 비활성화</h4>
+                    <p>Chromium은 기본적으로 사용자 데이터를 Google 서버로 전송할 수 있습니다. 이를 방지하려면 관련 설정을 비활성화해야 합니다.</p>
+                    <pre class="cpp" data-ke-language="cpp" data-ke-type="codeblock">
+// components/policy/core/common/cloud/cloud_policy_client.cc 파일에서 해당 코드를 수정
+void CloudPolicyClient::UploadPolicy() {
+    return; // 정책 업로드 비활성화
+}
+</pre>
+
+                    <h4>크래시 리포팅 기능 제거</h4>
+                    <p>Chromium은 기본적으로 크래시 데이터를 Google 서버로 전송할 수 있습니다. 이를 비활성화하려면 아래 코드를 수정하세요.</p>
+                    <pre class="cpp" data-ke-language="cpp" data-ke-type="codeblock">
+// components/crash/content/app/breakpad_linux.cc 파일 수정
+bool BreakpadClient::EnableBreakpad() {
+    return false; // 크래시 리포팅 비활성화
+}
+</pre>
+
+                    <h4>URL 프리페칭 비활성화</h4>
+                    <p>URL 프리페칭은 사용자의 방문 기록을 기반으로 사전 로드를 수행할 수 있습니다. 이를 비활성화하려면 다음 코드를 수정하세요.</p>
+                    <pre class="cpp" data-ke-language="cpp" data-ke-type="codeblock">
+// chrome/browser/prefetch/prefetch_prefs.cc 파일 수정
+void PrefetchService::EnablePrefetch(bool enable) {
+    enable = false; // 프리페칭 기능 비활성화
+}
+</pre>
+
+                </div>
+            </article>
+        </section>
+
+        <section id="sf-mozilla-firefox-info" class="sf-browser-section">
+            <h3>Mozilla Firefox</h3>
+            <p>Mozilla Firefox는 강력한 개인정보 보호 기능과 빠른 성능을 제공하는 오픈 소스 웹 브라우저입니다. 사용자의 데이터 보호를 최우선으로 두며, 광고 및 트래커 차단 기능이
+                기본적으로 제공됩니다.</p>
+            <p>그러나 일부 웹사이트와의 호환성 문제와 지속적인 확장 프로그램 API 변경으로 인해 개발자들에게 부담이 될 수 있습니다.</p>
+
+            <h4>개선 필요 사항</h4>
+            <ul>
+                <li>확장 프로그램의 안정적인 API 제공: 개발자 친화적인 환경 조성 및 장기적 호환성 유지</li>
+                <li>더 나은 성능 최적화: 페이지 로딩 속도 개선 및 메모리 사용 효율화</li>
+                <li>엔터프라이즈 환경 지원 강화: 기업 환경에서의 배포 및 관리 기능 향상</li>
+            </ul>
+
+            <h4>프라이버시 및 보안</h4>
+            <p>Firefox는 텔레메트리 기능을 통해 성능 및 오류 데이터를 수집하지만, 사용자는 이를 비활성화할 수 있습니다. 일부 사용자들은 이러한 데이터 수집 기능에 대해 우려를 제기하며, 이를
+                완전히 제거한 버전(예: LibreWolf)도 존재합니다.</p>
+            <p>Mozilla는 사용자 프라이버시를 보호하는 다양한 기능을 지속적으로 개발 중이며, 브라우징 환경을 더욱 안전하게 만들기 위한 노력을 기울이고 있습니다.</p>
+
+            <article>
+                <div class="sf-detail-source">
+                    <h4>Mozilla Firefox 빌드 및 텔레메트리 설정 변경</h4>
+
+                    <h4>텔레메트리 기능 활성화 또는 비활성화</h4>
+                    <p>Firefox의 텔레메트리 기능은 기본적으로 활성화되어 있으며, 이를 비활성화하려면 아래 설정을 변경해야 합니다.</p>
+                    <pre class="cpp" data-ke-language="cpp" data-ke-type="codeblock">
+// modules/libpref/init/StaticPrefList.yaml 파일 수정
+telemetry.fog.test.localhost_port:
+    type: int32_t
+    value: 0 # 0으로 설정하면 텔레메트리 비활성화
+</pre>
+
+                    <h4>텔레메트리 데이터 전송 완전 차단</h4>
+                    <p>Firefox는 텔레메트리 데이터를 서버로 전송할 수 있습니다. 이를 완전히 차단하려면 아래 설정을 수정하세요.</p>
+                    <pre class="cpp" data-ke-language="cpp" data-ke-type="codeblock">
+// toolkit/components/telemetry/TelemetryController.jsm 파일 수정
+TelemetryController.prototype.submitExternalPing = function() {
+    return; // 데이터 전송 비활성화
+}
+</pre>
+
+                    <h4>텔레메트리 기능 제거</h4>
+                    <p>텔레메트리 기능을 완전히 제거하려면 관련 코드를 삭제하거나 빌드 설정에서 제외해야 합니다.</p>
+                    <pre class="bash" data-ke-language="bash" data-ke-type="codeblock">
+# .mozconfig 파일에서 다음 설정 추가
+ac_add_options --disable-telemetry
+</pre>
+
+                </div>
+            </article>
+        </section>
+
+        <section id="sf-pale-moon-info" class="sf-browser-section">
+            <h3>Pale Moon</h3>
+            <p>Pale Moon은 가벼운 성능과 클래식한 UI를 유지하는 포크 브라우저로, XUL 기반의 인터페이스를 지원하며 이전 버전의 Firefox를 기반으로 개발되었습니다.</p>
+            <p>그러나 최신 웹 기술 지원 부족과 개발 리소스 제한이 주요 단점으로 지적됩니다. 일부 웹사이트와의 호환성이 부족하며, 최신 보안 패치 적용에 시간이 걸릴 수 있습니다.</p>
+
+            <h4>개선 필요 사항</h4>
+            <ul>
+                <li>최신 웹 표준 적용 확대: HTML5, CSS3, JavaScript 최신 기술 지원 개선</li>
+                <li>개발 커뮤니티 활성화: 오픈 소스 기여자 및 개발자 지원 확대</li>
+                <li>보안 업데이트 신속 제공: 보안 패치 및 취약점 대응 속도 향상</li>
+            </ul>
+
+            <h4>특징 및 한계</h4>
+            <p>Pale Moon은 경량화된 브라우저 경험을 제공하지만, 확장 프로그램 지원이 제한적이며, 특정 최신 웹 애플리케이션과의 호환성 문제가 발생할 수 있습니다.</p>
+            <p>개발 인력이 제한적이기 때문에 보안 및 기능 업데이트가 Chromium이나 Firefox 기반 브라우저보다 늦어질 가능성이 있습니다.</p>
+
+            <article>
+                <div class="sf-detail-source">
+                    <h4>Pale Moon 오픈소스 윈도우 빌드 방법</h4>
+                    <p>Pale Moon은 성능 최적화와 사용자 중심의 커스터마이징을 제공하는 웹 브라우저입니다.</p>
+
+                    <h4>필요한 도구 설치</h4>
+                    <p>Windows에서 빌드를 수행하려면 다음 도구가 필요합니다.</p>
+                    <pre class="bash" data-ke-language="bash" data-ke-type="codeblock">
+- Visual Studio 2017 이상 (C++ 개발 환경 포함)
+- Mozilla Build 환경 (https://ftp.mozilla.org/pub/mozilla/libraries/win32/MozillaBuildSetup-Latest.exe)
+- Mercurial (https://www.mercurial-scm.org/)
+</pre>
+
+                    <h4>소스 코드 다운로드</h4>
+                    <p>공식 Mercurial 저장소에서 Pale Moon의 소스 코드를 다운로드합니다.</p>
+                    <pre class="bash" data-ke-language="bash" data-ke-type="codeblock">
+hg clone https://repo.palemoon.org/MoonchildProductions/UXP.git pale-moon-source
+cd pale-moon-source
+</pre>
+
+                    <h4>빌드 환경 설정</h4>
+                    <p>Mozilla Build Shell을 실행하고, 빌드 환경을 준비합니다.</p>
+                    <pre class="bash" data-ke-language="bash" data-ke-type="codeblock">
+cd /c/pale-moon-source
+export PATH="$PATH:/c/Program Files/Mercurial"
+</pre>
+
+                    <h4>빌드 구성 파일 생성</h4>
+                    <p>`.mozconfig` 파일을 생성하여 빌드 설정을 구성합니다.</p>
+                    <pre class="bash" data-ke-language="bash" data-ke-type="codeblock">
+echo 'ac_add_options --enable-application=palemoon' > .mozconfig
+echo 'mk_add_options MOZ_OBJDIR=@TOPSRCDIR@/obj-palemoon' >> .mozconfig
+echo 'ac_add_options --disable-debug' >> .mozconfig
+echo 'ac_add_options --enable-optimize' >> .mozconfig
+</pre>
+
+                    <h4>소스 코드 빌드</h4>
+                    <p>이제 빌드를 실행하여 Pale Moon을 컴파일합니다.</p>
+                    <pre class="bash" data-ke-language="bash" data-ke-type="codeblock">
+./mach build
+</pre>
+
+                    <h4>빌드 완료 및 실행</h4>
+                    <p>빌드가 완료되면 다음 명령으로 Pale Moon을 실행할 수 있습니다.</p>
+                    <pre class="bash" data-ke-language="bash" data-ke-type="codeblock">
+./obj-palemoon/dist/bin/palemoon.exe
+</pre>
+
+                </div>
+            </article>
+
+        </section>
+
+        <section id="sf-basilisk-info" class="sf-browser-section">
+            <h3>Basilisk</h3>
+            <p>Basilisk는 Firefox의 이전 버전을 기반으로 한 브라우저로, 고전적인 XUL 기반 확장을 지원합니다. 그러나 최신 웹 표준을 완벽하게 지원하지 않으며, 개발 리소스가 제한적이어서
+                보안 업데이트가 지연될 가능성이 있습니다.</p>
+
+            <h4>개선 필요 사항</h4>
+            <ul>
+                <li>최신 웹 기술과의 적절한 접목: HTML5 및 최신 JavaScript 지원 확대</li>
+                <li>보안 업데이트 강화: 정기적인 패치 제공</li>
+                <li>개발자 문서화 개선: 개발자 지원 확대</li>
+            </ul>
+
+            <article>
+                <div class="sf-detail-source">
+                    <h4>Basilisk 오픈소스 윈도우 빌드 방법</h4>
+                    <p>Basilisk는 Pale Moon과 같은 UXP(Unified XUL Platform) 기반의 웹 브라우저입니다.</p>
+
+                    <h4>필요한 도구 설치</h4>
+                    <p>Windows에서 빌드를 수행하려면 다음 도구가 필요합니다.</p>
+                    <pre class="bash" data-ke-language="bash" data-ke-type="codeblock">
+- Visual Studio 2017 이상 (C++ 개발 환경 포함)
+- Mozilla Build 환경 (https://ftp.mozilla.org/pub/mozilla/libraries/win32/MozillaBuildSetup-Latest.exe)
+- Mercurial (https://www.mercurial-scm.org/)
+</pre>
+
+                    <h4>소스 코드 다운로드</h4>
+                    <p>공식 Mercurial 저장소에서 Basilisk의 소스 코드를 다운로드합니다.</p>
+                    <pre class="bash" data-ke-language="bash" data-ke-type="codeblock">
+hg clone https://repo.palemoon.org/MoonchildProductions/UXP.git basilisk-source
+cd basilisk-source
+</pre>
+
+                    <h4>빌드 환경 설정</h4>
+                    <p>Mozilla Build Shell을 실행하고, 빌드 환경을 준비합니다.</p>
+                    <pre class="bash" data-ke-language="bash" data-ke-type="codeblock">
+cd /c/basilisk-source
+export PATH="$PATH:/c/Program Files/Mercurial"
+</pre>
+
+                    <h4>빌드 구성 파일 생성</h4>
+                    <p>`.mozconfig` 파일을 생성하여 빌드 설정을 구성합니다.</p>
+                    <pre class="bash" data-ke-language="bash" data-ke-type="codeblock">
+echo 'ac_add_options --enable-application=basilisk' > .mozconfig
+echo 'mk_add_options MOZ_OBJDIR=@TOPSRCDIR@/obj-basilisk' >> .mozconfig
+echo 'ac_add_options --disable-debug' >> .mozconfig
+echo 'ac_add_options --enable-optimize' >> .mozconfig
+</pre>
+
+                    <h4>소스 코드 빌드</h4>
+                    <p>이제 빌드를 실행하여 Basilisk를 컴파일합니다.</p>
+                    <pre class="bash" data-ke-language="bash" data-ke-type="codeblock">
+./mach build
+</pre>
+
+                    <h4>빌드 완료 및 실행</h4>
+                    <p>빌드가 완료되면 다음 명령으로 Basilisk를 실행할 수 있습니다.</p>
+                    <pre class="bash" data-ke-language="bash" data-ke-type="codeblock">
+./obj-basilisk/dist/bin/basilisk.exe
+</pre>
+
+
+                </div>
+            </article>
+        </section>
+
+        <section id="sf-waterfox-info" class="sf-browser-section">
+            <h3>Waterfox</h3>
+            <p>Waterfox는 Firefox 기반의 독립적인 브라우저로, 개인정보 보호와 확장성 유지에 중점을 둡니다. 기본적으로 텔레메트리 및 데이터 수집 기능을 제거하여 사용자 프라이버시를
+                보호합니다.</p>
+
+            <h4>개선 필요 사항</h4>
+            <ul>
+                <li>보다 신속한 업데이트 주기: 보안 패치 및 기능 개선 가속화</li>
+                <li>최신 기술 적극 도입: 최신 웹 표준 및 성능 최적화</li>
+                <li>브라우저 생태계 확장: 개발자 및 사용자 커뮤니티 활성화</li>
+            </ul>
+            <article>
+                <div class="sf-detail-source">
+                    <h4>Waterfox 오픈소스 윈도우 빌드 방법</h4>
+
+                    <h4>필요한 도구 설치</h4>
+                    <p>Windows에서 Waterfox를 빌드하려면 다음 도구가 필요합니다.</p>
+                    <pre class="bash" data-ke-language="bash" data-ke-type="codeblock">
+- Visual Studio 2017 이상 (C++ 개발 환경 포함)
+- Mozilla Build 환경 (https://ftp.mozilla.org/pub/mozilla/libraries/win32/MozillaBuildSetup-Latest.exe)
+- Git (https://git-scm.com/downloads)
+</pre>
+
+                    <h4>소스 코드 다운로드</h4>
+                    <p>공식 GitHub 저장소에서 Waterfox의 소스 코드를 다운로드합니다.</p>
+                    <pre class="bash" data-ke-language="bash" data-ke-type="codeblock">
+git clone https://github.com/WaterfoxCo/Waterfox.git waterfox-source
+cd waterfox-source
+</pre>
+
+                    <h4>빌드 환경 설정</h4>
+                    <p>Mozilla Build Shell을 실행하고, 빌드 환경을 준비합니다.</p>
+                    <pre class="bash" data-ke-language="bash" data-ke-type="codeblock">
+cd /c/waterfox-source
+export PATH="$PATH:/c/Program Files/Git/bin"
+</pre>
+
+                    <h4>빌드 구성 파일 생성</h4>
+                    <p>`.mozconfig` 파일을 생성하여 빌드 설정을 구성합니다.</p>
+                    <pre class="bash" data-ke-language="bash" data-ke-type="codeblock">
+echo 'ac_add_options --enable-application=browser' > .mozconfig
+echo 'mk_add_options MOZ_OBJDIR=@TOPSRCDIR@/obj-waterfox' >> .mozconfig
+echo 'ac_add_options --disable-debug' >> .mozconfig
+echo 'ac_add_options --enable-optimize' >> .mozconfig
+</pre>
+
+                    <h4>소스 코드 빌드</h4>
+                    <p>이제 빌드를 실행하여 Waterfox를 컴파일합니다.</p>
+                    <pre class="bash" data-ke-language="bash" data-ke-type="codeblock">
+./mach build
+</pre>
+
+                    <h4>빌드 완료 및 실행</h4>
+                    <p>빌드가 완료되면 다음 명령으로 Waterfox를 실행할 수 있습니다.</p>
+                    <pre class="bash" data-ke-language="bash" data-ke-type="codeblock">
+./obj-waterfox/dist/bin/waterfox.exe
+</pre>
+
+
+                </div>
+            </article>
+        </section>
+
+        <section id="sf-librewolf-info" class="sf-browser-section">
+            <h3>LibreWolf</h3>
+            <p>LibreWolf는 Firefox 기반의 브라우저로, 프라이버시와 보안을 강화한 것이 특징입니다. 텔레메트리 및 데이터 수집을 차단하고, 사용자 추적 및 지문 채취 방지 기능을 갖추고
+                있습니다.</p>
+
+            <h4>개선 필요 사항</h4>
+            <ul>
+                <li>공식 지원 및 업데이트 체계 강화: 보안 패치 신속 적용</li>
+                <li>플러그인 및 확장성 개선: 최신 확장 프로그램과의 호환성 확보</li>
+            </ul>
+
+            <h4>브라우저 선택</h4>
+            <p>각 브라우저는 고유한 특징과 장단점을 가지고 있으므로, 사용자는 자신의 필요와 우선순위에 따라 적절한 브라우저를 선택하는 것이 중요합니다.</p>
+
+            <article>
+                <div class="sf-detail-source">
+                    <h4>LibreWolf 오픈소스 윈도우 빌드 방법</h4>
+
+                    <h4>필요한 도구 설치</h4>
+                    <p>Windows에서 LibreWolf를 빌드하려면 다음 도구가 필요합니다.</p>
+                    <pre class="bash" data-ke-language="bash" data-ke-type="codeblock">
+- Visual Studio 2019 이상 (C++ 개발 환경 포함)
+- Mozilla Build 환경 (https://ftp.mozilla.org/pub/mozilla/libraries/win32/MozillaBuildSetup-Latest.exe)
+- Git (https://git-scm.com/downloads)
+- Rust 및 Cargo (https://www.rust-lang.org/tools/install)
+</pre>
+
+                    <h4>소스 코드 다운로드</h4>
+                    <p>공식 GitHub 저장소에서 LibreWolf의 소스 코드를 다운로드합니다.</p>
+                    <pre class="bash" data-ke-language="bash" data-ke-type="codeblock">
+git clone https://gitlab.com/librewolf-community/browser/source.git librewolf-source
+cd librewolf-source
+</pre>
+
+                    <h4>빌드 환경 설정</h4>
+                    <p>Mozilla Build Shell을 실행하고, 빌드 환경을 준비합니다.</p>
+                    <pre class="bash" data-ke-language="bash" data-ke-type="codeblock">
+cd /c/librewolf-source
+export PATH="$PATH:/c/Program Files/Git/bin"
+</pre>
+
+                    <h4>빌드 구성 파일 생성</h4>
+                    <p>`.mozconfig` 파일을 생성하여 빌드 설정을 구성합니다.</p>
+                    <pre class="bash" data-ke-language="bash" data-ke-type="codeblock">
+echo 'ac_add_options --enable-application=browser' > .mozconfig
+echo 'mk_add_options MOZ_OBJDIR=@TOPSRCDIR@/obj-librewolf' >> .mozconfig
+echo 'ac_add_options --disable-debug' >> .mozconfig
+echo 'ac_add_options --enable-optimize' >> .mozconfig
+</pre>
+
+                    <h4>소스 코드 빌드</h4>
+                    <p>이제 빌드를 실행하여 LibreWolf를 컴파일합니다.</p>
+                    <pre class="bash" data-ke-language="bash" data-ke-type="codeblock">
+./mach build
+</pre>
+
+                    <h4>빌드 완료 및 실행</h4>
+                    <p>빌드가 완료되면 다음 명령으로 LibreWolf를 실행할 수 있습니다.</p>
+                    <pre class="bash" data-ke-language="bash" data-ke-type="codeblock">
+./obj-librewolf/dist/bin/librewolf.exe
+</pre>
+                </div>
+            </article>
+        </section>
+
+        <section id="sf-falkon-info" class="sf-browser-section">
+            <h3>Falkon</h3>
+            <p>Falkon은 Qt 기반의 경량 브라우저로, 빠른 성능과 적은 리소스 사용이 강점입니다. 그러나 업데이트가 빈번하지 않으며, 최신 웹 표준을 충분히 지원하지 않는 경우가 있습니다.</p>
+
+            <h4>개선 필요 사항</h4>
+            <ul>
+                <li>최신 웹 표준 지원 강화: HTML5, CSS3 및 최신 JavaScript 기능 지원 확대</li>
+                <li>더 자주 이루어지는 업데이트: 보안 패치 및 기능 개선 가속화</li>
+                <li>확장 프로그램 지원 확대: 플러그인 및 추가 기능 호환성 강화</li>
+            </ul>
+
+            <article>
+                <div class="sf-detail-source">
+                    <h4>Falkon 오픈소스 윈도우 빌드 방법</h4>
+
+                    <h4>필요한 도구 설치</h4>
+                    <p>Windows에서 Falkon을 빌드하려면 다음 도구가 필요합니다.</p>
+                    <pre class="bash" data-ke-language="bash" data-ke-type="codeblock">
+- Visual Studio 2019 이상 (C++ 개발 환경 포함)
+- Qt 5.15 이상 (https://www.qt.io/download)
+- CMake (https://cmake.org/download/)
+- Git (https://git-scm.com/downloads)
+- Ninja (https://ninja-build.org/)
+</pre>
+
+                    <h4>소스 코드 다운로드</h4>
+                    <p>공식 GitHub 저장소에서 Falkon의 소스 코드를 다운로드합니다.</p>
+                    <pre class="bash" data-ke-language="bash" data-ke-type="codeblock">
+git clone https://github.com/KDE/falkon.git falkon-source
+cd falkon-source
+</pre>
+
+                    <h4>빌드 환경 설정</h4>
+                    <p>CMake를 사용하여 빌드 디렉토리를 설정하고 환경을 구성합니다.</p>
+                    <pre class="bash" data-ke-language="bash" data-ke-type="codeblock">
+mkdir build
+cd build
+cmake -G "Ninja" -DCMAKE_BUILD_TYPE=Release -DCMAKE_PREFIX_PATH="C:/Qt/5.15.2/msvc2019_64" ..
+</pre>
+
+                    <h4>소스 코드 빌드</h4>
+                    <p>이제 빌드를 실행하여 Falkon을 컴파일합니다.</p>
+                    <pre class="bash" data-ke-language="bash" data-ke-type="codeblock">
+ninja
+</pre>
+
+                    <h4>빌드 완료 및 실행</h4>
+                    <p>빌드가 완료되면 다음 명령으로 Falkon을 실행할 수 있습니다.</p>
+                    <pre class="bash" data-ke-language="bash" data-ke-type="codeblock">
+./bin/falkon.exe
+</pre>
+                </div>
+            </article>
+        </section>
+
+        <section id="sf-konqueror-info" class="sf-browser-section">
+            <h3>Konqueror</h3>
+            <p>Konqueror는 KDE 데스크톱 환경과 통합된 브라우저로, 파일 탐색기 기능도 제공합니다. 그러나 현대적인 웹사이트와의 호환성이 부족하고, 개발 속도가 느린 것이 단점입니다.</p>
+
+            <h4>개선 필요 사항</h4>
+            <ul>
+                <li>최신 웹 표준 지원 강화: 최신 HTML, CSS 및 JavaScript 기술 적용</li>
+                <li>성능 개선: 브라우징 속도 및 안정성 향상</li>
+                <li>개발자 커뮤니티 참여 확대: 지속적인 유지보수 및 기능 추가</li>
+            </ul>
+
+            <article>
+                <div class="sf-detail-source">
+                    <h4>Konqueror 오픈소스 윈도우 빌드 방법</h4>
+
+                    <h4>필요한 도구 설치</h4>
+                    <p>Windows에서 Konqueror를 빌드하려면 다음 도구가 필요합니다.</p>
+                    <pre class="bash" data-ke-language="bash" data-ke-type="codeblock">
+- Visual Studio 2019 이상 (C++ 개발 환경 포함)
+- Qt 5.15 이상 (https://www.qt.io/download)
+- CMake (https://cmake.org/download/)
+- Git (https://git-scm.com/downloads)
+- KDE Frameworks (https://kde.org)
+- Ninja (https://ninja-build.org/)
+</pre>
+
+                    <h4>소스 코드 다운로드</h4>
+                    <p>공식 KDE Git 저장소에서 Konqueror의 소스 코드를 다운로드합니다.</p>
+                    <pre class="bash" data-ke-language="bash" data-ke-type="codeblock">
+git clone https://invent.kde.org/network/konqueror.git konqueror-source
+cd konqueror-source
+</pre>
+
+                    <h4>빌드 환경 설정</h4>
+                    <p>CMake를 사용하여 빌드 디렉토리를 설정하고 환경을 구성합니다.</p>
+                    <pre class="bash" data-ke-language="bash" data-ke-type="codeblock">
+mkdir build
+cd build
+cmake -G "Ninja" -DCMAKE_BUILD_TYPE=Release -DCMAKE_PREFIX_PATH="C:/Qt/5.15.2/msvc2019_64" ..
+</pre>
+
+                    <h4>소스 코드 빌드</h4>
+                    <p>이제 빌드를 실행하여 Konqueror를 컴파일합니다.</p>
+                    <pre class="bash" data-ke-language="bash" data-ke-type="codeblock">
+ninja
+</pre>
+
+                    <h4>빌드 완료 및 실행</h4>
+                    <p>빌드가 완료되면 다음 명령으로 Konqueror를 실행할 수 있습니다.</p>
+                    <pre class="bash" data-ke-language="bash" data-ke-type="codeblock">
+./bin/konqueror.exe
+</pre>
+                </div>
+            </article>
+        </section>
+
+        <section id="sf-otter-browser-info" class="sf-browser-section">
+            <h3>Otter Browser</h3>
+            <p>Otter Browser는 Presto 기반 Opera 브라우저의 철학을 계승한 프로젝트로, 클래식한 UI와 사용자 맞춤 설정이 강점입니다. 하지만 최신 웹 표준 및 일부 사이트와의
+                호환성이 부족한 점이 단점입니다.</p>
+
+            <h4>개선 필요 사항</h4>
+            <ul>
+                <li>최신 웹 기술 지원: 최신 웹 표준 및 브라우저 렌더링 엔진 개선</li>
+                <li>보안 업데이트 강화: 보안 취약점 패치 및 유지보수 지속</li>
+                <li>확장 프로그램 지원 확대: 플러그인 및 확장 기능 호환성 강화</li>
+            </ul>
+
+            <article>
+                <div class="sf-detail-source">
+                    <h4>Otter Browser 오픈소스 윈도우 빌드 방법</h4>
+
+                    <h4>필요한 도구 설치</h4>
+                    <p>Windows에서 Otter Browser를 빌드하려면 다음 도구가 필요합니다.</p>
+                    <pre class="bash" data-ke-language="bash" data-ke-type="codeblock">
+- Visual Studio 2019 이상 (C++ 개발 환경 포함)
+- Qt 5.15 이상 (https://www.qt.io/download)
+- CMake (https://cmake.org/download/)
+- Git (https://git-scm.com/downloads)
+- Ninja (https://ninja-build.org/)
+</pre>
+
+                    <h4>소스 코드 다운로드</h4>
+                    <p>공식 GitHub 저장소에서 Otter Browser의 소스 코드를 다운로드합니다.</p>
+                    <pre class="bash" data-ke-language="bash" data-ke-type="codeblock">
+git clone https://github.com/OtterBrowser/otter-browser.git otter-browser-source
+cd otter-browser-source
+</pre>
+
+                    <h4>빌드 환경 설정</h4>
+                    <p>CMake를 사용하여 빌드 디렉토리를 설정하고 환경을 구성합니다.</p>
+                    <pre class="bash" data-ke-language="bash" data-ke-type="codeblock">
+mkdir build
+cd build
+cmake -G "Ninja" -DCMAKE_BUILD_TYPE=Release -DCMAKE_PREFIX_PATH="C:/Qt/5.15.2/msvc2019_64" ..
+</pre>
+
+                    <h4>소스 코드 빌드</h4>
+                    <p>이제 빌드를 실행하여 Otter Browser를 컴파일합니다.</p>
+                    <pre class="bash" data-ke-language="bash" data-ke-type="codeblock">
+ninja
+</pre>
+
+                    <h4>빌드 완료 및 실행</h4>
+                    <p>빌드가 완료되면 다음 명령으로 Otter Browser를 실행할 수 있습니다.</p>
+                    <pre class="bash" data-ke-language="bash" data-ke-type="codeblock">
+./bin/otter-browser.exe
+</pre>
+                </div>
+            </article>
+        </section>
+
+        <section id="sf-qutebrowser-info" class="sf-browser-section">
+            <h3>Qutebrowser</h3>
+            <p>Vim 스타일 키 바인딩을 지원하는 키보드 중심의 미니멀한 브라우저로, 고급 사용자를 위한 기능이 많습니다. 하지만 확장 프로그램 지원이 제한적이며, 일부 웹사이트와의 호환성이 부족할 수
+                있습니다.</p>
+
+            <h4>개선 필요 사항</h4>
+            <ul>
+                <li>확장 프로그램 및 플러그인 지원 확대</li>
+                <li>웹 표준 호환성 개선</li>
+                <li>보다 직관적인 설정 옵션 추가</li>
+            </ul>
+
+            <article>
+                <div class="sf-detail-source">
+                    <h4>Qutebrowser 오픈소스 윈도우 빌드 방법</h4>
+
+                    <h4>필요한 도구 설치</h4>
+                    <p>Windows에서 Qutebrowser를 빌드하려면 다음 도구가 필요합니다.</p>
+                    <pre class="bash" data-ke-language="bash" data-ke-type="codeblock">
+- Python 3.8 이상 (https://www.python.org/downloads/)
+- PyQt 5 이상 (pip install pyqt5)
+- Git (https://git-scm.com/downloads)
+- Virtualenv (pip install virtualenv)
+</pre>
+
+                    <h4>소스 코드 다운로드</h4>
+                    <p>공식 Git 저장소에서 Qutebrowser의 소스 코드를 다운로드합니다.</p>
+                    <pre class="bash" data-ke-language="bash" data-ke-type="codeblock">
+git clone https://github.com/qutebrowser/qutebrowser.git qutebrowser-source
+cd qutebrowser-source
+</pre>
+
+                    <h4>가상 환경 설정</h4>
+                    <p>Python 가상 환경을 생성하고 필요한 패키지를 설치합니다.</p>
+                    <pre class="bash" data-ke-language="bash" data-ke-type="codeblock">
+python -m venv venv
+source venv/Scripts/activate  # Windows에서는 venv\Scripts\activate 실행
+pip install -r requirements.txt
+</pre>
+
+                    <h4>소스 코드 빌드</h4>
+                    <p>이제 Qutebrowser를 실행할 수 있도록 빌드를 수행합니다.</p>
+                    <pre class="bash" data-ke-language="bash" data-ke-type="codeblock">
+python3 scripts/mkvenv.py
+</pre>
+
+                    <h4>빌드 완료 및 실행</h4>
+                    <p>빌드가 완료되면 다음 명령으로 Qutebrowser를 실행할 수 있습니다.</p>
+                    <pre class="bash" data-ke-language="bash" data-ke-type="codeblock">
+python3 qutebrowser.py
+</pre>
+                </div>
+            </article>
+        </section>
+
+        <section id="sf-midori-info" class="sf-browser-section">
+            <h3>Midori</h3>
+            <p>경량 웹 브라우저로 빠른 속도와 낮은 리소스 사용이 장점입니다. 하지만 개발이 활발하지 않으며 최신 웹 기술 지원이 부족할 수 있습니다.</p>
+
+            <h4>개선 필요 사항</h4>
+            <ul>
+                <li>최신 웹 표준 지원 강화</li>
+                <li>보안 업데이트 주기 단축</li>
+                <li>보다 강력한 확장 프로그램 지원</li>
+            </ul>
+
+            <article>
+                <div class="sf-detail-source">
+                    <h4>Midori 오픈소스 윈도우 빌드 방법</h4>
+
+                    <h4>필요한 도구 설치</h4>
+                    <p>Windows에서 Midori를 빌드하려면 다음 도구가 필요합니다.</p>
+                    <pre class="bash" data-ke-language="bash" data-ke-type="codeblock">
+- Visual Studio 2019 이상 (C++ 개발 환경 포함)
+- Meson (pip install meson)
+- Ninja (https://ninja-build.org/)
+- Git (https://git-scm.com/downloads)
+- GTK 3 이상 (https://www.gtk.org/)
+- WebKitGTK (https://webkitgtk.org/)
+</pre>
+
+                    <h4>소스 코드 다운로드</h4>
+                    <p>공식 Git 저장소에서 Midori의 소스 코드를 다운로드합니다.</p>
+                    <pre class="bash" data-ke-language="bash" data-ke-type="codeblock">
+git clone https://github.com/midori-browser/core.git midori-source
+cd midori-source
+</pre>
+
+                    <h4>빌드 환경 설정</h4>
+                    <p>Meson을 사용하여 빌드 디렉토리를 설정하고 환경을 구성합니다.</p>
+                    <pre class="bash" data-ke-language="bash" data-ke-type="codeblock">
+meson setup builddir --prefix="C:/midori-build" --backend=ninja
+</pre>
+
+                    <h4>소스 코드 빌드</h4>
+                    <p>이제 빌드를 실행하여 Midori를 컴파일합니다.</p>
+                    <pre class="bash" data-ke-language="bash" data-ke-type="codeblock">
+ninja -C builddir
+</pre>
+
+                    <h4>빌드 완료 및 실행</h4>
+                    <p>빌드가 완료되면 다음 명령으로 Midori를 실행할 수 있습니다.</p>
+                    <pre class="bash" data-ke-language="bash" data-ke-type="codeblock">
+C:/midori-build/bin/midori.exe
+</pre>
+                </div>
+            </article>
+        </section>
+
+        <section id="sf-gnome-web-info" class="sf-browser-section">
+            <h3>GNOME Web (Epiphany)</h3>
+            <p>GNOME 데스크톱 환경과 긴밀히 통합된 브라우저로, 심플한 UI와 WebKit 엔진을 사용합니다. 하지만 확장 기능이 부족하고 크로스 플랫폼 지원이 제한적입니다.</p>
+
+            <h4>개선 필요 사항</h4>
+            <ul>
+                <li>확장성 강화</li>
+                <li>더 나은 웹 표준 지원</li>
+                <li>성능 최적화</li>
+            </ul>
+
+            <article>
+                <div class="sf-detail-source">
+                    <h4>GNOME Web (Epiphany) 오픈소스 윈도우 빌드 방법</h4>
+
+                    <h4>필요한 도구 설치</h4>
+                    <p>Windows에서 GNOME Web (Epiphany)를 빌드하려면 다음 도구가 필요합니다.</p>
+                    <pre class="bash" data-ke-language="bash" data-ke-type="codeblock">
+- Visual Studio 2019 이상 (C++ 개발 환경 포함)
+- Meson (pip install meson)
+- Ninja (https://ninja-build.org/)
+- Git (https://git-scm.com/downloads)
+- GTK 3 이상 (https://www.gtk.org/)
+- WebKitGTK (https://webkitgtk.org/)
+</pre>
+
+                    <h4>소스 코드 다운로드</h4>
+                    <p>공식 Git 저장소에서 GNOME Web (Epiphany)의 소스 코드를 다운로드합니다.</p>
+                    <pre class="bash" data-ke-language="bash" data-ke-type="codeblock">
+git clone https://gitlab.gnome.org/GNOME/epiphany.git epiphany-source
+cd epiphany-source
+</pre>
+
+                    <h4>빌드 환경 설정</h4>
+                    <p>Meson을 사용하여 빌드 디렉토리를 설정하고 환경을 구성합니다.</p>
+                    <pre class="bash" data-ke-language="bash" data-ke-type="codeblock">
+meson setup builddir --prefix="C:/epiphany-build" --backend=ninja
+</pre>
+
+                    <h4>소스 코드 빌드</h4>
+                    <p>이제 빌드를 실행하여 GNOME Web (Epiphany)를 컴파일합니다.</p>
+                    <pre class="bash" data-ke-language="bash" data-ke-type="codeblock">
+ninja -C builddir
+</pre>
+
+                    <h4>빌드 완료 및 실행</h4>
+                    <p>빌드가 완료되면 다음 명령으로 GNOME Web (Epiphany)를 실행할 수 있습니다.</p>
+                    <pre class="bash" data-ke-language="bash" data-ke-type="codeblock">
+C:/epiphany-build/bin/epiphany.exe
+</pre>
+                </div>
+            </article>
+        </section>
+
+        <section id="sf-lynx-info" class="sf-browser-section">
+            <h3>Lynx</h3>
+            <p>텍스트 기반의 터미널 브라우저로, 시각 장애인을 위한 접근성이 뛰어나며 저사양 환경에서도 실행이 가능합니다. 하지만 멀티미디어 콘텐츠 지원이 전혀 없고 현대적인 웹사이트와 호환성이
+                떨어집니다.</p>
+
+            <h4>개선 필요 사항</h4>
+            <ul>
+                <li>제한적인 멀티미디어 지원</li>
+                <li>보안 업데이트 유지</li>
+                <li>더 직관적인 내비게이션 시스템 추가</li>
+            </ul>
+
+            <article>
+                <div class="sf-detail-source">
+                    <h4>Lynx 오픈소스 윈도우 빌드 방법</h4>
+
+                    <h4>필요한 도구 설치</h4>
+                    <p>Windows에서 Lynx를 빌드하려면 다음 도구가 필요합니다.</p>
+                    <pre class="bash" data-ke-language="bash" data-ke-type="codeblock">
+- Visual Studio 2019 이상 (C++ 개발 환경 포함)
+- Cygwin (https://www.cygwin.com/)
+- Git (https://git-scm.com/downloads)
+- Ncurses 라이브러리 (Cygwin 설치 시 포함 가능)
+- OpenSSL (선택 사항, HTTPS 지원을 원할 경우 필요)
+</pre>
+
+                    <h4>소스 코드 다운로드</h4>
+                    <p>공식 Git 저장소에서 Lynx의 소스 코드를 다운로드합니다.</p>
+                    <pre class="bash" data-ke-language="bash" data-ke-type="codeblock">
+git clone https://github.com/lynx-dev/lynx.git lynx-source
+cd lynx-source
+</pre>
+
+                    <h4>빌드 환경 설정</h4>
+                    <p>Cygwin 터미널을 실행하고 빌드 환경을 구성합니다.</p>
+                    <pre class="bash" data-ke-language="bash" data-ke-type="codeblock">
+export CFLAGS="-I/usr/include/ncurses"
+export LDFLAGS="-L/usr/lib"
+</pre>
+
+                    <h4>소스 코드 빌드</h4>
+                    <p>이제 빌드를 실행하여 Lynx를 컴파일합니다.</p>
+                    <pre class="bash" data-ke-language="bash" data-ke-type="codeblock">
+./configure --with-screen=ncurses --enable-ipv6
+make
+</pre>
+
+                    <h4>빌드 완료 및 실행</h4>
+                    <p>빌드가 완료되면 다음 명령으로 Lynx를 실행할 수 있습니다.</p>
+                    <pre class="bash" data-ke-language="bash" data-ke-type="codeblock">
+./lynx
+</pre>
+                </div>
+            </article>
+        </section>
+
+        <section id="sf-links-info" class="sf-browser-section">
+            <h3>Links</h3>
+            <p>텍스트 및 간단한 그래픽 모드를 지원하는 브라우저로, 저사양 환경에서 유용합니다. 하지만 최신 웹 기술과의 호환성이 부족하며, UI가 현대적이지 않습니다.</p>
+
+            <h4>개선 필요 사항</h4>
+            <ul>
+                <li>웹 표준 지원 확대</li>
+                <li>HTTPS 보안 강화</li>
+                <li>보다 직관적인 인터페이스 개선</li>
+            </ul>
+            <article>
+                <div class="sf-detail-source">
+                    <h4>Links 오픈소스 윈도우 빌드 방법</h4>
+
+                    <h4>필요한 도구 설치</h4>
+                    <p>Windows에서 Links를 빌드하려면 다음 도구가 필요합니다.</p>
+                    <pre class="bash" data-ke-language="bash" data-ke-type="codeblock">
+- MinGW (https://osdn.net/projects/mingw/)
+- Git (https://git-scm.com/downloads)
+- OpenSSL (선택 사항, HTTPS 지원을 원할 경우 필요)
+</pre>
+
+                    <h4>소스 코드 다운로드</h4>
+                    <p>공식 Git 저장소에서 Links의 소스 코드를 다운로드합니다.</p>
+                    <pre class="bash" data-ke-language="bash" data-ke-type="codeblock">
+git clone http://links.twibright.com/download/links-2.29.tar.gz
+cd links-2.29
+</pre>
+
+                    <h4>빌드 환경 설정</h4>
+                    <p>MinGW 환경을 설정하고 빌드를 준비합니다.</p>
+                    <pre class="bash" data-ke-language="bash" data-ke-type="codeblock">
+export PATH=/c/MinGW/bin:$PATH
+</pre>
+
+                    <h4>소스 코드 빌드</h4>
+                    <p>이제 빌드를 실행하여 Links를 컴파일합니다.</p>
+                    <pre class="bash" data-ke-language="bash" data-ke-type="codeblock">
+./configure --with-ssl
+make
+</pre>
+
+                    <h4>빌드 완료 및 실행</h4>
+                    <p>빌드가 완료되면 다음 명령으로 Links를 실행할 수 있습니다.</p>
+                    <pre class="bash" data-ke-language="bash" data-ke-type="codeblock">
+./links.exe
+</pre>
+                </div>
+            </article>
+        </section>
+
+        <section id="sf-elinks-info" class="sf-browser-section">
+            <h3>ELinks</h3>
+            <p>고급 기능을 갖춘 텍스트 기반 브라우저로, 스크립팅 지원과 확장성이 뛰어납니다. 하지만 최신 웹사이트 호환성이 낮고, 사용자 경험이 다소 복잡할 수 있습니다.</p>
+
+            <h4>개선 필요 사항</h4>
+            <ul>
+                <li>최신 웹 기술 지원</li>
+                <li>보안 기능 강화</li>
+                <li>보다 쉬운 설정 옵션 추가</li>
+            </ul>
+
+            <article>
+                <div class="sf-detail-source">
+                    <h4>ELinks 오픈소스 윈도우 빌드 방법</h4>
+
+                    <h4>필요한 도구 설치</h4>
+                    <p>Windows에서 ELinks를 빌드하려면 다음 도구가 필요합니다.</p>
+                    <pre class="bash" data-ke-language="bash" data-ke-type="codeblock">
+- MinGW (https://osdn.net/projects/mingw/)
+- Git (https://git-scm.com/downloads)
+- OpenSSL (선택 사항, HTTPS 지원을 원할 경우 필요)
+- Cygwin (https://www.cygwin.com/)
+- Lua (선택 사항, Lua 스크립팅 지원을 원할 경우 필요)
+</pre>
+
+                    <h4>소스 코드 다운로드</h4>
+                    <p>공식 Git 저장소에서 ELinks의 소스 코드를 다운로드합니다.</p>
+                    <pre class="bash" data-ke-language="bash" data-ke-type="codeblock">
+git clone https://github.com/rkd77/elinks.git elinks-source
+cd elinks-source
+</pre>
+
+                    <h4>빌드 환경 설정</h4>
+                    <p>MinGW 또는 Cygwin 환경을 설정하고 빌드를 준비합니다.</p>
+                    <pre class="bash" data-ke-language="bash" data-ke-type="codeblock">
+export PATH=/c/MinGW/bin:$PATH
+</pre>
+
+                    <h4>소스 코드 빌드</h4>
+                    <p>이제 빌드를 실행하여 ELinks를 컴파일합니다.</p>
+                    <pre class="bash" data-ke-language="bash" data-ke-type="codeblock">
+./autogen.sh
+./configure --enable-utf8 --with-openssl
+make
+</pre>
+
+                    <h4>빌드 완료 및 실행</h4>
+                    <p>빌드가 완료되면 다음 명령으로 ELinks를 실행할 수 있습니다.</p>
+                    <pre class="bash" data-ke-language="bash" data-ke-type="codeblock">
+./src/elinks.exe
+</pre>
+                </div>
+            </article>
+        </section>
+
+        <section id="sf-dillo-info" class="sf-browser-section">
+            <h3>Dillo</h3>
+            <p>경량 브라우저로 매우 적은 리소스를 사용하며, 빠른 속도가 장점입니다. 하지만 최신 웹 표준을 지원하지 않으며, 기능이 제한적입니다.</p>
+
+            <h4>개선 필요 사항</h4>
+            <ul>
+                <li>HTML5 및 JavaScript 지원 강화</li>
+                <li>보안 업데이트</li>
+                <li>보다 직관적인 UI 개선</li>
+            </ul>
+
+            <article>
+                <div class="sf-detail-source">
+                    <h4>Dillo 오픈소스 윈도우 빌드 방법</h4>
+
+                    <h4>필요한 도구 설치</h4>
+                    <p>Windows에서 Dillo를 빌드하려면 다음 도구가 필요합니다.</p>
+                    <pre class="bash" data-ke-language="bash" data-ke-type="codeblock">
+- MinGW (https://osdn.net/projects/mingw/)
+- Git (https://git-scm.com/downloads)
+- FLTK (https://www.fltk.org/)
+- CMake (https://cmake.org/download/)
+- OpenSSL (선택 사항, HTTPS 지원을 원할 경우 필요)
+</pre>
+
+                    <h4>소스 코드 다운로드</h4>
+                    <p>공식 Git 저장소에서 Dillo의 소스 코드를 다운로드합니다.</p>
+                    <pre class="bash" data-ke-language="bash" data-ke-type="codeblock">
+git clone https://git.dillo.org/dillo.git dillo-source
+cd dillo-source
+</pre>
+
+                    <h4>빌드 환경 설정</h4>
+                    <p>MinGW 환경을 설정하고 빌드를 준비합니다.</p>
+                    <pre class="bash" data-ke-language="bash" data-ke-type="codeblock">
+export PATH=/c/MinGW/bin:$PATH
+</pre>
+
+                    <h4>소스 코드 빌드</h4>
+                    <p>이제 빌드를 실행하여 Dillo를 컴파일합니다.</p>
+                    <pre class="bash" data-ke-language="bash" data-ke-type="codeblock">
+mkdir build
+cd build
+cmake .. -G "MinGW Makefiles"
+mingw32-make
+</pre>
+
+                    <h4>빌드 완료 및 실행</h4>
+                    <p>빌드가 완료되면 다음 명령으로 Dillo를 실행할 수 있습니다.</p>
+                    <pre class="bash" data-ke-language="bash" data-ke-type="codeblock">
+./dillo.exe
+</pre>
+                </div>
+            </article>
+        </section>
+
+        <section id="sf-browsh-info" class="sf-browser-section">
+            <h3>Browsh</h3>
+            <p>CLI 기반의 터미널 브라우저로, 원격 서버에서 실행하여 저사양 환경에서도 현대적인 웹을 사용할 수 있습니다. 하지만 실시간 렌더링이 필요하며 설정이 복잡할 수 있습니다.</p>
+
+            <h4>개선 필요 사항</h4>
+            <ul>
+                <li>속도 최적화</li>
+                <li>설정 간소화</li>
+                <li>보안 기능 강화</li>
+            </ul>
+            <article>
+                <div class="sf-detail-source">
+                    <h4>Browsh 오픈소스 윈도우 빌드 방법</h4>
+
+                    <h4>필요한 도구 설치</h4>
+                    <p>Windows에서 Browsh를 빌드하려면 다음 도구가 필요합니다.</p>
+                    <pre class="bash" data-ke-language="bash" data-ke-type="codeblock">
+- Go (https://go.dev/dl/)
+- Git (https://git-scm.com/downloads)
+- Mozilla Firefox (https://www.mozilla.org/firefox/)
+- Xvfb (Windows에서는 X 서버가 필요할 수 있음)
+</pre>
+
+                    <h4>소스 코드 다운로드</h4>
+                    <p>공식 Git 저장소에서 Browsh의 소스 코드를 다운로드합니다.</p>
+                    <pre class="bash" data-ke-language="bash" data-ke-type="codeblock">
+git clone https://github.com/browsh-org/browsh.git browsh-source
+cd browsh-source
+</pre>
+
+                    <h4>빌드 환경 설정</h4>
+                    <p>Go 환경을 설정하고 빌드를 준비합니다.</p>
+                    <pre class="bash" data-ke-language="bash" data-ke-type="codeblock">
+export GOPATH=$HOME/go
+export PATH=$GOPATH/bin:$PATH
+</pre>
+
+                    <h4>소스 코드 빌드</h4>
+                    <p>이제 빌드를 실행하여 Browsh를 컴파일합니다.</p>
+                    <pre class="bash" data-ke-language="bash" data-ke-type="codeblock">
+go build
+</pre>
+
+                    <h4>빌드 완료 및 실행</h4>
+                    <p>빌드가 완료되면 다음 명령으로 Browsh를 실행할 수 있습니다.</p>
+                    <pre class="bash" data-ke-language="bash" data-ke-type="codeblock">
+./browsh
+</pre>
+                </div>
+            </article>
+        </section>
+
+        <section id="sf-luakit-info" class="sf-browser-section">
+            <h3>Luakit</h3>
+            <p>경량화 및 키보드 중심의 브라우저로, Lua 기반의 커스터마이징이 가능합니다. 하지만 기본적인 웹 표준 지원이 부족하며, 설정이 까다롭습니다.</p>
+
+            <h4>개선 필요 사항</h4>
+            <ul>
+                <li>사용 편의성 강화</li>
+                <li>웹 표준 지원 확대</li>
+                <li>보다 직관적인 설정 인터페이스 추가</li>
+            </ul>
+
+            <article>
+                <div class="sf-detail-source">
+                    <h4>Luakit 오픈소스 윈도우 빌드 방법</h4>
+
+                    <h4>필요한 도구 설치</h4>
+                    <p>Windows에서 Luakit을 빌드하려면 다음 도구가 필요합니다.</p>
+                    <pre class="bash" data-ke-language="bash" data-ke-type="codeblock">
+- MSYS2 (https://www.msys2.org/)
+- Git (https://git-scm.com/downloads)
+- GCC (pacman -S mingw-w64-x86_64-gcc)
+- Meson & Ninja (pacman -S mingw-w64-x86_64-meson mingw-w64-x86_64-ninja)
+- Webkit2GTK (pacman -S mingw-w64-x86_64-webkit2gtk)
+</pre>
+
+                    <h4>소스 코드 다운로드</h4>
+                    <p>공식 GitHub 저장소에서 Luakit의 소스 코드를 다운로드합니다.</p>
+                    <pre class="bash" data-ke-language="bash" data-ke-type="codeblock">
+git clone https://github.com/luakit/luakit.git luakit-source
+cd luakit-source
+</pre>
+
+                    <h4>빌드 환경 설정</h4>
+                    <p>MSYS2 환경에서 빌드를 위한 설정을 진행합니다.</p>
+                    <pre class="bash" data-ke-language="bash" data-ke-type="codeblock">
+pacman -S base-devel
+export PATH="/mingw64/bin:$PATH"
+</pre>
+
+                    <h4>Luakit 빌드</h4>
+                    <p>Meson과 Ninja를 사용하여 Luakit을 빌드합니다.</p>
+                    <pre class="bash" data-ke-language="bash" data-ke-type="codeblock">
+meson setup build
+ninja -C build
+</pre>
+
+                    <h4>빌드 완료 및 실행</h4>
+                    <p>빌드가 완료되면 다음 명령으로 Luakit을 실행할 수 있습니다.</p>
+                    <pre class="bash" data-ke-language="bash" data-ke-type="codeblock">
+./build/luakit
+</pre>
+                </div>
+            </article>
+        </section>
+
+        <section id="sf-nyxt-info" class="sf-browser-section">
+            <h3>Nyxt</h3>
+            <p>고급 사용자를 위한 Lisp 기반의 브라우저로, 강력한 자동화 및 커스터마이징 기능을 제공합니다. 하지만 학습 곡선이 가파르고, UI가 일반적인 브라우저와 다릅니다.</p>
+
+            <h4>개선 필요 사항</h4>
+            <ul>
+                <li>사용자 친화적인 인터페이스 추가</li>
+                <li>문서화 강화</li>
+                <li>성능 최적화</li>
+                <li>빌드 스크립트 개선 및 패키지 관리 지원</li>
+            </ul>
+
+            <article>
+                <div class="sf-detail-source">
+                    <h4>Nyxt 오픈소스 윈도우 빌드 방법</h4>
+
+                    <h4>필요한 도구 설치</h4>
+                    <p>Windows에서 Nyxt를 빌드하려면 다음 도구가 필요합니다.</p>
+                    <pre class="bash" data-ke-language="bash" data-ke-type="codeblock">
+- MSYS2 (https://www.msys2.org/)
+- Git (https://git-scm.com/downloads)
+- GCC (pacman -S mingw-w64-x86_64-gcc)
+- Meson & Ninja (pacman -S mingw-w64-x86_64-meson mingw-w64-x86_64-ninja)
+- SBCL (pacman -S mingw-w64-x86_64-sbcl)
+- Webkit2GTK (pacman -S mingw-w64-x86_64-webkit2gtk)
+</pre>
+
+                    <h4>소스 코드 다운로드</h4>
+                    <p>공식 GitHub 저장소에서 Nyxt의 소스 코드를 다운로드합니다.</p>
+                    <pre class="bash" data-ke-language="bash" data-ke-type="codeblock">
+git clone https://github.com/atlas-engineer/nyxt.git nyxt-source
+cd nyxt-source
+</pre>
+
+                    <h4>빌드 환경 설정</h4>
+                    <p>MSYS2 환경에서 빌드를 위한 설정을 진행합니다.</p>
+                    <pre class="bash" data-ke-language="bash" data-ke-type="codeblock">
+pacman -S base-devel
+export PATH="/mingw64/bin:$PATH"
+</pre>
+
+                    <h4>Nyxt 빌드</h4>
+                    <p>Meson과 Ninja를 사용하여 Nyxt를 빌드합니다.</p>
+                    <pre class="bash" data-ke-language="bash" data-ke-type="codeblock">
+meson setup build
+ninja -C build
+</pre>
+
+                    <h4>빌드 완료 및 실행</h4>
+                    <p>빌드가 완료되면 다음 명령으로 Nyxt를 실행할 수 있습니다.</p>
+                    <pre class="bash" data-ke-language="bash" data-ke-type="codeblock">
+./build/nyxt
+</pre>
+                </div>
+            </article>
+        </section>
+
+        <section id="sf-servo-info" class="sf-browser-section">
+            <h3>Servo</h3>
+            <p>Rust 기반의 실험적인 브라우저 엔진으로, 멀티스레딩을 활용한 성능 최적화가 특징입니다. 하지만 아직 개발 중이며, 실사용 브라우저로는 부족한 점이 많습니다.</p>
+
+            <h4>개선 필요 사항</h4>
+            <ul>
+                <li>기능 안정화</li>
+                <li>웹 표준 지원 강화</li>
+                <li>개발 커뮤니티 활성화</li>
+                <li>오픈 소스 기여 유도 및 지속적인 개발 지원</li>
+            </ul>
+            <article>
+                <div class="sf-detail-source">
+                    <h4>Servo 오픈소스 윈도우 빌드 방법</h4>
+
+                    <h4>필요한 도구 설치</h4>
+                    <p>Windows에서 Servo를 빌드하려면 다음 도구가 필요합니다.</p>
+                    <pre class="bash" data-ke-language="bash" data-ke-type="codeblock">
+- Visual Studio 2019 이상 (C++ 빌드 도구 포함)
+- Git (https://git-scm.com/downloads)
+- Rust (https://rustup.rs/)
+- Python 3 (https://www.python.org/downloads/)
+- NASM (https://www.nasm.us/)
+</pre>
+
+                    <h4>소스 코드 다운로드</h4>
+                    <p>공식 GitHub 저장소에서 Servo의 소스 코드를 다운로드합니다.</p>
+                    <pre class="bash" data-ke-language="bash" data-ke-type="codeblock">
+git clone https://github.com/servo/servo.git servo-source
+cd servo-source
+</pre>
+
+                    <h4>빌드 환경 설정</h4>
+                    <p>Rust 및 Servo 빌드 환경을 설정합니다.</p>
+                    <pre class="bash" data-ke-language="bash" data-ke-type="codeblock">
+rustup update
+rustup override set stable
+rustup target add x86_64-pc-windows-msvc
+</pre>
+
+                    <h4>Servo 빌드</h4>
+                    <p>Servo의 빌드를 실행합니다.</p>
+                    <pre class="bash" data-ke-language="bash" data-ke-type="codeblock">
+cargo build --release
+</pre>
+
+                    <h4>빌드 완료 및 실행</h4>
+                    <p>빌드가 완료되면 다음 명령으로 Servo를 실행할 수 있습니다.</p>
+                    <pre class="bash" data-ke-language="bash" data-ke-type="codeblock">
+target\release\servo.exe
+</pre>
+                </div>
+            </article>
+        </section>
+
+
+
+
+    </div>
 
 </body>
 

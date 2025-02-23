@@ -29,7 +29,6 @@ body {
     box-sizing: border-box;
 }
 
-#sf-os-filters-bws,
 #sf-language-filters-bws {
     display: flex;
     flex-wrap: wrap;
@@ -87,6 +86,13 @@ body {
 
 .sf-browser-card-bws.sf-selected-bws {
     background-color: #e0e0e0;
+}
+
+.sf-browser-card-bws.sf-unselected-bws {
+    background-color: #f9f9f9;
+    /* 선택되지 않은 카드 배경색 */
+    opacity: 0.7;
+    /* 선택되지 않은 카드 투명도 */
 }
 
 /* 카드 헤더 스타일 */
@@ -191,6 +197,51 @@ body {
 .sf-copy-button-bws.sf-copied-bws {
     background-color: #007bff;
 }
+
+
+
+.sf-detail-button-bws {
+    background-color: #007bff;
+    /* 원하는 배경색으로 변경 */
+    color: white;
+    padding: 5px 10px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    text-decoration: none;
+    /* 링크 스타일 제거 */
+    font-size: 0.8em;
+}
+
+.sf-detail-button-bws:hover {
+    background-color: #0056b3;
+    /* 호버 시 배경색 변경 */
+}
+
+
+.sf-browser-dev-info {
+    margin: 0 auto;
+    padding: 15px;
+}
+
+.sf-browser-section {
+    margin-bottom: 20px;
+    padding: 15px;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    background: #f9f9f9;
+}
+
+@media (max-width: 600px) {
+    .sf-browser-dev-info {
+        padding: 10px;
+    }
+
+    .sf-browser-section {
+        padding: 10px;
+    }
+}
+
 
 /* 반응형 스타일 */
 @media (max-width: 480px) {
