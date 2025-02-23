@@ -1,6 +1,6 @@
 /**
  * SfOpenSourceBrowsers 클래스
- * XML 데이터를 로드하여 오픈 소스 브라우저 목록을 표시하고 필터링하는 기능을 제공합니다.
+ * XML 데이터를 로드하여 오픈 소스 브라우저 목록을 표시하고 필터링
  */
 class SfOpenSourceBrowsers {
     /**
@@ -101,7 +101,6 @@ class SfOpenSourceBrowsers {
         filterOptionsContainer.id = 'sf-filter-options-bws'; // 컨테이너의 ID를 설정합니다.
         filterOptionsContainer.innerHTML = `
             <div id="sf-language-filters-bws">
-                <h3>소스 언어</h3>
             </div>
         `;  // 컨테이너에 HTML 내용을 추가합니다. 여기서는 언어 필터 영역을 만듭니다.
         container.appendChild(filterOptionsContainer); // 먼저 필터 옵션 컨테이너 추가
