@@ -240,14 +240,14 @@
     }
 }
 
-@media (min-width: 481px) and (max-width: 1049px) {
+@media (min-width: 481px) and (max-width: 1059px) {
     .sf-browser-card-bws {
         /* width: calc(50% - 20px); */
         width: 100%;
     }
 }
 
-@media (min-width: 1050px) {
+@media (min-width: 1060px) {
     .sf-browser-card-bws {
         width: calc(50% - 20px);
     }
