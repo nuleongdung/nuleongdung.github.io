@@ -16,7 +16,7 @@
         <name>Brave</name>
         <engine>Chromium</engine>
         <country>USA</country>
-        <download_link>https://brave.com/download/</download_link>
+        <download_link>https://github.com/portapps/brave-portable/releases</download_link>
         <advantages>
             <advantage>광고 차단 기능 내장</advantage>
             <advantage>개인 정보 보호 강화</advantage>

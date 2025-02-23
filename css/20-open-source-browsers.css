@@ -247,7 +247,7 @@
     }
 }
 
-@media (min-width: 1060px) {
+@media (min-width: 1070px) {
     .sf-browser-card-bws {
         width: calc(50% - 20px);
     }
