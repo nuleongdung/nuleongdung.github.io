@@ -1,0 +1,629 @@
+<!DOCTYPE html>
+<html lang="ko">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>무료 IP 정보 API 비교</title>
+</head>
+// 웹 문서가 완전히 로드된 후 실행될 코드를 추가합니다.
+window.onload = function () {
+// sfIpinfoIo 클래스의 인스턴스를 생성하고, 'sf-ipinfo-result' id를 가진 HTML 요소에 IP 정보를 표시합니다.
+new sfIpinfoIo('sf-ipinfo-result');
+};
+
+<body>
+
+
+
+    <article>
+        <section>
+            <h2>IP API 서비스 비교</h2>
+            <p>
+                JavaScript에서 사용 가능한 주요 IP 주소 API들을 간략하게 소개하고, 각 API의 특징과 주요 기능을 비교합니다.
+                <br />
+                개발자는 제시된 정보를 바탕으로 프로젝트 요구사항에 가장
+                적합한 API를 선택할 수 있습니다. 각 API의 상세 사용법은 공식 문서를 참고하시기 바랍니다.
+            </p>
+
+            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 10px;">
+                <div style="padding: 10px; border: 1px solid #ddd;">
+                    <h3><a href="#sf-ipinfo-io">ipinfo.io</a></h3>
+                    <p><strong>주요 기능:</strong> IP 주소, 위치, 호스트, ASN, 회사 정보 제공</p>
+                    <p><strong>요금:</strong> 무료 플랜 및 유료 플랜 제공</p>
+                    <p><strong>특징:</strong> 정확하고 빠른 응답 속도</p>
+                </div>
+
+                <div style="padding: 10px; border: 1px solid #ddd;">
+                    <h3><a href="#sf-ipapi-com">ip-api.com</a></h3>
+                    <p><strong>주요 기능:</strong> IP 주소, 국가, 지역, 도시, 위도/경도 정보 제공</p>
+                    <p><strong>요금:</strong> 무료 (제한) 및 유료 플랜 제공</p>
+                    <p><strong>특징:</strong> 간단하고 사용하기 쉬운 API</p>
+                </div>
+
+                <div style="padding: 10px; border: 1px solid #ddd;">
+                    <h3><a href="#sf-freegeoip-app">freegeoip.app</a></h3>
+                    <p><strong>주요 기능:</strong> IP 주소, 국가, 지역, 도시, 위도/경도, 시간대 정보 제공</p>
+                    <p><strong>요금:</strong> 무료</p>
+                    <p><strong>특징:</strong> 간단한 사용, 오픈 소스 기반</p>
+                </div>
+
+                <div style="padding: 10px; border: 1px solid #ddd;">
+                    <h3><a href="#sf-abstractapi">Abstract API (IP Geolocation)</a></h3>
+                    <p><strong>주요 기능:</strong> IP 주소, 위치, 통화, 시간대 정보 제공</p>
+                    <p><strong>요금:</strong> 무료 (제한) 및 유료 플랜 제공</p>
+                    <p><strong>특징:</strong> 다양한 추가 기능 제공</p>
+                </div>
+
+                <div style="padding: 10px; border: 1px solid #ddd;">
+                    <h3><a href="#sf-telize">Telize</a></h3>
+                    <p><strong>주요 기능:</strong> IP 주소, 국가, 지역, 도시, 위도/경도 정보 제공</p>
+                    <p><strong>요금:</strong> 무료</p>
+                    <p><strong>특징:</strong> 간단하고 빠른 API</p>
+                </div>
+
+                <div style="padding: 10px; border: 1px solid #ddd;">
+                    <h3><a href="#sf-bigdatacloud">BigDataCloud</a></h3>
+                    <p><strong>주요 기능:</strong> IP 주소, 위치, ASN, 연결 유형, 프록시 감지 등 다양한 정보 제공</p>
+                    <p><strong>요금:</strong> 무료 (제한) 및 유료 플랜 제공</p>
+                    <p><strong>특징:</strong> 상세한 IP 정보 제공</p>
+                </div>
+
+                <div style="padding: 10px; border: 1px solid #ddd;">
+                    <h3><a href="#sf-dbip">DB-IP</a></h3>
+                    <p><strong>주요 기능:</strong> IP 주소, 국가, 지역, 도시, 위도/경도 정보 제공</p>
+                    <p><strong>요금:</strong> 무료 (제한) 및 유료 플랜 제공</p>
+                    <p><strong>특징:</strong> 정확한 데이터 제공</p>
+                </div>
+
+                <div style="padding: 10px; border: 1px solid #ddd;">
+                    <h3><a href="#sf-ip2location">IP2Location</a></h3>
+                    <p><strong>주요 기능:</strong> IP 주소, 위치, 위도/경도, 우편번호, 시간대 정보 제공</p>
+                    <p><strong>요금:</strong> 무료 (제한) 및 유료 플랜 제공</p>
+                    <p><strong>특징:</strong> 다양한 데이터베이스 제공</p>
+                </div>
+
+                <div style="padding: 10px; border: 1px solid #ddd;">
+                    <h3><a href="#sf-extremeiplookup">Extreme-IP-Lookup</a></h3>
+                    <p><strong>주요 기능:</strong> IP 주소, 위치, 도시, 국가, 위도/경도 정보 제공</p>
+                    <p><strong>요금:</strong> 무료</p>
+                    <p><strong>특징:</strong> 간단한 사용법, 추가 설정 불필요</p>
+                </div>
+
+                <div style="padding: 10px; border: 1px solid #ddd;">
+                    <h3><a href="#sf-geolocationio">Geolocation.io</a></h3>
+                    <p><strong>주요 기능:</strong> IP 주소, 위치, 통화, 시간대, 연결 정보 제공</p>
+                    <p><strong>요금:</strong> 무료 (제한) 및 유료 플랜 제공</p>
+                    <p><strong>특징:</strong> 다양한 정보 제공, 맞춤 설정 가능</p>
+                </div>
+            </div>
+
+            <div style="margin-top: 20px;">
+                <h3>API 엔드포인트 정보</h3>
+                <ul style="list-style-type: disc; padding-left: 20px;">
+                    <li><strong>ipinfo.io:</strong> <code
+                            style="background-color: #eee; padding: 2px 4px; border-radius: 4px;">https://ipinfo.io</code>
+                    </li>
+                    <li><strong>ip-api.com:</strong> <code
+                            style="background-color: #eee; padding: 2px 4px; border-radius: 4px;">http://ip-api.com/json</code>
+                    </li>
+                    <li><strong>freegeoip.app:</strong> <code
+                            style="background-color: #eee; padding: 2px 4px; border-radius: 4px;">https://freegeoip.app/json</code>
+                    </li>
+                    <li><strong>Abstract API (IP Geolocation):</strong> <code
+                            style="background-color: #eee; padding: 2px 4px; border-radius: 4px;">https://ipgeolocation.abstractapi.com/v1</code>
+                    </li>
+                    <li><strong>Telize:</strong> <code
+                            style="background-color: #eee; padding: 2px 4px; border-radius: 4px;">https://www.telize.com/geoip</code>
+                    </li>
+                    <li><strong>BigDataCloud:</strong> <code
+                            style="background-color: #eee; padding: 2px 4px; border-radius: 4px;">https://api.bigdatacloud.net/data/client-request</code>
+                    </li>
+                    <li><strong>DB-IP:</strong> <code
+                            style="background-color: #eee; padding: 2px 4px; border-radius: 4px;">https://api.db-ip.com/v2/free/self</code>
+                    </li>
+                    <li><strong>IP2Location:</strong> <code
+                            style="background-color: #eee; padding: 2px 4px; border-radius: 4px;">https://api.ip2location.io</code>
+                    </li>
+                    <li><strong>Extreme-IP-Lookup:</strong> <code
+                            style="background-color: #eee; padding: 2px 4px; border-radius: 4px;">https://extreme-ip-lookup.com/json</code>
+                    </li>
+                    <li><strong>Geolocation.io:</strong> <code
+                            style="background-color: #eee; padding: 2px 4px; border-radius: 4px;">https://geolocation.io/api/ip</code>
+                    </li>
+                </ul>
+            </div>
+        </section>
+
+        <p></p>
+
+        <article>
+            <section id="sf-ipinfo-io">
+                <h2>ipinfo.io 상세 정보</h2>
+                <p>ipinfo.io는 IP 주소에 대한 다양한 정보를 제공하는 API 서비스입니다. 위치 정보, 호스트 정보, ASN(Autonomous System Number), 회사 정보 등을
+                    포함하여 IP 주소를 기반으로 유용한 데이터 포인트를 제공합니다.</p>
+                <p><strong>주요 기능:</strong> IP 주소, 위치 (국가, 지역, 도시, 위도/경도), 호스트 정보, ASN, 회사 정보 제공</p>
+                <p><strong>요금:</strong> 무료 플랜 (제한된 요청 수) 및 유료 플랜 제공 (더 많은 요청 수 및 추가 기능)</p>
+                <p><strong>특징:</strong>
+                <ul>
+                    <li>정확하고 빠른 응답 속도</li>
+                    <li>간단한 API 사용법</li>
+                    <li>다양한 데이터 포맷 지원 (JSON 등)</li>
+                    <li>전 세계 IP 주소 데이터베이스</li>
+                </ul>
+                </p>
+                <h3>ipinfo.io 사용 예시 (JavaScript)</h3>
+                <p>다음은 JavaScript를 사용하여 ipinfo.io API를 호출하고 IP 주소 정보를 가져오는 예제입니다.</p>
+                <pre class="javascript" data-ke-language="javascript" data-ke-type="codeblock">
+                <code>
+// 현재 사용자의 IP 주소 정보를 가져오는 예제
+fetch('https://ipinfo.io/json')
+.then(response => {
+    if (!response.ok) {
+    throw new Error('네트워크 응답이 좋지 않습니다.');
+    }
+    return response.json();
+})
+.then(data => {
+    console.log('IP 주소 정보:', data);
+    // 필요한 정보를 화면에 표시하거나 다른 작업 수행
+    document.getElementById('sf-ipinfo-result').innerHTML = `
+    &lt;h4&gt;결과 표시 영역&lt;/h4&gt;
+    &lt;p&gt;IP: ${data.ip}&lt;/p&gt;
+    &lt;p&gt;도시: ${data.city}&lt;/p&gt;
+    &lt;p&gt;지역: ${data.region}&lt;/p&gt;
+    &lt;p&gt;국가: ${data.country}&lt;/p&gt;
+    &lt;p&gt;위치: ${data.loc}&lt;/p&gt;
+    &lt;p&gt;조직: ${data.org}&lt;/p&gt;
+    &lt;p&gt;시간대: ${data.timezone}&lt;/p&gt;
+    `;
+})
+.catch(error => {
+    console.error('데이터를 가져오는 중 오류 발생:', error);
+    document.getElementById('sf-ipinfo-result').innerHTML = `&lt;p style="color: red;"&gt;데이터를 가져오는 중 오류가 발생했습니다.&lt;/p&gt;`;
+});
+
+// 특정 IP 주소의 정보를 가져오는 예제 (예: 8.8.8.8 - Google Public DNS)
+const ipAddress = '8.8.8.8';
+fetch(`https://ipinfo.io/${ipAddress}/json`)
+.then(response => {
+    if (!response.ok) {
+    throw new Error('네트워크 응답이 좋지 않습니다.');
+    }
+    return response.json();
+})
+.then(data => {
+    console.log('특정 IP 주소 정보:', data);
+    // 특정 IP 주소에 대한 정보를 처리하는 로직
+})
+.catch(error => {
+    console.error('데이터를 가져오는 중 오류 발생:', error);
+});
+                </code>
+              </pre>
+                <div style="margin-top: 20px;" id="sf-ipinfo-result"></div>
+                <script src="https://nuleongdung.github.io/js/sf-ipinfo-io.js"></script>
+                <p>위 예제에서는 `fetch` 함수를 사용하여 ipinfo.io API를 호출하고, 응답으로 받은 JSON 데이터를 파싱하여 콘솔에 출력하고 HTML 요소에 표시합니다. 오류 처리를
+                    위해 `try...catch` 블록을 사용했습니다.</p>
+                <p>더 자세한 정보 및 사용법은 <a href="https://ipinfo.io/" target="_blank" rel="noopener">ipinfo.io 공식 웹사이트</a>를
+                    참조하세요.</p>
+            </section>
+
+            <section id="sf-ipapi-com">
+                <h2>ip-api.com 상세 정보</h2>
+                <p>ip-api.com은 IP 주소에 대한 위치 정보를 제공하는 API 서비스입니다. 국가, 지역, 도시, 위도/경도 등의 정보를 제공하여 IP 주소를 기반으로 위치 데이터를
+                    제공합니다.</p>
+
+                <p><strong>주요 기능:</strong> IP 주소, 국가, 지역, 도시, 위도/경도 정보 제공</p>
+                <p><strong>요금:</strong> 무료 플랜 (제한된 요청 수) 및 유료 플랜 제공 (더 많은 요청 수 및 추가 기능)</p>
+                <p><strong>특징:</strong>
+                <ul>
+                    <li>간단하고 사용하기 쉬운 API</li>
+                    <li>JSON, XML, CSV 등 다양한 데이터 포맷 지원</li>
+                    <li>빠른 응답 속도</li>
+                </ul>
+                </p>
+                <h3>ip-api.com 사용 예시 (JavaScript)</h3>
+                <p>다음은 JavaScript를 사용하여 ip-api.com API를 호출하고 IP 주소 정보를 가져오는 예제입니다.</p>
+                <pre class="javascript" data-ke-language="javascript" data-ke-type="codeblock">
+                <code>
+// 현재 사용자의 IP 주소 정보를 가져오는 예제
+fetch('http://ip-api.com/json')
+.then(response => {
+    if (!response.ok) {
+    throw new Error('네트워크 응답이 좋지 않습니다.');
+    }
+    return response.json();
+})
+.then(data => {
+    console.log('IP 주소 정보:', data);
+    // 필요한 정보를 화면에 표시하거나 다른 작업 수행
+    document.getElementById('sf-ipapi-result').innerHTML = `
+    &lt;h4&gt;결과 표시 영역&lt;/h4&gt;
+    &lt;p&gt;IP: ${data.query}&lt;/p&gt;
+    &lt;p&gt;국가: ${data.country}&lt;/p&gt;
+    &lt;p&gt;지역: ${data.regionName}&lt;/p&gt;
+    &lt;p&gt;도시: ${data.city}&lt;/p&gt;
+    &lt;p&gt;위도: ${data.lat}&lt;/p&gt;
+    &lt;p&gt;경도: ${data.lon}&lt;/p&gt;
+    &lt;p&gt;시간대: ${data.timezone}&lt;/p&gt;
+    `;
+})
+.catch(error => {
+    console.error('데이터를 가져오는 중 오류 발생:', error);
+    document.getElementById('sf-ipapi-result').innerHTML = `&lt;p style="color: red;"&gt;데이터를 가져오는 중 오류가 발생했습니다.&lt;/p&gt;`;
+});
+
+// 특정 IP 주소의 정보를 가져오는 예제 (예: 8.8.8.8 - Google Public DNS)
+const ipAddress = '8.8.8.8';
+fetch(`http://ip-api.com/json/${ipAddress}`)
+.then(response => {
+    if (!response.ok) {
+    throw new Error('네트워크 응답이 좋지 않습니다.');
+    }
+    return response.json();
+})
+.then(data => {
+    console.log('특정 IP 주소 정보:', data);
+    // 특정 IP 주소에 대한 정보를 처리하는 로직
+})
+.catch(error => {
+    console.error('데이터를 가져오는 중 오류 발생:', error);
+});
+                </code>
+              </pre>
+                <div style="margin-top: 20px;" id="sf-ipapi-result"></div>
+                <p>위 예제에서는 `fetch` 함수를 사용하여 ip-api.com API를 호출하고, 응답으로 받은 JSON 데이터를 파싱하여 콘솔에 출력하고 HTML 요소에 표시합니다. 오류 처리를
+                    위해 `try...catch` 블록을 사용했습니다.</p>
+                <p>더 자세한 정보 및 사용법은 <a href="http://ip-api.com/" target="_blank" rel="noopener">ip-api.com 공식 웹사이트</a>를
+                    참조하세요.</p>
+            </section>
+
+            <section id="sf-freegeoip-app">
+                <h2>freegeoip.app 상세 정보</h2>
+                <p>freegeoip.app은 IP 주소에 대한 위치 정보를 제공하는 API 서비스입니다. 국가, 지역, 도시, 위도/경도, 시간대 등의 정보를 제공하여 IP 주소를 기반으로 위치
+                    데이터를 제공합니다.</p>
+                <p><strong>주요 기능:</strong> IP 주소, 국가, 지역, 도시, 위도/경도, 시간대 정보 제공</p>
+                <p><strong>요금:</strong> 무료</p>
+                <p><strong>특징:</strong>
+                <ul>
+                    <li>간단한 사용</li>
+                    <li>오픈 소스 기반</li>
+                </ul>
+                </p>
+
+                <h3>freegeoip.app 사용 예시 (JavaScript)</h3>
+                <p>다음은 JavaScript를 사용하여 freegeoip.app API를 호출하고 IP 주소 정보를 가져오는 예제입니다.</p>
+                <pre class="javascript" data-ke-language="javascript" data-ke-type="codeblock">
+                <code>
+// 현재 사용자의 IP 주소 정보를 가져오는 예제
+fetch('https://freegeoip.app/json')
+.then(response => {
+    if (!response.ok) {
+    throw new Error('네트워크 응답이 좋지 않습니다.');
+    }
+    return response.json();
+})
+.then(data => {
+    console.log('IP 주소 정보:', data);
+    // 필요한 정보를 화면에 표시하거나 다른 작업 수행
+    document.getElementById('sf-freegeoip-result').innerHTML = `
+    &lt;h4&gt;결과 표시 영역&lt;/h4&gt;
+    &lt;p&gt;IP: ${data.ip}&lt;/p&gt;
+    &lt;p&gt;국가: ${data.country_code}&lt;/p&gt;
+    &lt;p&gt;지역: ${data.region_name}&lt;/p&gt;
+    &lt;p&gt;도시: ${data.city}&lt;/p&gt;
+    &lt;p&gt;위도: ${data.latitude}&lt;/p&gt;
+    &lt;p&gt;경도: ${data.longitude}&lt;/p&gt;
+    &lt;p&gt;시간대: ${data.time_zone}&lt;/p&gt;
+    `;
+})
+.catch(error => {
+    console.error('데이터를 가져오는 중 오류 발생:', error);
+    document.getElementById('sf-freegeoip-result').innerHTML = `&lt;p style="color: red;"&gt;데이터를 가져오는 중 오류가 발생했습니다.&lt;/p&gt;`;
+});
+
+// 특정 IP 주소의 정보를 가져오는 예제 (별도 API endpoint 없음)
+                </code>
+              </pre>
+                <div style="margin-top: 20px;" id="sf-freegeoip-result"></div>
+                <p>위 예제에서는 `fetch` 함수를 사용하여 freegeoip.app API를 호출하고, 응답으로 받은 JSON 데이터를 파싱하여 콘솔에 출력하고 HTML 요소에 표시합니다. 오류
+                    처리를 위해 `try...catch` 블록을 사용했습니다.</p>
+                <p>더 자세한 정보 및 사용법은 <a href="https://freegeoip.app/" target="_blank" rel="noopener">freegeoip.app 공식
+                        웹사이트</a>를 참조하세요.</p>
+            </section>
+
+            <section id="sf-abstractapi">
+                <h2>Abstract API (IP Geolocation) 상세 정보</h2>
+                <p>Abstract API는 IP 주소에 대한 위치 정보를 제공하는 API 서비스입니다. IP 주소, 위치, 통화, 시간대 정보 등을 제공합니다.</p>
+                <p><strong>주요 기능:</strong> IP 주소, 위치, 통화, 시간대 정보 제공</p>
+                <p><strong>요금:</strong> 무료 (제한) 및 유료 플랜 제공</p>
+                <p><strong>특징:</strong> 다양한 추가 기능 제공</p>
+                <h3>Abstract API 사용 예시 (JavaScript)</h3>
+                <p>다음은 JavaScript를 사용하여 Abstract API를 호출하고 IP 주소 정보를 가져오는 예제입니다.</p>
+                <pre class="javascript" data-ke-language="javascript" data-ke-type="codeblock">
+                <code>
+const apiKey = 'YOUR_API_KEY'; // 여기에 API 키를 입력하세요
+fetch(`https://ipgeolocation.abstractapi.com/v1/?api_key=${apiKey}`)
+.then(response => {
+    if (!response.ok) {
+    throw new Error('네트워크 응답이 좋지 않습니다.');
+    }
+    return response.json();
+})
+.then(data => {
+    console.log('IP 주소 정보:', data);
+    document.getElementById('sf-abstractapi-result').innerHTML = `
+    &lt;h4&gt;결과 표시 영역&lt;/h4&gt;
+    &lt;p&gt;IP: ${data.ip_address}&lt;/p&gt;
+    &lt;p&gt;국가: ${data.country}&lt;/p&gt;
+    &lt;p&gt;도시: ${data.city}&lt;/p&gt;
+    &lt;p&gt;위도: ${data.latitude}&lt;/p&gt;
+    &lt;p&gt;경도: ${data.longitude}&lt;/p&gt;
+    &lt;p&gt;통화: ${data.currency.code}&lt;/p&gt;
+    &lt;p&gt;시간대: ${data.timezone.name}&lt;/p&gt;
+    `;
+})
+.catch(error => {
+    console.error('데이터를 가져오는 중 오류 발생:', error);
+    document.getElementById('sf-abstractapi-result').innerHTML = `&lt;p style="color: red;"&gt;데이터를 가져오는 중 오류가 발생했습니다.&lt;/p&gt;`;
+});
+                </code>
+              </pre>
+                <div style="margin-top: 20px;" id="sf-abstractapi-result"></div>
+            </section>
+
+            <section id="sf-telize">
+                <h2>Telize 상세 정보</h2>
+                <p>Telize는 IP 주소에 대한 위치 정보를 제공하는 API 서비스입니다. IP 주소, 국가, 지역, 도시, 위도/경도 정보 등을 제공합니다.</p>
+                <p><strong>주요 기능:</strong> IP 주소, 국가, 지역, 도시, 위도/경도 정보 제공</p>
+                <p><strong>요금:</strong> 무료</p>
+                <p><strong>특징:</strong> 간단하고 빠른 API</p>
+                <h3>Telize 사용 예시 (JavaScript)</h3>
+                <p>다음은 JavaScript를 사용하여 Telize API를 호출하고 IP 주소 정보를 가져오는 예제입니다.</p>
+                <pre class="javascript" data-ke-language="javascript" data-ke-type="codeblock">
+                <code>
+fetch('https://www.telize.com/geoip?callback=getGeoIP')
+.then(response => response.text())
+.then(data => {
+    // JSONP 응답 처리
+    const jsonString = data.substring(8, data.length - 2);
+    const jsonData = JSON.parse(jsonString);
+
+    console.log('IP 주소 정보:', jsonData);
+    document.getElementById('sf-telize-result').innerHTML = `
+    &lt;h4&gt;결과 표시 영역&lt;/h4&gt;
+    &lt;p&gt;IP: ${jsonData.ip}&lt;/p&gt;
+    &lt;p&gt;국가: ${jsonData.country}&lt;/p&gt;
+    &lt;p&gt;지역: ${jsonData.region}&lt;/p&gt;
+    &lt;p&gt;도시: ${jsonData.city}&lt;/p&gt;
+    &lt;p&gt;위도: ${jsonData.latitude}&lt;/p&gt;
+    &lt;p&gt;경도: ${jsonData.longitude}&lt;/p&gt;
+    `;
+})
+.catch(error => {
+    console.error('데이터를 가져오는 중 오류 발생:', error);
+    document.getElementById('sf-telize-result').innerHTML = `&lt;p style="color: red;"&gt;데이터를 가져오는 중 오류가 발생했습니다.&lt;/p&gt;`;
+});
+                </code>
+              </pre>
+                <div style="margin-top: 20px;" id="sf-telize-result"></div>
+            </section>
+
+            <section id="sf-bigdatacloud">
+                <h2>BigDataCloud 상세 정보</h2>
+                <p>BigDataCloud는 IP 주소에 대한 다양한 정보를 제공하는 API 서비스입니다. IP 주소, 위치, ASN, 연결 유형, 프록시 감지 등 다양한 정보 제공합니다.</p>
+                <p><strong>주요 기능:</strong> IP 주소, 위치, ASN, 연결 유형, 프록시 감지 등 다양한 정보 제공</p>
+                <p><strong>요금:</strong> 무료 (제한) 및 유료 플랜 제공</p>
+                <p><strong>특징:</strong> 상세한 IP 정보 제공</p>
+                <h3>BigDataCloud 사용 예시 (JavaScript)</h3>
+                <p>다음은 JavaScript를 사용하여 BigDataCloud API를 호출하고 IP 주소 정보를 가져오는 예제입니다.</p>
+                <pre class="javascript" data-ke-language="javascript" data-ke-type="codeblock">
+                <code>
+const apiKey = 'YOUR_API_KEY'; // 여기에 API 키를 입력하세요
+fetch(`https://api.bigdatacloud.net/data/client-request?apiKey=${apiKey}`)
+.then(response => {
+    if (!response.ok) {
+    throw new Error('네트워크 응답이 좋지 않습니다.');
+    }
+    return response.json();
+})
+.then(data => {
+    console.log('IP 주소 정보:', data);
+    document.getElementById('sf-bigdatacloud-result').innerHTML = `
+    &lt;h4&gt;결과 표시 영역&lt;/h4&gt;
+    &lt;p&gt;IP: ${data.ip}&lt;/p&gt;
+    &lt;p&gt;국가: ${data.countryName}&lt;/p&gt;
+    &lt;p&gt;도시: ${data.city}&lt;/p&gt;
+    &lt;p&gt;위도: ${data.latitude}&lt;/p&gt;
+    &lt;p&gt;경도: ${data.longitude}&lt;/p&gt;
+    &lt;p&gt;ISP: ${data.isp}&lt;/p&gt;
+    `;
+})
+.catch(error => {
+    console.error('데이터를 가져오는 중 오류 발생:', error);
+    document.getElementById('sf-bigdatacloud-result').innerHTML = `&lt;p style="color: red;"&gt;데이터를 가져오는 중 오류가 발생했습니다.&lt;/p&gt;`;
+});
+                </code>
+              </pre>
+                <div style="margin-top: 20px;" id="sf-bigdatacloud-result"></div>
+            </section>
+
+            <section id="sf-dbip">
+                <h2>DB-IP 상세 정보</h2>
+                <p>DB-IP는 IP 주소에 대한 위치 정보를 제공하는 API 서비스입니다. IP 주소, 국가, 지역, 도시, 위도/경도 정보 등을 제공합니다.</p>
+                <p><strong>주요 기능:</strong> IP 주소, 국가, 지역, 도시, 위도/경도 정보 제공</p>
+                <p><strong>요금:</strong> 무료 (제한) 및 유료 플랜 제공</p>
+                <p><strong>특징:</strong> 정확한 데이터 제공</p>
+                <h3>DB-IP 사용 예시 (JavaScript)</h3>
+                <p>다음은 JavaScript를 사용하여 DB-IP API를 호출하고 IP 주소 정보를 가져오는 예제입니다.</p>
+                <pre class="javascript" data-ke-language="javascript" data-ke-type="codeblock">
+                <code>
+const apiKey = 'YOUR_API_KEY'; // 여기에 API 키를 입력하세요
+fetch(`https://api.db-ip.com/v2/free/self?key=${apiKey}`)
+.then(response => {
+    if (!response.ok) {
+    throw new Error('네트워크 응답이 좋지 않습니다.');
+    }
+    return response.json();
+})
+.then(data => {
+    console.log('IP 주소 정보:', data);
+    document.getElementById('sf-dbip-result').innerHTML = `
+    &lt;h4&gt;결과 표시 영역&lt;/h4&gt;
+    &lt;p&gt;IP: ${data.ipAddress}&lt;/p&gt;
+    &lt;p&gt;국가: ${data.countryName}&lt;/p&gt;
+    &lt;p&gt;지역: ${data.stateProv}&lt;/p&gt;
+    &lt;p&gt;도시: ${data.city}&lt;/p&gt;
+    &lt;p&gt;위도: ${data.latitude}&lt;/p&gt;
+    &lt;p&gt;경도: ${data.longitude}&lt;/p&gt;
+    `;
+})
+.catch(error => {
+    console.error('데이터를 가져오는 중 오류 발생:', error);
+    document.getElementById('sf-dbip-result').innerHTML = `&lt;p style="color: red;"&gt;데이터를 가져오는 중 오류가 발생했습니다.&lt;/p&gt;`;
+});
+                </code>
+              </pre>
+                <div style="margin-top: 20px;" id="sf-dbip-result"></div>
+            </section>
+
+            <section id="sf-ip2location">
+                <h2>IP2Location 상세 정보</h2>
+                <p>IP2Location은 IP 주소에 대한 위치 정보를 제공하는 API 서비스입니다. IP 주소, 위치, 위도/경도, 우편번호, 시간대 정보 등을 제공합니다.</p>
+                <p><strong>주요 기능:</strong> IP 주소, 위치, 위도/경도, 우편번호, 시간대 정보 제공</p>
+                <p><strong>요금:</strong> 무료 (제한) 및 유료 플랜 제공</p>
+                <p><strong>특징:</strong> 다양한 데이터베이스 제공</p>
+                <h3>IP2Location 사용 예시 (JavaScript)</h3>
+                <p>다음은 JavaScript를 사용하여 IP2Location API를 호출하고 IP 주소 정보를 가져오는 예제입니다.</p>
+                <pre class="javascript" data-ke-language="javascript" data-ke-type="codeblock">
+                <code>
+const apiKey = 'YOUR_API_KEY'; // 여기에 API 키를 입력하세요
+const ipAddress = '8.8.8.8'; // 예시 IP 주소
+fetch(`https://api.ip2location.io/?ip=${ipAddress}&key=${apiKey}`)
+.then(response => {
+    if (!response.ok) {
+    throw new Error('네트워크 응답이 좋지 않습니다.');
+    }
+    return response.json();
+})
+.then(data => {
+    console.log('IP 주소 정보:', data);
+    document.getElementById('sf-ip2location-result').innerHTML = `
+    &lt;h4&gt;결과 표시 영역&lt;/h4&gt;
+    &lt;p&gt;IP: ${data.ip}&lt;/p&gt;
+    &lt;p&gt;국가: ${data.country_name}&lt;/p&gt;
+    &lt;p&gt;지역: ${data.region_name}&lt;/p&gt;
+    &lt;p&gt;도시: ${data.city_name}&lt;/p&gt;
+    &lt;p&gt;위도: ${data.latitude}&lt;/p&gt;
+    &lt;p&gt;경도: ${data.longitude}&lt;/p&gt;
+    &lt;p&gt;우편번호: ${data.zip_code}&lt;/p&gt;
+    &lt;p&gt;시간대: ${data.time_zone}&lt;/p&gt;
+    `;
+})
+.catch(error => {
+    console.error('데이터를 가져오는 중 오류 발생:', error);
+    document.getElementById('sf-ip2location-result').innerHTML = `&lt;p style="color: red;"&gt;데이터를 가져오는 중 오류가 발생했습니다.&lt;/p&gt;`;
+});
+                </code>
+              </pre>
+                <div style="margin-top: 20px;" id="sf-ip2location-result"></div>
+            </section>
+
+            <section id="sf-extremeiplookup">
+                <h2>Extreme-IP-Lookup 상세 정보</h2>
+                <p>Extreme-IP-Lookup은 IP 주소에 대한 위치 정보를 제공하는 API 서비스입니다. IP 주소, 위치, 도시, 국가, 위도/경도 정보 등을 제공합니다.</p>
+                <p><strong>주요 기능:</strong> IP 주소, 위치, 도시, 국가, 위도/경도 정보 제공</p>
+                <p><strong>요금:</strong> 무료</p>
+                <p><strong>특징:</strong> 간단한 사용법, 추가 설정 불필요</p>
+                <h3>Extreme-IP-Lookup 사용 예시 (JavaScript)</h3>
+                <p>다음은 JavaScript를 사용하여 Extreme-IP-Lookup API를 호출하고 IP 주소 정보를 가져오는 예제입니다.</p>
+                <pre class="javascript" data-ke-language="javascript" data-ke-type="codeblock">
+                <code>
+fetch('https://extreme-ip-lookup.com/json')
+.then(response => {
+    if (!response.ok) {
+    throw new Error('네트워크 응답이 좋지 않습니다.');
+    }
+    return response.json();
+})
+.then(data => {
+    console.log('IP 주소 정보:', data);
+    document.getElementById('sf-extremeiplookup-result').innerHTML = `
+    &lt;h4&gt;결과 표시 영역&lt;/h4&gt;
+    &lt;p&gt;IP: ${data.query}&lt;/p&gt;
+    &lt;p&gt;국가: ${data.country}&lt;/p&gt;
+    &lt;p&gt;도시: ${data.city}&lt;/p&gt;
+    &lt;p&gt;위도: ${data.latitude}&lt;/p&gt;
+    &lt;p&gt;경도: ${data.longitude}&lt;/p&gt;
+    `;
+})
+.catch(error => {
+    console.error('데이터를 가져오는 중 오류 발생:', error);
+    document.getElementById('sf-extremeiplookup-result').innerHTML = `&lt;p style="color: red;"&gt;데이터를 가져오는 중 오류가 발생했습니다.&lt;/p&gt;`;
+});
+                </code>
+              </pre>
+                <div style="margin-top: 20px;" id="sf-extremeiplookup-result"></div>
+            </section>
+
+            <section id="sf-geolocationio">
+                <h2>Geolocation.io 상세 정보</h2>
+                <p>Geolocation.io는 IP 주소에 대한 위치 정보를 제공하는 API 서비스입니다. IP 주소, 위치, 통화, 시간대, 연결 정보 등을 제공합니다.</p>
+                <p><strong>주요 기능:</strong> IP 주소, 위치, 통화, 시간대, 연결 정보 제공</p>
+                <p><strong>요금:</strong> 무료 (제한) 및 유료 플랜 제공</p>
+                <p><strong>특징:</strong> 다양한 정보 제공, 맞춤 설정 가능</p>
+                <h3>Geolocation.io 사용 예시 (JavaScript)</h3>
+                <p>다음은 JavaScript를 사용하여 Geolocation.io API를 호출하고 IP 주소 정보를 가져오는 예제입니다.</p>
+                <pre class="javascript" data-ke-language="javascript" data-ke-type="codeblock">
+                <code>
+const apiKey = 'YOUR_API_KEY'; // 여기에 API 키를 입력하세요
+fetch(`https://geolocation.io/api/ip?api_key=${apiKey}`)
+.then(response => {
+    if (!response.ok) {
+    throw new Error('네트워크 응답이 좋지 않습니다.');
+    }
+    return response.json();
+})
+.then(data => {
+    console.log('IP 주소 정보:', data);
+    document.getElementById('sf-geolocationio-result').innerHTML = `
+    &lt;h4&gt;결과 표시 영역&lt;/h4&gt;
+    &lt;p&gt;IP: ${data.ip}&lt;/p&gt;
+    &lt;p&gt;국가: ${data.country_name}&lt;/p&gt;
+    &lt;p&gt;도시: ${data.city}&lt;/p&gt;
+    &lt;p&gt;위도: ${data.latitude}&lt;/p&gt;
+    &lt;p&gt;경도: ${data.longitude}&lt;/p&gt;
+    &lt;p&gt;통화: ${data.currency.code}&lt;/p&gt;
+    &lt;p&gt;시간대: ${data.time_zone.name}&lt;/p&gt;
+    `;
+})
+.catch(error => {
+    console.error('데이터를 가져오는 중 오류 발생:', error);
+    document.getElementById('sf-geolocationio-result').innerHTML = `&lt;p style="color: red;"&gt;데이터를 가져오는 중 오류가 발생했습니다.&lt;/p&gt;`;
+});
+                </code>
+              </pre>
+                <div style="margin-top: 20px;" id="sf-geolocationio-result"></div>
+            </section>
+
+            <aside>
+                <h3>참고 사항</h3>
+                <ul>
+                    <li>일부 API는 사용량 제한이 있을 수 있습니다.</li>
+                    <li>API 키가 필요한 경우, 해당 서비스에서 발급받아야 합니다.</li>
+                    <li>요금 정책은 각 서비스 제공사의 웹사이트에서 확인하시기 바랍니다.</li>
+                    <li>ip-api.com은 CORS를 지원하지 않으므로, 클라이언트 측에서 직접 호출하는 경우 CORS 관련 오류가 발생할 수 있습니다. 이 경우 서버 측에서 API를 호출하여
+                        데이터를 가져오는 방법을 고려해야 합니다.</li>
+                </ul>
+            </aside>
+        </article>
+
+
+    </article>
+
+
+
+</body>
+
+</html>
