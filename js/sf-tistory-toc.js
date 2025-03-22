@@ -1,165 +1,325 @@
 class sfTistoryToc {
     constructor() {
+        // TOC 컨테이너의 ID (HTML에 삽입될 위치)
         this.tocContainerId = 'sf-tistory-toc';
-        this.articleViewId = 'article-view'; // 글 본문
-        this.headingsTargetClass = 'tt_article_useless_p_margin'; // 타겟 클래스
+        // 글 본문의 ID (목차를 생성할 기준)
+        this.articleViewId = 'article-view';
+        // 본문에서 제목을 찾을 영역의 클래스 이름
+        this.headingsTargetClass = 'tt_article_useless_p_margin';
+        // TOC를 감싸는 Wrapper 클래스 이름
         this.tocWrapperClass = 'sf-toc-wrapper';
+        // TOC 목록(ul)의 클래스 이름
         this.tocListClass = 'sf-toc-list';
+        // TOC 항목(li)의 클래스 이름
         this.tocItemClass = 'sf-toc-item';
+        // TOC 링크(a)의 클래스 이름 (사용하지 않음)
         this.tocLinkClass = 'sf-toc-link';
+        // 제목을 선택할 CSS 선택자 (h2, h3만 사용)
         this.headingSelector = `#${this.articleViewId} h2, #${this.articleViewId} h3`;
-        this.sfTocOpenClass = 'sfTocOpen';
-        this.sfTocCloseClass = 'sfTocClose';
+        // 하위 목록을 열 때 사용할 클래스 이름
+        this.sfTocOpenClass = 'sf-toc-open';
+        // 하위 목록을 닫을 때 사용할 클래스 이름
+        this.sfTocCloseClass = 'sf-toc-close';
+        // TOC 본문 영역 클래스 이름
+        this.sfTocBodyClass = 'sf-toc-body';
+        // 현재 보고 있는 제목에 포커스 주기 위한 클래스 이름
+        this.sfTocFocusClass = 'sf-toc-focus';
+        // 포커스 위치를 계산할 때 offset 값 (스크롤 위치 조정)
+        this.focusOffset = 300;
 
+        // TOC가 활성화될 최소 페이지 너비 (px)
+        this.minPageWidth = 1000; // 기본값: 1000px
+
+        // 초기화 함수 호출
         this.init();
     }
 
+    // 초기화 함수
     init() {
-        // 'sf-toc-open' 클래스가 있는지 확인
-        if (!document.querySelector('.sf-toc-open')) {
-            console.error(".sf-toc-open  없음");
-            return;
+        // 초기 페이지 로드 시 및 리사이즈 시 TOC 생성/제거 결정
+        this.checkAndRun();
+
+        // 창 크기가 변경될 때마다 checkAndRun 함수 실행
+        window.addEventListener('resize', () => {
+            this.checkAndRun();
+        });
+    }
+
+    // TOC 생성/제거 여부를 결정하는 함수
+    checkAndRun() {
+        // 현재 페이지 너비가 최소 너비보다 크거나 같은 경우
+        if (window.innerWidth >= this.minPageWidth) {
+            // HTML에 'sf-toc-open' 클래스가 있는지 확인 (없으면 TOC 생성 안 함)
+            if (!document.querySelector('.sf-toc-open')) {
+                console.error(".sf-toc-open 클래스가 없어 TOC를 생성하지 않습니다.");
+                return;
+            }
+
+            // 이미 TOC가 생성되었는지 확인 (중복 생성 방지)
+            if (document.getElementById(this.tocContainerId)) {
+                console.warn("TOC가 이미 존재합니다. 생성을 건너뜁니다...");
+                return;
+            }
+            // TOC 컨테이너 생성
+            if (this.createTocContainer()) {
+                // 목차 생성
+                this.generateToc();
+            }
         }
-        // TOC 컨테이너 생성 및 삽입
-        if (this.createTocContainer()) {
-            // 목차 생성
-            this.generateToc();
+        // 현재 페이지 너비가 최소 너비보다 작은 경우
+        else {
+            // TOC 제거
+            this.destroyToc();
         }
     }
 
+    // TOC 컨테이너를 생성하여 HTML에 삽입하는 함수
     createTocContainer() {
+        // TOC를 삽입할 위치(.inner 클래스를 가진 요소)를 찾음
         const contentInner = document.querySelector('#content .inner');
 
+        // 삽입 위치를 찾지 못한 경우
         if (!contentInner) {
             // console.error('TOC를 삽입할 위치를 찾을 수 없습니다: #content .inner');
-            return;
+            return false; // 실패 반환
         }
 
-        const tocContainer = document.createElement('div');
-        tocContainer.id = this.tocContainerId; // this.tocContainerId = 'sf-tistory-toc';
+        // TOC 컨테이너 요소 생성 (aside 태그 사용)
+        const tocContainer = document.createElement('aside');
+        // 컨테이너 ID 설정
+        tocContainer.id = this.tocContainerId;
+        // 컨테이너를 .inner 요소에 추가
         contentInner.appendChild(tocContainer);
-        return true; // 성공 시 true 반환
+        return true; // 성공 반환
     }
 
+    // TOC 컨테이너를 제거하는 함수
+    destroyToc() {
+        // TOC 컨테이너 요소를 찾음
+        const tocContainer = document.getElementById(this.tocContainerId);
+        // 컨테이너가 존재하면 제거
+        if (tocContainer) {
+            tocContainer.remove();
+        }
+    }
+
+    // TOC를 생성하는 함수
     generateToc() {
+        // TOC 컨테이너 요소와 글 본문 요소 가져오기
+        const tocContainer = document.getElementById(this.tocContainerId);
         const articleView = document.getElementById(this.articleViewId);
 
-        // articleView 요소를 찾을 수 없는 경우 오류를 출력하고 TOC 생성을 중단합니다.
+        // 글 본문 요소를 찾지 못한 경우
         if (!articleView) {
             console.error('articleView 를 찾을 수 없습니다.');
-            return false;
+            return false; // 실패 반환
         }
 
-        // articleView 요소 안에서 첫 번째로 발견되는 headingsTargetClass 클래스를 가진 요소 선택
+        // 글 본문에서 제목을 찾을 영역을 가져옴
         const headingsTarget = articleView.querySelector(`.${this.headingsTargetClass}`);
 
-        // headingsTarget 요소를 찾을 수 없는 경우 오류를 출력하고 TOC 생성을 중단합니다.
+        // 제목 영역을 찾지 못한 경우
         if (!headingsTarget) {
             console.error(`articleView 안에 ${this.headingsTargetClass} 클래스를 가진 요소를 찾을 수 없습니다.`);
-            return false;
+            return false; // 실패 반환
         }
 
-        // headingsTarget 요소 내의 h2, h3, h4 태그를 모두 선택합니다.
+        // 제목 영역에서 h2, h3, h4 태그를 모두 찾음
         let headings = headingsTarget.querySelectorAll('h2, h3, h4');
 
-        // headings 배열에 요소가 없는 경우 경고를 출력하고 TOC 생성을 중단합니다.
+        // 제목이 하나도 없는 경우
         if (headings.length === 0) {
             console.warn('article-view안에 h1, h2, h3, h4 태그가 없습니다.');
-            return false;
+            return false; // 실패 반환
         }
 
-
-        // headings 배열의 마지막 값을 제거. 마지막에 빈값이 하나 더 들어간다 
+        // 마지막 요소가 불필요하게 추가되는 경우 제거
         if (headings.length > 0) {
-            // 마지막 요소를 제외한 나머지 요소만으로 새로운 NodeList 생성
             headings = Array.from(headings).slice(0, headings.length - 1);
         }
 
-        // TOC 목록을 담을 ul 요소를 생성하고 클래스를 추가합니다.
+        // TOC 목록을 담을 ul 요소 생성
         const tocList = document.createElement('ul');
         tocList.classList.add(this.tocListClass);
 
-
-        // headings 배열을 계층 구조로 변환합니다.
+        // 제목 목록을 계층 구조로 변환
         const structuredHeadings = this.structureHeadings(headings);
 
-        // 계층 구조를 기반으로 TOC 목록을 생성합니다.
+        // 계층 구조를 기반으로 TOC 목록 생성
         this.generateTocList(structuredHeadings, tocList);
 
-        // tocList 맨 위에 "목차" div를 sf-toc-title 추가합니다. h1의 text 내용
+        // TOC 제목 요소 생성 (div 태그 사용)
         let tocTitle = document.createElement('div');
         tocTitle.className = "sf-toc-title";
-        tocTitle.textContent = "목차"; // 기본 텍스트 내용 설정
-        tocList.insertBefore(tocTitle, tocList.firstChild);
+        tocTitle.textContent = "목차"; // 기본 제목
 
+        // 글 제목(h1)을 가져와 TOC 제목으로 사용
         const h1Elements = articleView.querySelectorAll('h1');
 
-        // h1Elements가 비어있지 않은 경우에만 첫 번째 노드를 가져옴
+        // 글 제목이 있는 경우
         if (h1Elements.length > 0) {
             const firstH1 = h1Elements[0];
-            // firstH1 변수에 첫 번째 h1 요소가 저장됩니다.
-            // 예: console.log(firstH1.textContent);
-            tocTitle.textContent = firstH1.textContent;
-        } else {
-            // h1 요소가 없는 경우 처리
-            // console.warn('articleView 안에 h1 태그가 없습니다.');
-            // tocTitle.textContent = "목차"; // 기본 텍스트 내용은 이미 설정되어 있으므로 제거
+            tocTitle.textContent = firstH1.textContent; // 글 제목으로 변경
         }
 
+        // TOC 본문 영역 생성
+        const tocBody = document.createElement('div');
+        tocBody.classList.add(this.sfTocBodyClass);
 
+        // 제목과 목록을 본문 영역에 추가
+        tocBody.appendChild(tocTitle);
+        tocBody.appendChild(tocList);
 
-
-
-
-        const tocContainer = document.getElementById(this.tocContainerId);
+        // TOC 컨테이너에 본문 영역 추가
         if (tocContainer) {
-            tocContainer.appendChild(tocList);
+            tocContainer.appendChild(tocBody);
 
-            // tocList에 클릭 이벤트 리스너 추가
+            // TOC 목록에 클릭 이벤트 리스너 추가
             this.attachTocEventListener(tocList);
+
+            // 스크롤 이벤트 리스너 추가 (포커스 표시)
+            this.attachScrollEventListener(tocContainer);
         }
 
-        return true;
+        return true; // 성공 반환
     }
-    // tocList에 클릭 이벤트 리스너를 부착하는 함수
+
+    // 스크롤 이벤트 리스너를 추가하는 함수 (포커스 표시)
+    attachScrollEventListener(tocContainer) {
+        let ticking = false; // 스크롤 이벤트 throttling
+        const handleScroll = () => {
+            if (!ticking) {
+                ticking = true;
+                requestAnimationFrame(() => {
+                    this.checkFocus(tocContainer); // 현재 위치에 따라 포커스 변경
+                    ticking = false;
+                });
+            }
+        };
+        window.addEventListener('scroll', handleScroll); // 스크롤 이벤트에 함수 연결
+    }
+
+    // 현재 보고 있는 제목을 찾아 TOC에 포커스하는 함수
+    checkFocus(tocContainer) {
+        // 필요한 요소 가져오기
+        const articleView = document.getElementById(this.articleViewId);
+        if (!articleView) return;
+
+        const headingsTarget = articleView.querySelector(`.${this.headingsTargetClass}`);
+        if (!headingsTarget) return;
+
+        const headings = headingsTarget.querySelectorAll('h2, h3, h4');
+        if (!headings.length) return;
+
+        let closestHeading = null; // 가장 가까운 제목
+        let closestDistance = Infinity; // 가장 가까운 거리
+        const windowHeight = window.innerHeight; // 창 높이
+        const focusThreshold = windowHeight / 2; // 포커스 기준점 (창 높이의 절반)
+
+        // 모든 제목을 순회하며 가장 가까운 제목 찾기
+        headings.forEach(heading => {
+            const rect = heading.getBoundingClientRect(); // 제목의 위치 정보
+            const distance = Math.abs(rect.top - focusThreshold); // 포커스 기준점과의 거리
+
+            // 현재까지 가장 가까운 제목보다 더 가까운 경우
+            if (distance < closestDistance) {
+                closestDistance = distance; // 거리 업데이트
+                closestHeading = heading; // 제목 업데이트
+            }
+        });
+
+        // TOC에 포커스 설정
+        this.setTocFocus(tocContainer, closestHeading);
+    }
+
+    // TOC에서 특정 제목에 포커스하는 함수
+    setTocFocus(tocContainer, closestHeading) {
+        // 모든 TOC 항목에서 포커스 제거
+        const tocItems = tocContainer.querySelectorAll('.' + this.tocItemClass);
+        tocItems.forEach(item => {
+            item.classList.remove(this.sfTocFocusClass); // 포커스 제거
+        });
+
+        // 가장 가까운 제목이 존재하는 경우
+        if (closestHeading) {
+            // 해당 제목의 sfIdx 값을 가져옴
+            const sfIdx = closestHeading.dataset.sftocid;
+            // TOC에서 해당 sfIdx 값을 가진 항목 찾기
+            const focusedItem = tocContainer.querySelector(`[data-sf-idx="${sfIdx}"]`);
+
+            // 해당 항목이 존재하는 경우
+            if (focusedItem) {
+                // 해당 항목에 포커스 클래스 추가
+                focusedItem.classList.add(this.sfTocFocusClass);
+
+                // 부모 ul 요소들을 모두 펼치기
+                let parent = focusedItem.parentNode;
+                while (parent && parent.tagName === 'UL') {
+                    const listItem = parent.parentNode;
+                    if (listItem && listItem.classList.contains(this.tocItemClass)) {
+                        const toggleButton = listItem.querySelector('.sf-toc-toggle');
+                        if (toggleButton) {
+                            toggleButton.classList.remove(this.sfTocCloseClass);
+                            toggleButton.classList.add(this.sfTocOpenClass);
+                        }
+                        parent.style.display = 'block';
+                    }
+                    parent = listItem.parentNode;
+                }
+            }
+        }
+    }
+
+    // TOC 목록 클릭 이벤트 리스너를 추가하는 함수
     attachTocEventListener(tocList) {
+        // 클릭 이벤트 발생 시
         tocList.addEventListener('click', (event) => {
-            const target = event.target;
+            const target = event.target; // 클릭된 요소
 
-            // 클릭된 요소가 sf-toc-item 클래스를 가지고 있는지 확인합니다.
+            // 클릭된 요소가 TOC 항목인 경우
             if (target.classList.contains('sf-toc-item')) {
-                const sfIdx = target.dataset.sfIdx;
+                const sfIdx = target.dataset.sfIdx; // 해당 항목의 sfIdx 값
 
-                // sfIdx 값이 존재하는지 확인합니다.
+                // sfIdx 값이 존재하는 경우
                 if (sfIdx) {
-                    // 해당 sfIdx를 가진 헤딩 요소로 스크롤 이동
+                    // 해당 sfIdx 값을 가진 제목 요소 찾기
                     const heading = document.querySelector(`[data-sftocid="${sfIdx}"]`);
 
-                    // 헤딩 요소를 찾을 수 있는 경우
+                    // 제목 요소를 찾은 경우
                     if (heading) {
-                        // 300px 아래로 스크롤하는 새로운 방식
-                        const offset = 300;
+                        // 스크롤 위치 계산 (offset 적용)
+                        const offset = this.focusOffset;
                         const elementPosition = heading.getBoundingClientRect().top;
                         const offsetPosition = elementPosition + window.pageYOffset - offset;
 
+                        // 스크롤 이동
                         window.scrollTo({
                             top: offsetPosition,
-                            behavior: "smooth"
+                            behavior: "smooth" // 부드러운 스크롤
                         });
+
+                        // 모든 TOC 항목에서 포커스 제거
+                        const tocItems = tocList.querySelectorAll('.' + this.tocItemClass);
+                        tocItems.forEach(item => {
+                            item.classList.remove(this.sfTocFocusClass);
+                        });
+                        // 클릭된 항목에 포커스 추가
+                        target.classList.add(this.sfTocFocusClass);
+
                     }
                 }
             }
 
-            // 클릭된 요소가 sf-toc-toggle 클래스를 가지고 있는지 확인합니다.
+            // 클릭된 요소가 토글 버튼인 경우
             if (target.classList.contains('sf-toc-toggle')) {
-                const h2Item = target.closest('.sf-toc-item'); // 가장 가까운 상위 sf-toc-item 찾기
+                const h2Item = target.closest('.sf-toc-item'); // 가장 가까운 상위 TOC 항목 찾기
                 if (h2Item) {
-                    const subList = h2Item.querySelector('ul'); // 하위 ul 요소 찾기
+                    const subList = h2Item.querySelector('ul'); // 하위 목록 찾기
                     if (subList) {
-                        // 하위 ul 요소의 display 속성을 토글합니다.
+                        // 하위 목록의 표시 상태를 토글
                         subList.style.display = subList.style.display === 'none' ? 'block' : 'none';
 
-                        // 토글 버튼의 클래스 이름을 변경합니다.
+                        // 토글 버튼의 클래스 이름을 변경하여 아이콘 변경
                         if (subList.style.display === 'none') {
                             target.classList.remove(this.sfTocOpenClass);
                             target.classList.add(this.sfTocCloseClass);
@@ -167,16 +327,16 @@ class sfTistoryToc {
                             target.classList.remove(this.sfTocCloseClass);
                             target.classList.add(this.sfTocOpenClass);
                         }
-                        target.textContent = '';
+                        target.textContent = ''; // 텍스트 내용 제거
                     }
                 }
-                event.stopPropagation(); // 이벤트 버블링을 막습니다.
+                event.stopPropagation(); // 이벤트 버블링 중단
             }
         });
     }
 
     /**
-     * headings 배열을 계층 구조로 변환하는 함수
+     * 제목 목록을 계층 구조로 변환하는 함수
      * @param {NodeList} headings - h1, h2, h3, h4 요소의 NodeList
      * @returns {Array} - 계층 구조로 변환된 headings 배열
      *
@@ -206,34 +366,40 @@ class sfTistoryToc {
      *   }
      * ]
      */
-    structureHeadings(headings) {
-        const structuredHeadings = [];
-        let currentH2 = null;
-        let currentH3 = null;
-        // console.log(headings); // 불필요한 console.log() 제거
+    structureHeadings = (headings) => {
+        const structuredHeadings = []; // 계층 구조로 변환된 제목 목록
+        let currentH2 = null; // 현재 H2 제목
+        let currentH3 = null; // 현재 H3 제목
+
+        // 모든 제목을 순회하며 계층 구조 생성
         headings.forEach(heading => {
+            // H2 제목인 경우
             if (heading.tagName === 'H2') {
                 currentH2 = {
                     element: heading,
-                    children: []
+                    children: [] // 자식 제목을 담을 배열
                 };
-                structuredHeadings.push(currentH2);
-                currentH3 = null;
-            } else if (heading.tagName === 'H3' && currentH2) {
+                structuredHeadings.push(currentH2); // 계층 구조에 추가
+                currentH3 = null; // H3 제목 초기화
+            }
+            // H3 제목인 경우 (현재 H2 제목이 존재해야 함)
+            else if (heading.tagName === 'H3' && currentH2) {
                 currentH3 = {
                     element: heading,
-                    children: []
+                    children: [] // 자식 제목을 담을 배열
                 };
-                currentH2.children.push(currentH3);
-            } else if (heading.tagName === 'H4' && currentH3) {
+                currentH2.children.push(currentH3); // 현재 H2 제목의 자식으로 추가
+            }
+            // H4 제목인 경우 (현재 H3 제목이 존재해야 함)
+            else if (heading.tagName === 'H4' && currentH3) {
                 currentH3.children.push({
                     element: heading,
-                    children: []
+                    children: [] // 자식 제목을 담을 배열 (H4는 자식이 없음)
                 });
             }
         });
 
-        return structuredHeadings;
+        return structuredHeadings; // 계층 구조 반환
     }
 
     /**
@@ -246,44 +412,54 @@ class sfTistoryToc {
      * const tocList = document.createElement('ul');
      * this.generateTocList(structuredHeadings, tocList);
      */
-    generateTocList(structuredHeadings, parentElement, parentIndex = '') {
+    generateTocList = (structuredHeadings, parentElement, parentIndex = '') => {
+        // 계층 구조를 순회하며 TOC 목록 생성
         structuredHeadings.forEach((heading, index) => {
+            // 현재 항목의 인덱스 생성 (상위 인덱스를 기반으로)
             const currentIndex = parentIndex ? `${parentIndex}-${index + 1}` : (index + 1).toString();
 
-            // data-sftocid 설정
+            // 제목 요소에 data-sftocid 속성 추가 (TOC에서 스크롤 위치 찾기 위해)
             heading.element.dataset.sftocid = currentIndex;
 
+            // TOC 항목(li) 생성
             const listItem = document.createElement('li');
-            listItem.classList.add(this.tocItemClass);
-            listItem.dataset.sfIdx = currentIndex;
+            listItem.classList.add(this.tocItemClass); // 클래스 추가
+            listItem.dataset.sfIdx = currentIndex; // data-sf-idx 속성 추가
 
-            // 자식 요소가 없는 경우 토글 버튼 생성하지 않음
+            // data-sf-tocheading 속성 추가 (h2, h3, h4)
+            listItem.dataset.sfTocheading = heading.element.tagName.toLowerCase();
+
+            // title 속성 추가 (툴팁)
+            listItem.title = heading.element.textContent;
+
+            // 하위 목록이 있는 경우 토글 버튼 생성
             let toggleButton = null;
             if (heading.children.length > 0) {
-                toggleButton = document.createElement('span');
-                toggleButton.classList.add('sf-toc-toggle');
-                toggleButton.classList.add(this.sfTocCloseClass);
-                toggleButton.textContent = ''; // 초기에는 닫힌 상태로 표시
-                listItem.appendChild(toggleButton);
+                toggleButton = document.createElement('span'); // span 요소 생성
+                toggleButton.classList.add('sf-toc-toggle'); // 클래스 추가
+                toggleButton.classList.add(this.sfTocCloseClass); // 클래스 추가 (닫힌 상태)
+                toggleButton.textContent = ' '; // 텍스트 내용 추가 (CSS로 아이콘 표시)
+                listItem.appendChild(toggleButton); // TOC 항목에 추가
             }
 
-            listItem.append(heading.element.textContent); // 텍스트 내용 뒤에 추가
+            // 제목 텍스트 추가
+            listItem.append(heading.element.textContent);
 
+            // TOC 항목을 부모 요소에 추가
             parentElement.appendChild(listItem);
 
-            // 자식 노드가 있는 경우 재귀적으로 목록 생성
+            // 하위 목록이 있는 경우 재귀 호출
             if (heading.children.length > 0) {
-                const subList = document.createElement('ul');
-                listItem.appendChild(subList);
-                this.generateTocList(heading.children, subList, currentIndex);
-                subList.style.display = 'none'; // 초기에는 닫힌 상태로 설정
+                const subList = document.createElement('ul'); // 하위 목록(ul) 생성
+                listItem.appendChild(subList); // TOC 항목에 추가
+                this.generateTocList(heading.children, subList, currentIndex); // 재귀 호출
+                subList.style.display = 'none'; // 초기 상태: 닫힘
             }
         });
     }
-
 }
 
-// 페이지 로드 후 TOC 생성
+// DOMContentLoaded 이벤트 발생 시 TOC 생성
 document.addEventListener('DOMContentLoaded', () => {
-    new sfTistoryToc();
+    new sfTistoryToc(); // sfTistoryToc 클래스 인스턴스 생성
 });

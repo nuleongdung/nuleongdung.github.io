@@ -383,13 +383,24 @@ hr {
     width: 100%;
 }
 
-/* toc 오픈 */
+/*
+ sf-toc 스타일 
+*/
+
 .sf-toc-open {
+    /* toc 글쓸대 템플릿 클래스 이 클래스가 존재하면 sf-toc 클래스 실행 */
     display: none;
 }
 
-/* #sf-tistory-toc 생성 노드 */
+#sf-tistory-toc {
+    /* 기본 값으면 보이지 않는다 */
+    display: none;
+}
+
+/* 라느 리스트 페이지나 공지사항등에서 동작되지 않게 글 포스트에서만 동작해야한다 */
 #tt-body-page #content .inner #sf-tistory-toc {
+    /* <aside> #sf-tistory-toc 생성 노드 */
+    display: block;
     flex: 0 1 300px;
     font-size: 1em;
     font-weight: lighter;
@@ -397,51 +408,34 @@ hr {
     transition: all 0.3s ease;
 }
 
-/*  UL Toc 리스트 root */
-#sf-tistory-toc .sf-toc-list {
+
+#tt-body-page #content .inner #sf-tistory-toc>.sf-toc-body {
+    /*  <div class="sf-toc-body"> */
     position: fixed;
-    border-left: 3px solid #52525e;
+    font-weight: lighter;
+}
+
+#tt-body-page #content .inner #sf-tistory-toc .sf-toc-list {
+    /* ul class */
+    border-left: 1px solid #52525e;
     list-style: inside;
-    padding: 0;
-}
-
-/*  Toc 타이틀 */
-#sf-tistory-toc .sf-toc-title {}
-
-/*  Toc 아이템  */
-#sf-tistory-toc .sf-toc-item {
-    list-style: outside;
+    /* border-radius: 2%; */
+    padding: 2px 50px 0px 0px;
 }
 
 
-#sf-toc-container .sf-toc-list {
-
-    /* 들여쓰기 제거 */
-}
-
-#sf-toc-container .sf-toc-toggle {}
-
-#sf-toc-container .sf-toc-toggle .sfTocClose::before {
-    content: '+';
-}
-
-#sf-toc-container .sf-toc-toggle .sfTocOpen::before {
-    content: '-';
+#tt-body-page #content .inner #sf-tistory-toc .sf-toc-item {
+    /*  li Toc 아이템  */
+    cursor: pointer;
+    list-style-position: inside;
+    list-style-type: none;
+    margin-left: 10px;
 }
 
 
-
-
-
-
-
-
-
-
-
-
-
-
+#tt-body-page #content .inner #sf-tistory-toc .sf-heading-title:hover {
+    background-color: rgba(238, 68, 68, 0.434);
+}
 
 
 
