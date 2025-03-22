@@ -434,6 +434,12 @@ hr {
 
 
 #tt-body-page #content .inner #sf-tistory-toc .sf-heading-title:hover {
+    /* <div class="sf-heading-title"> */
+    background-color: rgba(238, 68, 68, 0.434);
+}
+
+.sf-toc-focus>div.sf-heading-title:first-child {
+    /* 여기에 스타일을 적용 */
     background-color: rgba(238, 68, 68, 0.434);
 }
 

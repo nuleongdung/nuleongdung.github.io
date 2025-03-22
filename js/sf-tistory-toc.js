@@ -30,6 +30,16 @@ class sfTistoryToc {
         // TOC가 활성화될 최소 페이지 너비 (px)
         this.minPageWidth = 1000; // 기본값: 1000px
 
+        // 새로 추가한 클래스 이름 정의
+        this.sfHeadingTitleClass = 'sf-heading-title'; // 제목 클래스 이름
+        this.sfTocToggleClass = 'sf-toc-toggle'; // 토글 버튼 클래스 이름
+
+        // 설정 가능한 옵션
+        this.headingWrapperTag = 'div'; // 제목을 감싸는 태그 이름 (div 또는 button)
+        this.headingWrapperClass = 'heading-title'; // 제목을 감싸는 요소의 클래스 이름
+        this.sfHeadingWrapperClass = 'sf-' + this.headingWrapperClass; // sf-heading-title 로 변경
+        this.manualFocus = false; // 수동 포커스 여부
+
         // 초기화 함수 호출
         this.init();
     }
@@ -124,12 +134,12 @@ class sfTistoryToc {
             return false; // 실패 반환
         }
 
-        // 제목 영역에서 h2, h3, h4 태그를 모두 찾음
-        let headings = headingsTarget.querySelectorAll('h2, h3, h4');
+        // 제목 영역에서 h2, h3 태그를 모두 찾음 (h4 제거)
+        let headings = headingsTarget.querySelectorAll('h2, h3');
 
         // 제목이 하나도 없는 경우
         if (headings.length === 0) {
-            console.warn('article-view안에 h1, h2, h3, h4 태그가 없습니다.');
+            console.warn('article-view안에 h2, h3 태그가 없습니다.');
             return false; // 실패 반환
         }
 
@@ -150,7 +160,7 @@ class sfTistoryToc {
 
         // TOC 제목 요소 생성 (div 태그 사용)
         let tocTitle = document.createElement('div');
-        tocTitle.className = "sf-toc-title";
+        tocTitle.className = this.sfHeadingTitleClass; // sf-heading-title 클래스 사용
         tocTitle.textContent = "목차"; // 기본 제목
 
         // 글 제목(h1)을 가져와 TOC 제목으로 사용
@@ -174,9 +184,6 @@ class sfTistoryToc {
         if (tocContainer) {
             tocContainer.appendChild(tocBody);
 
-            // TOC 목록에 클릭 이벤트 리스너 추가
-            this.attachTocEventListener(tocList);
-
             // 스크롤 이벤트 리스너 추가 (포커스 표시)
             this.attachScrollEventListener(tocContainer);
         }
@@ -188,7 +195,7 @@ class sfTistoryToc {
     attachScrollEventListener(tocContainer) {
         let ticking = false; // 스크롤 이벤트 throttling
         const handleScroll = () => {
-            if (!ticking) {
+            if (!ticking && !this.manualFocus) {
                 ticking = true;
                 requestAnimationFrame(() => {
                     this.checkFocus(tocContainer); // 현재 위치에 따라 포커스 변경
@@ -208,7 +215,7 @@ class sfTistoryToc {
         const headingsTarget = articleView.querySelector(`.${this.headingsTargetClass}`);
         if (!headingsTarget) return;
 
-        const headings = headingsTarget.querySelectorAll('h2, h3, h4');
+        const headings = headingsTarget.querySelectorAll('h2, h3');
         if (!headings.length) return;
 
         let closestHeading = null; // 가장 가까운 제목
@@ -257,7 +264,7 @@ class sfTistoryToc {
                 while (parent && parent.tagName === 'UL') {
                     const listItem = parent.parentNode;
                     if (listItem && listItem.classList.contains(this.tocItemClass)) {
-                        const toggleButton = listItem.querySelector('.sf-toc-toggle');
+                        const toggleButton = listItem.querySelector('.' + this.sfTocToggleClass); // 토글 버튼 클래스 사용
                         if (toggleButton) {
                             toggleButton.classList.remove(this.sfTocCloseClass);
                             toggleButton.classList.add(this.sfTocOpenClass);
@@ -270,78 +277,13 @@ class sfTistoryToc {
         }
     }
 
-    // TOC 목록 클릭 이벤트 리스너를 추가하는 함수
-    attachTocEventListener(tocList) {
-        // 클릭 이벤트 발생 시
-        tocList.addEventListener('click', (event) => {
-            const target = event.target; // 클릭된 요소
-
-            // 클릭된 요소가 TOC 항목인 경우
-            if (target.classList.contains('sf-toc-item')) {
-                const sfIdx = target.dataset.sfIdx; // 해당 항목의 sfIdx 값
-
-                // sfIdx 값이 존재하는 경우
-                if (sfIdx) {
-                    // 해당 sfIdx 값을 가진 제목 요소 찾기
-                    const heading = document.querySelector(`[data-sftocid="${sfIdx}"]`);
-
-                    // 제목 요소를 찾은 경우
-                    if (heading) {
-                        // 스크롤 위치 계산 (offset 적용)
-                        const offset = this.focusOffset;
-                        const elementPosition = heading.getBoundingClientRect().top;
-                        const offsetPosition = elementPosition + window.pageYOffset - offset;
-
-                        // 스크롤 이동
-                        window.scrollTo({
-                            top: offsetPosition,
-                            behavior: "smooth" // 부드러운 스크롤
-                        });
-
-                        // 모든 TOC 항목에서 포커스 제거
-                        const tocItems = tocList.querySelectorAll('.' + this.tocItemClass);
-                        tocItems.forEach(item => {
-                            item.classList.remove(this.sfTocFocusClass);
-                        });
-                        // 클릭된 항목에 포커스 추가
-                        target.classList.add(this.sfTocFocusClass);
-
-                    }
-                }
-            }
-
-            // 클릭된 요소가 토글 버튼인 경우
-            if (target.classList.contains('sf-toc-toggle')) {
-                const h2Item = target.closest('.sf-toc-item'); // 가장 가까운 상위 TOC 항목 찾기
-                if (h2Item) {
-                    const subList = h2Item.querySelector('ul'); // 하위 목록 찾기
-                    if (subList) {
-                        // 하위 목록의 표시 상태를 토글
-                        subList.style.display = subList.style.display === 'none' ? 'block' : 'none';
-
-                        // 토글 버튼의 클래스 이름을 변경하여 아이콘 변경
-                        if (subList.style.display === 'none') {
-                            target.classList.remove(this.sfTocOpenClass);
-                            target.classList.add(this.sfTocCloseClass);
-                        } else {
-                            target.classList.remove(this.sfTocCloseClass);
-                            target.classList.add(this.sfTocOpenClass);
-                        }
-                        target.textContent = ''; // 텍스트 내용 제거
-                    }
-                }
-                event.stopPropagation(); // 이벤트 버블링 중단
-            }
-        });
-    }
-
     /**
      * 제목 목록을 계층 구조로 변환하는 함수
-     * @param {NodeList} headings - h1, h2, h3, h4 요소의 NodeList
+     * @param {NodeList} headings - h1, h2, h3 요소의 NodeList
      * @returns {Array} - 계층 구조로 변환된 headings 배열
      *
      * 사용 예시:
-     * const headings = document.querySelectorAll('h2, h3, h4');
+     * const headings = document.querySelectorAll('h2, h3');
      * const structuredHeadings = this.structureHeadings(headings);
      *
      * 출력 모델:
@@ -351,12 +293,7 @@ class sfTistoryToc {
      *     children: [
      *       {
      *         element: h3 요소,
-     *         children: [
-     *           {
-     *             element: h4 요소,
-     *             children: []
-     *           }
-     *         ]
+     *         children: []
      *       }
      *     ]
      *   },
@@ -390,13 +327,6 @@ class sfTistoryToc {
                 };
                 currentH2.children.push(currentH3); // 현재 H2 제목의 자식으로 추가
             }
-            // H4 제목인 경우 (현재 H3 제목이 존재해야 함)
-            else if (heading.tagName === 'H4' && currentH3) {
-                currentH3.children.push({
-                    element: heading,
-                    children: [] // 자식 제목을 담을 배열 (H4는 자식이 없음)
-                });
-            }
         });
 
         return structuredHeadings; // 계층 구조 반환
@@ -426,24 +356,39 @@ class sfTistoryToc {
             listItem.classList.add(this.tocItemClass); // 클래스 추가
             listItem.dataset.sfIdx = currentIndex; // data-sf-idx 속성 추가
 
-            // data-sf-tocheading 속성 추가 (h2, h3, h4)
+            // data-sf-tocheading 속성 추가 (h2, h3)
             listItem.dataset.sfTocheading = heading.element.tagName.toLowerCase();
 
             // title 속성 추가 (툴팁)
             listItem.title = heading.element.textContent;
 
+            // heading 텍스트를 감싸는 요소 생성 (div 또는 button)
+            const headingWrapper = document.createElement(this.headingWrapperTag);
+            headingWrapper.className = this.sfHeadingWrapperClass;
+
+            // 클릭 이벤트 리스너 추가
+            headingWrapper.addEventListener('click', (event) => {
+                this.manualFocus = true; // 수동 포커스 설정
+                this.scrollToHeading(heading.element); // 해당 heading으로 스크롤
+                this.setTocFocus(document.getElementById(this.tocContainerId), heading.element); // 클릭한 heading element 전달
+                setTimeout(() => {
+                    this.manualFocus = false;
+                }, 300); //0.3초후 수동포커스 해제
+                event.preventDefault(); // 기본 이벤트 막기
+            });
+
+            headingWrapper.append(heading.element.textContent); // 제목 텍스트 추가
+            listItem.appendChild(headingWrapper); // TOC 항목에 추가
+
             // 하위 목록이 있는 경우 토글 버튼 생성
             let toggleButton = null;
             if (heading.children.length > 0) {
                 toggleButton = document.createElement('span'); // span 요소 생성
-                toggleButton.classList.add('sf-toc-toggle'); // 클래스 추가
+                toggleButton.classList.add(this.sfTocToggleClass); // 토글 클래스 사용
                 toggleButton.classList.add(this.sfTocCloseClass); // 클래스 추가 (닫힌 상태)
                 toggleButton.textContent = ' '; // 텍스트 내용 추가 (CSS로 아이콘 표시)
                 listItem.appendChild(toggleButton); // TOC 항목에 추가
             }
-
-            // 제목 텍스트 추가
-            listItem.append(heading.element.textContent);
 
             // TOC 항목을 부모 요소에 추가
             parentElement.appendChild(listItem);
@@ -455,6 +400,19 @@ class sfTistoryToc {
                 this.generateTocList(heading.children, subList, currentIndex); // 재귀 호출
                 subList.style.display = 'none'; // 초기 상태: 닫힘
             }
+        });
+    }
+
+
+    // 해당 heading으로 스크롤하는 함수
+    scrollToHeading(heading) {
+        const offset = this.focusOffset;
+        const elementPosition = heading.getBoundingClientRect().top;
+        const offsetPosition = elementPosition + window.pageYOffset - offset;
+
+        window.scrollTo({
+            top: offsetPosition,
+            behavior: "smooth" // 부드러운 스크롤
         });
     }
 }
