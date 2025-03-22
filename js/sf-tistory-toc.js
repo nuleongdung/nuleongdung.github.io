@@ -21,7 +21,7 @@ class sfTistoryToc {
         // 현재 보고 있는 제목에 포커스 주기 위한 클래스 이름
         this.sfTocFocusClass = 'sf-toc-focus';
         // 포커스 위치를 계산할 때 offset 값 (스크롤 위치 조정)
-        this.focusOffset = 100;
+        this.focusOffset = 300;
 
         // TOC가 활성화될 최소 페이지 너비 (px)
         this.minPageWidth = 1000; // 기본값: 1000px
@@ -39,6 +39,7 @@ class sfTistoryToc {
         this.sfTocToggleCloseClass = 'sf-toc-toggle-close'; // 토글 닫힘 클래스
         this.sfTocToggleOpenClass = 'sf-toc-toggle-open';  // 토글 열림 클래스
         this.tocBodyClass = 'sf-toc-body'; // TOC 본문 클래스 이름
+        this.h1HeadingTitleClass = 'sf-heading-title h1';
 
         // 초기화 함수 호출
         this.init();
@@ -160,16 +161,17 @@ class sfTistoryToc {
 
         // TOC 제목 요소 생성 (div 태그 사용)
         let tocTitle = document.createElement('div');
-        tocTitle.className = this.sfHeadingTitleClass; // sf-heading-title 클래스 사용
-        tocTitle.textContent = "목차"; // 기본 제목
+        tocTitle.className = this.h1HeadingTitleClass; // sf-heading-title h1 클래스 사용
+        tocTitle.dataset.sfTocheading = 'h1'; // data-sf-tocheading 속성 추가
+        tocTitle.title = "테스팅 페이지"; // title 속성 추가
+        tocTitle.textContent = "테스팅 페이지"; // 기본 제목
 
-        // 글 제목(h1)을 가져와 TOC 제목으로 사용
         const h1Elements = articleView.querySelectorAll('h1');
 
-        // 글 제목이 있는 경우
         if (h1Elements.length > 0) {
-            const firstH1 = h1Elements[0];
-            tocTitle.textContent = firstH1.textContent; // 글 제목으로 변경
+            tocTitle.dataset.sfTocheading = 'h1'; // data-sf-tocheading 속성 추가
+            tocTitle.title = h1Elements[0].textContent; // title 속성 추가
+            tocTitle.textContent = h1Elements[0].textContent; // 글 제목으로 변경
         }
 
         // TOC 본문 영역 생성
@@ -403,6 +405,7 @@ class sfTistoryToc {
 
             parentElement.appendChild(listItem);
 
+            // 하위 목록이 있는 경우 재귀 호출
             if (heading.children.length > 0) {
                 const subList = document.createElement('ul'); // 하위 목록(ul) 생성
                 listItem.appendChild(subList); // TOC 항목에 추가
@@ -469,4 +472,5 @@ document.addEventListener('DOMContentLoaded', () => {
  *      - this.sfTocToggleCloseClass: 토글 버튼 닫힘 상태 클래스.
  *      - this.sfTocToggleOpenClass: 토글 버튼 열림 상태 클래스.
  *      - this.tocBodyClass: TOC 전체를 감싸는 요소의 클래스.
+ *      - this.h1HeadingTitleClass: h1HeadingTitle의 클래스
  */

@@ -408,7 +408,7 @@ hr {
     transition: all 0.3s ease;
 }
 
-☰ #tt-body-page #content .inner #sf-tistory-toc>.sf-toc-body {
+#tt-body-page #content .inner #sf-tistory-toc>.sf-toc-body {
     /*  <div class="sf-toc-body"> */
     position: fixed;
     font-weight: lighter;
