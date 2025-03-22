@@ -408,8 +408,7 @@ hr {
     transition: all 0.3s ease;
 }
 
-
-#tt-body-page #content .inner #sf-tistory-toc>.sf-toc-body {
+☰ #tt-body-page #content .inner #sf-tistory-toc>.sf-toc-body {
     /*  <div class="sf-toc-body"> */
     position: fixed;
     font-weight: lighter;
@@ -417,7 +416,7 @@ hr {
 
 #tt-body-page #content .inner #sf-tistory-toc .sf-toc-list {
     /* ul class */
-    border-left: 1px solid #52525e;
+    border-left: 1px solid rgba(160, 159, 159, 0.144);
     list-style: inside;
     /* border-radius: 2%; */
     padding: 2px 50px 0px 0px;
@@ -426,29 +425,57 @@ hr {
 
 #tt-body-page #content .inner #sf-tistory-toc .sf-toc-item {
     /*  li Toc 아이템  */
-    cursor: pointer;
+
     list-style-position: inside;
     list-style-type: none;
     margin-left: 10px;
 }
 
+#tt-body-page #content .inner #sf-tistory-toc .sf-heading-title {
+    /* <div class="sf-heading-title"> */
+    cursor: pointer;
+    font-size: 1em;
+    padding: 2px 4px 4px 4px;
+}
 
 #tt-body-page #content .inner #sf-tistory-toc .sf-heading-title:hover {
     /* <div class="sf-heading-title">  후버시 */
-    background-color: rgba(238, 68, 68, 0.434);
+    background-color: rgba(95, 158, 160, 0.3);
 }
 
-.sf-toc-focus>div.sf-heading-title:first-child {
-    /* li 첫번째 div='sf-heading-title' 를 선택  */
-    background-color: rgba(238, 68, 68, 0.434);
+#tt-body-page #content .inner #sf-tistory-toc div.sf-heading-title {
+    display: inline-block;
+    /* 한 줄에 표시 */
 }
+
+.sf-toc-focus>div.sf-heading-title {
+    /* li 첫번째 div='sf-heading-title' 를 선택  */
+    background-color: rgba(95, 158, 160, 0.3);
+}
+
+
 
 /* TOC 펼치기 닫기 스타일 */
 #tt-body-page #content .inner #sf-tistory-toc .sf-toc-toggle {
-    width: 5px;
+    display: inline-block;
+    /* 한 줄에 표시 */
+    width: 1em;
+    /* 최소 너비 확보 */
     border-width: 1px;
-    margin-left: 10px;
 }
+
+.sf-toc-toggle-open::before {
+    border-color: #000000;
+    border-width: 1px;
+    content: '▾';
+}
+
+.sf-toc-toggle-close::before {
+    border-color: #000000;
+    border-width: 1px;
+    content: '▸';
+}
+
 
 
 
