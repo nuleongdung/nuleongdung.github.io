@@ -18,10 +18,6 @@ class sfTistoryToc {
         this.headingSelector = `#${this.articleViewId} h2, #${this.articleViewId} h3`;
         // 하위 목록을 열 때 사용할 클래스 이름
         this.sfTocOpenClass = 'sf-toc-open';
-        // 하위 목록을 닫을 때 사용할 클래스 이름
-        this.sfTocCloseClass = 'sf-toc-close';
-        // TOC 본문 영역 클래스 이름
-        this.sfTocBodyClass = 'sf-toc-body';
         // 현재 보고 있는 제목에 포커스 주기 위한 클래스 이름
         this.sfTocFocusClass = 'sf-toc-focus';
         // 포커스 위치를 계산할 때 offset 값 (스크롤 위치 조정)
@@ -39,6 +35,10 @@ class sfTistoryToc {
         this.headingWrapperClass = 'heading-title'; // 제목을 감싸는 요소의 클래스 이름
         this.sfHeadingWrapperClass = 'sf-' + this.headingWrapperClass; // sf-heading-title 로 변경
         this.manualFocus = false; // 수동 포커스 여부
+        this.toggleButtonTag = 'span'; // 토글 버튼을 감싸는 태그 이름 (기본값: span)
+        this.sfTocToggleCloseClass = 'sf-toc-toggle-close'; // 토글 닫힘 클래스
+        this.sfTocToggleOpenClass = 'sf-toc-toggle-open';  // 토글 열림 클래스
+        this.tocBodyClass = 'sf-toc-body'; // TOC 본문 클래스 이름
 
         // 초기화 함수 호출
         this.init();
@@ -174,7 +174,7 @@ class sfTistoryToc {
 
         // TOC 본문 영역 생성
         const tocBody = document.createElement('div');
-        tocBody.classList.add(this.sfTocBodyClass);
+        tocBody.classList.add(this.tocBodyClass); // sf-toc-body 클래스 사용 !!!
 
         // 제목과 목록을 본문 영역에 추가
         tocBody.appendChild(tocTitle);
@@ -266,8 +266,8 @@ class sfTistoryToc {
                     if (listItem && listItem.classList.contains(this.tocItemClass)) {
                         const toggleButton = listItem.querySelector('.' + this.sfTocToggleClass); // 토글 버튼 클래스 사용
                         if (toggleButton) {
-                            toggleButton.classList.remove(this.sfTocCloseClass);
-                            toggleButton.classList.add(this.sfTocOpenClass);
+                            toggleButton.classList.remove(this.sfTocToggleCloseClass); // 닫힘 클래스 제거
+                            toggleButton.classList.add(this.sfTocToggleOpenClass);  // 열림 클래스 추가
                         }
                         parent.style.display = 'block';
                     }
@@ -281,27 +281,6 @@ class sfTistoryToc {
      * 제목 목록을 계층 구조로 변환하는 함수
      * @param {NodeList} headings - h1, h2, h3 요소의 NodeList
      * @returns {Array} - 계층 구조로 변환된 headings 배열
-     *
-     * 사용 예시:
-     * const headings = document.querySelectorAll('h2, h3');
-     * const structuredHeadings = this.structureHeadings(headings);
-     *
-     * 출력 모델:
-     * [
-     *   {
-     *     element: h2 요소,
-     *     children: [
-     *       {
-     *         element: h3 요소,
-     *         children: []
-     *       }
-     *     ]
-     *   },
-     *   {
-     *     element: h2 요소,
-     *     children: []
-     *   }
-     * ]
      */
     structureHeadings = (headings) => {
         const structuredHeadings = []; // 계층 구조로 변환된 제목 목록
@@ -337,10 +316,6 @@ class sfTistoryToc {
      * @param {Array} structuredHeadings - 계층 구조로 변환된 headings 배열
      * @param {HTMLElement} parentElement - TOC 목록을 추가할 부모 요소
      * @param {string} parentIndex - 부모 요소의 data-sf-idx 값
-     *
-     * 사용 예시:
-     * const tocList = document.createElement('ul');
-     * this.generateTocList(structuredHeadings, tocList);
      */
     generateTocList = (structuredHeadings, parentElement, parentIndex = '') => {
         // 계층 구조를 순회하며 TOC 목록 생성
@@ -383,9 +358,9 @@ class sfTistoryToc {
             // 하위 목록이 있는 경우 토글 버튼 생성
             let toggleButton = null;
             if (heading.children.length > 0) {
-                toggleButton = document.createElement('span'); // span 요소 생성
+                toggleButton = document.createElement(this.toggleButtonTag); // 토글 버튼 요소 생성, span or div
                 toggleButton.classList.add(this.sfTocToggleClass); // 토글 클래스 사용
-                toggleButton.classList.add(this.sfTocCloseClass); // 클래스 추가 (닫힌 상태)
+                toggleButton.classList.add(this.sfTocToggleCloseClass); // 닫힘 클래스 추가
                 toggleButton.textContent = ' '; // 텍스트 내용 추가 (CSS로 아이콘 표시)
                 listItem.appendChild(toggleButton); // TOC 항목에 추가
             }
