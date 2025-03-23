@@ -107,13 +107,13 @@ class sfTistoryToc {
      */
     createTocContainer() {
         // TOC를 삽입할 위치 찾기
-        this.contentInner = document.querySelector(`#content .inner`); // 멤버변수로 등록
-        if (!this.contentInner) return false;
+        const contentInner = document.querySelector(`#content .inner`);
+        if (!contentInner) return false;
 
         // TOC 컨테이너 생성 (aside 태그 사용)
         const tocContainer = document.createElement('aside');
         tocContainer.id = this.settings.tocContainerId;
-        this.contentInner.appendChild(tocContainer);
+        contentInner.appendChild(tocContainer);
         return true;
     }
 
@@ -133,18 +133,18 @@ class sfTistoryToc {
     generateToc() {
         // 컨테이너와 본문 요소 가져오기
         const tocContainer = document.getElementById(this.settings.tocContainerId);
-        this.articleView = document.getElementById(this.settings.articleViewId); // 멤버 변수로 등록
-        if (!this.articleView) {
+        const articleView = document.getElementById(this.settings.articleViewId);
+        if (!articleView) {
             console.error('articleView 를 찾을 수 없습니다.');
             return false; // 실패 반환
         }
 
         // 제목 검색 대상 요소 가져오기
-        this.headingsTarget = this.articleView.querySelector(`.${this.settings.headingsTargetClass}`); // 멤버 변수로 등록
-        if (!this.headingsTarget) return false;
+        const headingsTarget = articleView.querySelector(`.${this.settings.headingsTargetClass}`);
+        if (!headingsTarget) return false;
 
         // h2, h3, h4 제목 선택
-        let headings = this.headingsTarget.querySelectorAll(this.settings.headingSelector);
+        let headings = headingsTarget.querySelectorAll(this.settings.headingSelector);
         if (headings.length === 0) return false;
 
         // 마지막 요소 제거
@@ -167,7 +167,7 @@ class sfTistoryToc {
         tocTitle.dataset.sfTocheading = 'h1';
         tocTitle.title = "테스팅 페이지"; // 기본 제목
 
-        const h1Elements = this.articleView.querySelectorAll('h1');
+        const h1Elements = articleView.querySelectorAll('h1');
 
         // h1 태그가 있으면 내용 가져오기
         if (h1Elements.length > 0) {
@@ -215,10 +215,13 @@ class sfTistoryToc {
      * 현재 화면에 보이는 제목을 확인하고 TOC에 포커스를 설정합니다.
      */
     checkFocus(tocContainer) {
-        if (!this.articleView) return;
-        if (!this.headingsTarget) return;
+        const articleView = document.getElementById(this.settings.articleViewId);
+        if (!articleView) return;
 
-        const headings = this.headingsTarget.querySelectorAll(this.settings.headingSelector);
+        const headingsTarget = articleView.querySelector(`.${this.settings.headingsTargetClass}`);
+        if (!headingsTarget) return;
+
+        const headings = headingsTarget.querySelectorAll(this.settings.headingSelector);
         if (!headings.length) return;
 
         let closestHeading = null; // 가장 가까운 제목
@@ -271,8 +274,8 @@ class sfTistoryToc {
                     if (listItem && listItem.classList.contains(this.settings.tocItemClass)) {
                         const toggleButton = listItem.querySelector('.' + this.settings.sfTocToggleClass);
                         if (toggleButton) {
-                            toggleButton.classList.remove(this.settings.sfTocToggleCloseClass);
-                            toggleButton.classList.add(this.settings.sfTocToggleOpenClass);
+                            toggleButton.classList.remove(this.sfTocToggleCloseClass);
+                            toggleButton.classList.add(this.sfTocToggleOpenClass);
                         }
                         parent.style.display = 'block';
                     }
@@ -287,39 +290,43 @@ class sfTistoryToc {
      * 제목 목록을 계층 구조로 변환합니다.
      */
     structureHeadings = (headings) => {
-        const structuredHeadings = [];
-        let currentH2 = null;
-        let currentH3 = null;
+        const structuredHeadings = []; // 계층 구조로 변환된 제목 목록
+        let currentH2 = null; // 현재 H2 제목
+        let currentH3 = null; // 현재 H3 제목
+        let currentH4 = null; // 현재 H4 제목
 
+        // 모든 제목을 순회하며 계층 구조 생성
         headings.forEach(heading => {
-            switch (heading.tagName) {
-                case 'H2':
-                    currentH2 = {
-                        element: heading,
-                        children: []
-                    };
-                    structuredHeadings.push(currentH2);
-                    currentH3 = null;
-                    break;
-                case 'H3':
-                    let parent = currentH2 ? currentH2.children : structuredHeadings;
-                    currentH3 = {
-                        element: heading,
-                        children: []
-                    };
-                    parent.push(currentH3);
-                    break;
-                case 'H4':
-                    let h4Parent = currentH3 ? currentH3.children : (currentH2 ? currentH2.children : structuredHeadings);
-                    h4Parent.push({
-                        element: heading,
-                        children: []
-                    });
-                    break;
+            // H2 제목인 경우
+            if (heading.tagName === 'H2') {
+                currentH2 = {
+                    element: heading,
+                    children: [] // 자식 제목을 담을 배열
+                };
+                structuredHeadings.push(currentH2); // 계층 구조에 추가
+                currentH3 = null; // H3 제목 초기화
+                currentH4 = null; // H4 제목 초기화
+            }
+            // H3 제목인 경우 (현재 H2 제목이 존재해야 함)
+            else if (heading.tagName === 'H3' && currentH2) {
+                currentH3 = {
+                    element: heading,
+                    children: [] // 자식 제목을 담을 배열
+                };
+                currentH2.children.push(currentH3); // 현재 H2 제목의 자식으로 추가
+                currentH4 = null; // H4 제목 초기화
+            }
+            // H4 제목인 경우 (현재 H3 제목이 존재해야 함)
+            else if (heading.tagName === 'H4' && currentH3) {
+                currentH4 = {
+                    element: heading,
+                    children: [] // 자식 제목을 담을 배열
+                };
+                currentH3.children.push(currentH4); // 현재 H3 제목의 자식으로 추가
             }
         });
 
-        return structuredHeadings;
+        return structuredHeadings; // 계층 구조 반환
     }
 
     /**
@@ -432,9 +439,53 @@ class sfTistoryToc {
  * DOMContentLoaded 이벤트가 발생하면 sfTistoryToc 클래스를 인스턴스화합니다.
  */
 document.addEventListener('DOMContentLoaded', () => {
-    // 'sf-toc-open' 클래스를 가진 요소가 있는지 확인
-    if (document.querySelector('.sf-toc-open')) {
-        // 사용자 정의 옵션을 사용하여 sfTistoryToc 인스턴스 생성
-        const toc = new sfTistoryToc();
-    }
+    // 사용자 정의 옵션을 사용하여 sfTistoryToc 인스턴스 생성
+    const toc = new sfTistoryToc();
 });
+
+/*
+ * sf-tistory-toc.js 사용 방법:
+ *
+ * 1. HTML 설정:
+ *    - 글 본문 영역에 <div id="article-view"></div>를 추가합니다.
+ *    - <div id="article-view"> 내부에 제목 (h2, h3, h4)을 감싸는 컨테이너 요소에 class="tt_article_useless_p_margin"을 추가합니다.
+ *    - <body> 태그 내에 <span class="sf-toc-open"></span>을 추가합니다. 이 요소가 존재해야 TOC가 활성화됩니다.
+ *    - TOC가 삽입될 위치에 <aside id="sf-tistory-toc"></aside>를 추가합니다. (필수 사항은 아니며, 스크립트가 자동으로 생성합니다.)
+ *
+ * 2. CSS 스타일:
+ *    - sf-tistory-toc.css 파일을 HTML에 연결합니다.
+ *
+ * 3. JavaScript 파일 연결:
+ *    - sf-tistory-toc.js 파일을 HTML에 연결합니다.
+ *
+ * 4. 사용자 정의 옵션 (선택 사항):
+ *    - sf-tistory-toc.js 파일을 HTML에 연결한 후, 다음과 같이 사용자 정의 옵션을 사용하여 sfTistoryToc 인스턴스를 생성할 수 있습니다.
+ *
+ *      document.addEventListener('DOMContentLoaded', () => {
+ *          const toc = new sfTistoryToc({
+ *              minPageWidth: 800,         // TOC가 활성화될 최소 페이지 너비 변경
+ *              headingWrapperTag: 'button',  // 제목을 감싸는 태그를 button으로 변경
+ *              sfHeadingWrapperClass: 'sf-heading-button'   //button class 변경
+ *              // 다른 옵션들도 필요에 따라 추가 가능
+ *          });
+ *      });
+ *
+ *    - 사용자 정의 가능한 옵션은 다음과 같습니다.
+ *      - tocContainerId: TOC 컨테이너의 HTML ID.
+ *      - articleViewId: 글 본문 영역의 HTML ID.
+ *      - headingsTargetClass: 제목을 검색할 상위 요소의 클래스.
+ *      - headingSelector: 목차에 포함될 제목 태그 선택자 (h2, h3, h4).
+ *      - sfTocOpenClass: TOC를 활성화하는 클래스 (해당 클래스가 있는 경우에만 TOC 생성).
+ *      - sfTocFocusClass: 현재 보고 있는 제목에 포커스를 주기 위한 클래스.
+ *      - focusOffset: 스크롤 시 제목 위치를 조정하기 위한 오프셋 (픽셀 단위).
+ *      - minPageWidth: TOC가 활성화될 최소 페이지 너비 (픽셀 단위).
+ *      - sfHeadingTitleClass: TOC 제목 (h1)을 감싸는 요소의 클래스.
+ *      - h1HeadingTitleClass: TOC 제목 (h1)에 적용할 클래스.
+ *      - sfTocToggleClass: 하위 목록 토글 버튼의 클래스.
+ *      - headingWrapperTag: 제목 텍스트를 감싸는 HTML 태그 (기본값: 'div').
+ *      - headingWrapperClass: 제목 텍스트를 감싸는 HTML 요소의 클래스 (기본값: 'heading-title').
+ *      - toggleButtonTag: 토글 버튼을 감싸는 HTML 태그 (기본값: 'span').
+ *      - sfTocToggleCloseClass: 토글 버튼 닫힘 상태 클래스.
+ *      - sfTocToggleOpenClass: 토글 버튼 열림 상태 클래스.
+ *      - tocBodyClass: TOC 전체를 감싸는 요소의 클래스.
+ */

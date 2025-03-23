@@ -401,7 +401,7 @@ hr {
 #tt-body-page #content .inner #sf-tistory-toc {
     /* <aside> #sf-tistory-toc 생성 노드 */
     display: block;
-    flex: 0 1 300px;
+    flex: 0 1;
     font-size: 1em;
     font-weight: lighter;
     padding-top: 5rem;
@@ -434,7 +434,6 @@ hr {
 #tt-body-page #content .inner #sf-tistory-toc .sf-heading-title {
     /* <div class="sf-heading-title"> */
     cursor: pointer;
-    font-size: 1em;
     padding: 2px 4px 4px 4px;
 }
 
@@ -445,7 +444,13 @@ hr {
 
 #tt-body-page #content .inner #sf-tistory-toc div.sf-heading-title {
     display: inline-block;
-    /* 한 줄에 표시 */
+    max-width: 300px;
+    min-width: 50px;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    vertical-align: middle;
+
 }
 
 .sf-toc-focus>div.sf-heading-title {
@@ -464,18 +469,36 @@ hr {
     border-width: 1px;
 }
 
+
+
 .sf-toc-toggle-open::before {
     border-color: #000000;
-    border-width: 1px;
     content: '▾';
 }
 
 .sf-toc-toggle-close::before {
     border-color: #000000;
-    border-width: 1px;
     content: '▸';
 }
 
+li[data-sf-tocheading="h2"]>div {
+    /* data-sf-tocheading 속성 값이 "h2"인 li 요소에 적용될 스타일 */
+    font-size: 1.2em;
+    font-weight: normal;
+}
+
+li[data-sf-tocheading="h3"]>div {
+    /* data-sf-tocheading 속성 값이 "h3"인 li 요소에 적용될 스타일 */
+    font-size: 1.1em;
+    font-weight: lighter;
+}
+
+li[data-sf-tocheading="h4"]>div {
+    /* data-sf-tocheading 속성 값이 "h4"인 li 요소에 적용될 스타일 */
+    font-size: 1em;
+    font-weight: lighter;
+    /* color: gray; */
+}
 
 
 

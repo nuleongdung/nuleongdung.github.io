@@ -1,0 +1,28 @@
+#sf-drag-container {
+    width: 200px;
+    height: 200px;
+    border: 1px solid black;
+    margin: 20px;
+    padding: 10px;
+}
+
+#sf-draggable {
+    background-color: lightblue;
+    padding: 10px;
+    cursor: move;
+    /* 마우스 커서 변경 */
+}
+
+#sf-drop-target {
+    width: 200px;
+    height: 200px;
+    border: 1px dashed gray;
+    margin: 20px;
+    padding: 10px;
+    text-align: center;
+}
+
+#sf-drop-target.sf-drag-over {
+    background-color: lightgreen;
+    /* 드래그 요소가 위에 있을 때 */
+}
