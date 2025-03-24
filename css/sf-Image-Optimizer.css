@@ -1,0 +1,22 @@
+#sf-drop-area {
+    border: 2px dashed #ccc;
+    padding: 20px;
+    text-align: center;
+    cursor: pointer;
+}
+
+#sf-drop-area.highlight {
+    border-color: #007bff;
+}
+
+#sfimgs {
+    display: flex;
+    flex-wrap: wrap;
+}
+
+#sfimgs img {
+    width: 100px;
+    height: 100px;
+    margin: 5px;
+    object-fit: cover;
+}
