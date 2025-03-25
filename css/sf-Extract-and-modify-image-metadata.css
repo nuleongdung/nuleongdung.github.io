@@ -1,0 +1,140 @@
+/* CSS 파일 (sf-Extract-and-modify-image-metadata.css) */
+
+#sf-drop-area {
+    border: 2px dashed #ccc;
+    padding: 20px;
+    text-align: center;
+    cursor: pointer;
+}
+
+#sfimgs {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin-top: 20px;
+}
+
+#sfimgs img {
+    width: 100px;
+    height: auto;
+    border: 1px solid #ddd;
+    padding: 5px;
+    box-sizing: border-box;
+}
+
+/* 로그 영역 스타일 */
+#sf-log-area {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    background-color: rgba(0, 0, 0, 0.7);
+    color: white;
+    padding: 10px;
+    font-size: 12px;
+    z-index: 1000;
+    overflow-y: scroll;
+    max-height: 200px;
+}
+
+#sf-log-area p {
+    margin: 0;
+    padding: 5px;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+/* 로그 레벨에 따른 스타일 */
+.log-level-info {
+    color: #fff;
+}
+
+.log-level-warning {
+    color: #ffc107;
+}
+
+.log-level-error {
+    color: #f44336;
+}
+
+/* 프로그레스 바 스타일 */
+#sf-progress-bar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 10px;
+    z-index: 1001;
+    appearance: none;
+    /* 기본 스타일 제거 */
+    -webkit-appearance: none;
+}
+
+#sf-progress-bar::-webkit-progress-bar {
+    background-color: #eee;
+}
+
+#sf-progress-bar::-webkit-progress-value {
+    background-color: #4caf50;
+}
+
+#sf-progress-bar::-moz-progress-bar {
+    background-color: #4caf50;
+}
+
+/* 토스트 메시지 스타일 */
+#sf-toast-container {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    z-index: 1002;
+}
+
+.sf-toast {
+    position: relative;
+    margin-bottom: 10px;
+    background-color: #333;
+    color: white;
+    padding: 10px 20px;
+    border-radius: 5px;
+    opacity: 0.9;
+    transition: transform 0.3s ease, opacity 0.3s ease;
+}
+
+.sf-toast-success {
+    background-color: #4caf50;
+}
+
+.sf-toast-info {
+    background-color: #2196f3;
+}
+
+.sf-toast-warning {
+    background-color: #ffc107;
+}
+
+.sf-toast-error {
+    background-color: #f44336;
+}
+
+/* 썸네일 컨테이너 스타일 */
+.sforiginalthumb {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin-top: 20px;
+}
+
+.sforiginalthumb img {
+    width: 100px;
+    height: auto;
+    border: 1px solid #ddd;
+    padding: 5px;
+    box-sizing: border-box;
+}
+
+/* 메타데이터 패널 스타일 */
+#sf-metadata-panel {
+    margin-top: 20px;
+    padding: 10px;
+    border: 1px solid #ccc;
+}

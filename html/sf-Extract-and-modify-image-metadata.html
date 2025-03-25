@@ -3,12 +3,42 @@
 
 <head>
     <title>이미지 메타테이터 추출 및 수정</title>
+    <link rel="stylesheet" href="../css/sf-Extract-and-modify-image-metadata.css">
+
+    <script src="../js/temp/sf-UiHandler.js"></script>
+    <script src="../js/temp/sf-FileHandler.js"></script>
+    <script src="../js/temp/sf-sanitizeXMPData.js"></script>
+    <script src="../js/temp/sf-XmpHandler.js"></script>
 </head>
 
 <body>
-    <link rel="stylesheet" href="../css/sf-Extract-and-modify-image-metadata.css">
-    <script src="../js/sf-Extract-and-modify-image-metadata.js"></script>
-    <div id="sf-Extract-and-modify-image-metadata" class="sf-Extract-and-modify-image-metadata"></div>
+    <div id="sf-Extract-and-modify-image-metadata" class="sf-Extract-and-modify-image-metadata">
+
+    </div>
+    <script src="../js/sfImageMetadataEditor.js"></script>
+    <script>
+        // 문서가 로드되고 난후에 실행
+        document.addEventListener('DOMContentLoaded', async () => {
+            // 설정 객체
+            const sfExtractandmodifyimagemetadataConfig = {
+                maxFileSize: 100 * 1024 * 1024, // 업로드 가능한 최대 파일 크기 (바이트 단위). 100MB로 제한.
+                supportedFormats: ['jpeg', 'jpg', 'png', 'gif', 'webp'], // 지원하는 이미지 파일 형식 목록 (소문자).
+                xmpCdnUrl: 'https://cdn.jsdelivr.net/npm/xmp-js@0.0.5/dist/xmp.iife.min.js', // XMP 라이브러리 CDN URL.
+                xmpFallbackUrl: 'https://nuleongdung.github.io/libs/xmp.iife.min.js' // XMP 라이브러리 CDN 로드 실패 시 대체 URL.
+            };
+
+            const sfuiHandler = new sfUiHandler(sfExtractandmodifyimagemetadataConfig);
+            const sffileHandler = new sfFileHandler(sfuiHandler, sfExtractandmodifyimagemetadataConfig);
+            const sfxmpHandler = new sfXmpHandler(sfuiHandler, sfExtractandmodifyimagemetadataConfig);
+
+            const imageMetadataEditor = new sfImageMetadataEditor(
+                'sf-Extract-and-modify-image-metadata',
+                sfuiHandler,
+                sffileHandler,
+                sfxmpHandler
+            );
+        });
+    </script>
 </body>
 
 </html>

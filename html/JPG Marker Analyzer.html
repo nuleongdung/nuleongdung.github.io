@@ -1,0 +1,331 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>sf-JPG Marker Analyzer (Multi-Type Input)</title>
+</head>
+
+<body>
+    <input type="file" id="fileInput" />
+    <canvas id="myCanvas" width="400" height="300" style="border:1px solid black;"></canvas>
+    <button onclick="drawOnCanvas()">캔버스에 그리기</button>
+    <button onclick="analyzeFile()">파일 분석</button>
+    <button onclick="analyzeCanvas()">캔버스 분석</button>
+    <button onclick="analyzeURL()">URL 분석</button>
+    <input type="text" id="urlInput" placeholder="이미지 URL 입력" />
+    <pre id="output"></pre>
+
+    <script>
+        class sfJPGMarkerAnalyzer {
+            constructor() {
+                this.markers = [];
+                this.exifFound = false;
+                this.iptcFound = false;
+                this.xmpFound = false;
+                this.stop = false;
+            }
+
+            async analyze(input, type = 'file') { // type 파라미터 추가
+                try {
+                    let arrayBuffer;
+
+                    switch (type) {
+                        case 'file':
+                            arrayBuffer = await this.readFileAsync(input); // input이 File 객체
+                            break;
+                        case 'blob':
+                            arrayBuffer = await this.readBlobAsync(input); // input이 Blob 객체
+                            break;
+                        case 'url':
+                            arrayBuffer = await this.readURLAsync(input); // input이 URL 문자열
+                            break;
+                        default:
+                            throw new Error('지원하지 않는 입력 타입입니다.');
+                    }
+
+                    const result = this.analyzeJPGMarkers(arrayBuffer);
+                    return result;
+
+                } catch (error) {
+                    throw error;
+                }
+            }
+
+            readFileAsync(file) {
+                return new Promise((resolve, reject) => {
+                    const reader = new FileReader();
+                    reader.onload = () => {
+                        resolve(reader.result);
+                    };
+                    reader.onerror = () => {
+                        reject(reader.error);
+                    };
+                    reader.readAsArrayBuffer(file);
+                });
+            }
+
+            readBlobAsync(blob) {
+                return new Promise((resolve, reject) => {
+                    const reader = new FileReader();
+                    reader.onload = () => {
+                        resolve(reader.result);
+                    };
+                    reader.onerror = () => {
+                        reject(reader.error);
+                    };
+                    reader.readAsArrayBuffer(blob);
+                });
+            }
+
+            readURLAsync(url) {
+                return new Promise((resolve, reject) => {
+                    fetch(url)
+                        .then(response => response.arrayBuffer())
+                        .then(buffer => resolve(buffer))
+                        .catch(error => reject(error));
+                });
+            }
+
+            analyzeJPGMarkers(buffer) {
+                this.markers = []; // 초기화
+                this.exifFound = false;
+                this.iptcFound = false;
+                this.xmpFound = false;
+                this.stop = false;
+
+                const dataView = new DataView(buffer);
+                let offset = 0;
+
+                if (dataView.getUint16(offset) !== 0xFFD8) {
+                    throw new Error("JPG 파일이 아닙니다.");
+                }
+
+                this.markers.push({ marker: "SOI (Start of Image)", offset: offset.toString(16).toUpperCase() }); // 시작 마커 추가
+                offset += 2;
+
+                while (offset < dataView.byteLength && !this.stop) { // SOS 이후 중단
+                    const marker = dataView.getUint16(offset);
+                    const markerName = this.getMarkerName(marker);
+                    const markerInfo = { marker: markerName, offset: offset.toString(16).toUpperCase() };
+                    this.markers.push(markerInfo);
+                    offset += 2;
+
+                    switch (marker) {
+                        case 0xFFE1:  // APP1
+                            const app1Length = dataView.getUint16(offset);
+                            offset += 2;
+                            const app1Data = new TextDecoder().decode(new DataView(buffer, offset, Math.min(10, app1Length - 2))); //최소한의 길이로 읽기
+
+                            if (app1Data.startsWith("Exif")) {
+                                this.exifFound = true;
+                                markerInfo.exif = true;
+                            } else if (app1Data.startsWith("http://ns.adobe.com/xap/1.0/")) { //더 정확한 XMP체크
+                                this.xmpFound = true;
+                                markerInfo.xmp = true;
+                            } else if (app1Data.startsWith("http://iptc.org/std/IIM/41")) { //더 정확한 IPTC체크
+                                this.iptcFound = true;
+                                markerInfo.iptc = true;
+                            }
+
+                            offset += app1Length - 2;
+                            break;
+
+                        case 0xFFE2: //APP2
+                            const app2Length = dataView.getUint16(offset);
+                            offset += 2;
+                            const app2Data = new TextDecoder().decode(new DataView(buffer, offset, Math.min(14, app2Length - 2))); //최소한의 길이로 읽기
+                            if (app2Data.startsWith("Adobe_CM") && !this.iptcFound) { //Adobe_CM으로 시작하는지 확인
+                                this.iptcFound = true;
+                                markerInfo.iptc = true;
+                            }
+                            offset += app2Length - 2;
+                            break;
+
+
+                        case 0xFFDA: // SOS
+                            this.stop = true; // SOS 마커를 만나면 중단
+                            break;
+
+                        // SOF 마커 처리
+                        case 0xFFC0: // SOF0
+                        case 0xFFC1: // SOF1
+                        case 0xFFC2: // SOF2
+                        case 0xFFC3: // SOF3
+                        case 0xFFC4: // DHT
+                        case 0xFFC5:
+                        case 0xFFC6:
+                        case 0xFFC7:
+                        case 0xFFC8:
+                        case 0xFFC9:
+                        case 0xFFCA:
+                        case 0xFFCB:
+                        case 0xFFCC:
+                        case 0xFFCD:
+                        case 0xFFCE:
+                        case 0xFFCF:
+                        case 0xFFD0: //RST0
+                        case 0xFFD1: //RST1
+                        case 0xFFD2: //RST2
+                        case 0xFFD3: //RST3
+                        case 0xFFD4: //RST4
+                        case 0xFFD5: //RST5
+                        case 0xFFD6: //RST6
+                        case 0xFFD7: //RST7
+                        case 0xFFD8: //SOI
+                        case 0xFFD9: //EOI
+                        case 0xFFDB:  //DQT
+                        case 0xFFDC: //DNL
+                        case 0xFFDD: //DRI
+                        case 0xFFDE: //DHP
+                        case 0xFFDF: //EXP
+                        case 0xFFE0: //APP0
+                            const length = dataView.getUint16(offset);
+                            offset += 2;
+                            offset += length - 2;
+                            break;
+                        default:
+                            // 알려지지 않은 마커 또는 처리하지 않는 마커는 그냥 넘어감
+                            console.warn("Unknown marker:", marker.toString(16));
+                            break;
+
+                    }
+
+                }
+
+                return {
+                    markers: this.markers,
+                    exif: this.exifFound,
+                    iptc: this.iptcFound,
+                    xmp: this.xmpFound
+                };
+            }
+
+            getMarkerName(marker) {
+                switch (marker) {
+                    case 0xFFD8: return "SOI (Start of Image)";
+                    case 0xFFD9: return "EOI (End of Image)";
+                    case 0xFFE0: return "APP0";
+                    case 0xFFE1: return "APP1";
+                    case 0xFFE2: return "APP2";
+                    case 0xFFC0: return "SOF0 (Start of Frame 0)";
+                    case 0xFFC1: return "SOF1 (Start of Frame 1)";
+                    case 0xFFC2: return "SOF2 (Start of Frame 2)";
+                    case 0xFFC3: return "SOF3 (Start of Frame 3)";
+                    case 0xFFC4: return "DHT (Define Huffman Table)";
+                    case 0xFFC5: return "SOF5 (Start of Frame 5)";
+                    case 0xFFC6: return "SOF6 (Start of Frame 6)";
+                    case 0xFFC7: return "SOF7 (Start of Frame 7)";
+                    case 0xFFC8: return "SOF8 (Start of Frame 8)";
+                    case 0xFFC9: return "SOF9 (Start of Frame 9)";
+                    case 0xFFCA: return "SOF10 (Start of Frame 10)";
+                    case 0xFFCB: return "SOF11 (Start of Frame 11)";
+                    case 0xFFCC: return "SOF12 (Start of Frame 12)";
+                    case 0xFFCD: return "SOF13 (Start of Frame 13)";
+                    case 0xFFCE: return "SOF14 (Start of Frame 14)";
+                    case 0xFFCF: return "SOF15 (Start of Frame 15)";
+                    case 0xFFDA: return "SOS (Start of Scan)";
+                    case 0xFFDB: return "DQT (Define Quantization Table)";
+                    case 0xFFDC: return "DNL (Define Number of Lines)";
+                    case 0xFFDD: return "DRI (Define Restart Interval)";
+                    case 0xFFDE: return "DHP (Define Huffman Table)";
+                    case 0xFFDF: return "EXP (Expand Reference Component)";
+                    case 0xFFE0: return "APP0 (Application Segment 0)";
+                    case 0xFFE1: return "APP1 (Application Segment 1)";
+                    case 0xFFE2: return "APP2 (Application Segment 2)";
+                    case 0xFFE3: return "APP3 (Application Segment 3)";
+                    case 0xFFE4: return "APP4 (Application Segment 4)";
+                    case 0xFFE5: return "APP5 (Application Segment 5)";
+                    case 0xFFE6: return "APP6 (Application Segment 6)";
+                    case 0xFFE7: return "APP7 (Application Segment 7)";
+                    case 0xFFE8: return "APP8 (Application Segment 8)";
+                    case 0xFFE9: return "APP9 (Application Segment 9)";
+                    case 0xFFEA: return "APP10 (Application Segment 10)";
+                    case 0xFFEB: return "APP11 (Application Segment 11)";
+                    case 0xFFEC: return "APP12 (Application Segment 12)";
+                    case 0xFFED: return "APP13 (Application Segment 13)";
+                    case 0xFFEE: return "APP14 (Application Segment 14)";
+                    case 0xFFEF: return "APP15 (Application Segment 15)";
+                    case 0xFFF0: return "JPG0";
+                    case 0xFFF1: return "JPG1";
+                    case 0xFFF2: return "JPG2";
+                    case 0xFFF3: return "JPG3";
+                    case 0xFFF4: return "JPG4";
+                    case 0xFFF5: return "JPG5";
+                    case 0xFFF6: return "JPG6";
+                    case 0xFFF7: return "JPG7";
+                    case 0xFFF8: return "JPG8";
+                    case 0xFFF9: return "JPG9";
+                    case 0xFFFA: return "JPG10";
+                    case 0xFFFB: return "JPG11";
+                    case 0xFFFC: return "JPG12";
+                    case 0xFFFD: return "JPG13";
+                    case 0xFFFE: return "COM (Comment)";
+                    default: return `Unknown Marker (0x${marker.toString(16).toUpperCase()})`;
+                }
+            }
+        }
+
+        function drawOnCanvas() {
+            const canvas = document.getElementById('myCanvas');
+            const ctx = canvas.getContext('2d');
+            ctx.fillStyle = 'rgb(200, 0, 0)';
+            ctx.fillRect(10, 10, 50, 50);
+
+            ctx.fillStyle = 'rgba(0, 0, 200, 0.5)';
+            ctx.fillRect(30, 30, 50, 50);
+        }
+
+        async function analyzeFile() {
+            const fileInput = document.getElementById('fileInput');
+            const output = document.getElementById('output');
+            const file = fileInput.files[0];
+
+            if (file) {
+                try {
+                    const analyzer = new sfJPGMarkerAnalyzer();
+                    const result = await analyzer.analyze(file, 'file'); // type = 'file'
+                    output.textContent = JSON.stringify(result, null, 2);
+                } catch (error) {
+                    output.textContent = `오류 발생: ${error.message}`;
+                }
+            } else {
+                output.textContent = "파일을 선택해주세요.";
+            }
+        }
+
+        async function analyzeCanvas() {
+            const canvas = document.getElementById('myCanvas');
+            const output = document.getElementById('output');
+
+            canvas.toBlob(async function (blob) {
+                try {
+                    const analyzer = new sfJPGMarkerAnalyzer();
+                    const result = await analyzer.analyze(blob, 'blob'); // type = 'blob'
+                    output.textContent = JSON.stringify(result, null, 2);
+                } catch (error) {
+                    output.textContent = `오류 발생: ${error.message}`;
+                }
+            }, 'image/jpeg'); // JPEG 형식으로 Blob 생성 (필수)
+        }
+
+        async function analyzeURL() {
+            const urlInput = document.getElementById('urlInput');
+            const output = document.getElementById('output');
+            const url = urlInput.value;
+
+            if (url) {
+                try {
+                    const analyzer = new sfJPGMarkerAnalyzer();
+                    const result = await analyzer.analyze(url, 'url'); // type = 'url'
+                    output.textContent = JSON.stringify(result, null, 2);
+                } catch (error) {
+                    output.textContent = `오류 발생: ${error.message}`;
+                }
+            } else {
+                output.textContent = "URL을 입력해주세요.";
+            }
+        }
+    </script>
+</body>
+
+</html>

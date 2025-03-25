@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>sfImageSanitizerJs (다중 파일 처리)</title>
+    <script src="../js/sfImageSanitizerJs.js"></script>
+    <style>
+        .safe-image {
+            max-width: 200px;
+            max-height: 200px;
+            border: 1px solid #ccc;
+            margin: 5px;
+        }
+
+        .warning {
+            color: red;
+            font-weight: bold;
+        }
+    </style>
+</head>
+
+<body>
+    <h1>이미지 XSS 스캐너</h1>
+    <input type="file" id="fileInput" multiple onchange="handleFiles(this.files)" />
+    <div id="results"></div>
+
+    <script>
+        async function handleFiles(files) {
+            const sanitizer = new sfImageSanitizerJs();
+            const resultsDiv = document.getElementById('results');
+            resultsDiv.innerHTML = ''; // 결과 영역 초기화
+
+            for (const file of files) {
+                try {
+                    const isSafe = await sanitizer.scan(file, false);
+
+                    if (isSafe === true) {
+                        // 안전한 이미지: 이미지 태그로 표시
+                        const img = document.createElement('img');
+                        img.src = URL.createObjectURL(file); // Blob URL 생성
+                        img.classList.add('safe-image');
+                        resultsDiv.appendChild(img);
+
+                        // Blob URL은 더 이상 필요하지 않으면 해제해야 합니다.
+                        img.onload = () => URL.revokeObjectURL(img.src);
+
+                    } else {
+                        // 안전하지 않은 이미지: 경고 메시지 표시
+                        const warningDiv = document.createElement('div');
+                        warningDiv.classList.add('warning');
+                        warningDiv.textContent = `[${file.name}] XSS 스캔 실패: ${isSafe}`;
+                        resultsDiv.appendChild(warningDiv);
+                    }
+                } catch (error) {
+                    const errorDiv = document.createElement('div');
+                    errorDiv.classList.add('warning');
+                    errorDiv.textContent = `[${file.name}] 파일 처리 중 오류 발생: ${error.message}`;
+                    resultsDiv.appendChild(errorDiv);
+                }
+            }
+        }
+    </script>
+</body>
+
+</html>

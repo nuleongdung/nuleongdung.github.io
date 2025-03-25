@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>JPG 마커 분석기</title>
+</head>
+
+<body>
+    <input type="file" id="fileInput" />
+    <button onclick="processFile()">분석 시작</button>
+    <pre id="output"></pre>
+
+    <script>
+        async function processFile() {
+            const fileInput = document.getElementById('fileInput');
+            const output = document.getElementById('output');
+            const file = fileInput.files[0];
+
+            if (file) {
+                try {
+                    const arrayBuffer = await readFileAsync(file);
+                    const markers = analyzeJPGMarkers(arrayBuffer);
+                    output.textContent = JSON.stringify(markers, null, 2); // 보기 좋게 출력
+
+                } catch (error) {
+                    output.textContent = `오류 발생: ${error.message}`;
+                }
+            } else {
+                output.textContent = "파일을 선택해주세요.";
+            }
+        }
+
+        function readFileAsync(file) {
+            return new Promise((resolve, reject) => {
+                const reader = new FileReader();
+                reader.onload = () => {
+                    resolve(reader.result);
+                };
+                reader.onerror = () => {
+                    reject(reader.error);
+                };
+                reader.readAsArrayBuffer(file);
+            });
+        }
+
+        function analyzeJPGMarkers(buffer) {
+            const dataView = new DataView(buffer);
+            let offset = 0;
+            const markers = [];
+            let exifFound = false;
+            let iptcFound = false;
+            let xmpFound = false;
+            let stop = false;  // SOS마커 이후 중단을 위한 플래그
+
+            // JPG 파일 시작 마커 확인
+            if (dataView.getUint16(offset) !== 0xFFD8) {
+                throw new Error("JPG 파일이 아닙니다.");
+            }
+
+            markers.push({ marker: "SOI (Start of Image)", offset: offset.toString(16).toUpperCase() }); // 시작 마커 추가
+            offset += 2;
+
+            while (offset < dataView.byteLength && !stop) { // SOS 이후 중단
+                const marker = dataView.getUint16(offset);
+                const markerName = getMarkerName(marker);
+                const markerInfo = { marker: markerName, offset: offset.toString(16).toUpperCase() };
+                markers.push(markerInfo);
+                offset += 2;
+
+                switch (marker) {
+                    case 0xFFE1:  // APP1
+                        const app1Length = dataView.getUint16(offset);
+                        offset += 2;
+                        const app1Data = new TextDecoder().decode(new DataView(buffer, offset, Math.min(10, app1Length - 2))); //최소한의 길이로 읽기
+
+                        if (app1Data.startsWith("Exif")) {
+                            exifFound = true;
+                            markerInfo.exif = true;
+                        } else if (app1Data.startsWith("http://ns.adobe.com/xap/1.0/")) { //더 정확한 XMP체크
+                            xmpFound = true;
+                            markerInfo.xmp = true;
+                        } else if (app1Data.startsWith("http://iptc.org/std/IIM/41")) { //더 정확한 IPTC체크
+                            iptcFound = true;
+                            markerInfo.iptc = true;
+                        }
+
+                        offset += app1Length - 2;
+                        break;
+
+                    case 0xFFE2: //APP2
+                        const app2Length = dataView.getUint16(offset);
+                        offset += 2;
+                        const app2Data = new TextDecoder().decode(new DataView(buffer, offset, Math.min(14, app2Length - 2))); //최소한의 길이로 읽기
+                        if (app2Data.startsWith("Adobe_CM") && !iptcFound) { //Adobe_CM으로 시작하는지 확인
+                            iptcFound = true;
+                            markerInfo.iptc = true;
+                        }
+                        offset += app2Length - 2;
+                        break;
+
+
+                    case 0xFFDA: // SOS
+                        stop = true; // SOS 마커를 만나면 중단
+                        break;
+
+                    // SOF 마커 처리
+                    case 0xFFC0: // SOF0
+                    case 0xFFC1: // SOF1
+                    case 0xFFC2: // SOF2
+                    case 0xFFC3: // SOF3
+                    case 0xFFC4: // DHT
+                    case 0xFFC5:
+                    case 0xFFC6:
+                    case 0xFFC7:
+                    case 0xFFC8:
+                    case 0xFFC9:
+                    case 0xFFCA:
+                    case 0xFFCB:
+                    case 0xFFCC:
+                    case 0xFFCD:
+                    case 0xFFCE:
+                    case 0xFFCF:
+                    case 0xFFD0: //RST0
+                    case 0xFFD1: //RST1
+                    case 0xFFD2: //RST2
+                    case 0xFFD3: //RST3
+                    case 0xFFD4: //RST4
+                    case 0xFFD5: //RST5
+                    case 0xFFD6: //RST6
+                    case 0xFFD7: //RST7
+                    case 0xFFD8: //SOI
+                    case 0xFFD9: //EOI
+                    case 0xFFDB:  //DQT
+                    case 0xFFDC: //DNL
+                    case 0xFFDD: //DRI
+                    case 0xFFDE: //DHP
+                    case 0xFFDF: //EXP
+                    case 0xFFE0: //APP0
+                        const length = dataView.getUint16(offset);
+                        offset += 2;
+                        offset += length - 2;
+                        break;
+                    default:
+                        // 알려지지 않은 마커 또는 처리하지 않는 마커는 그냥 넘어감
+                        console.warn("Unknown marker:", marker.toString(16));
+                        break;
+
+                }
+
+            }
+
+            return {
+                markers,
+                exif: exifFound,
+                iptc: iptcFound,
+                xmp: xmpFound
+            };
+        }
+
+        function getMarkerName(marker) {
+            switch (marker) {
+                case 0xFFD8: return "SOI (Start of Image)";
+                case 0xFFD9: return "EOI (End of Image)";
+                case 0xFFE0: return "APP0";
+                case 0xFFE1: return "APP1";
+                case 0xFFE2: return "APP2";
+                case 0xFFC0: return "SOF0 (Start of Frame 0)";
+                case 0xFFC1: return "SOF1 (Start of Frame 1)";
+                case 0xFFC2: return "SOF2 (Start of Frame 2)";
+                case 0xFFC3: return "SOF3 (Start of Frame 3)";
+                case 0xFFC4: return "DHT (Define Huffman Table)";
+                case 0xFFC5: return "SOF5 (Start of Frame 5)";
+                case 0xFFC6: return "SOF6 (Start of Frame 6)";
+                case 0xFFC7: return "SOF7 (Start of Frame 7)";
+                case 0xFFC8: return "SOF8 (Start of Frame 8)";
+                case 0xFFC9: return "SOF9 (Start of Frame 9)";
+                case 0xFFCA: return "SOF10 (Start of Frame 10)";
+                case 0xFFCB: return "SOF11 (Start of Frame 11)";
+                case 0xFFCC: return "SOF12 (Start of Frame 12)";
+                case 0xFFCD: return "SOF13 (Start of Frame 13)";
+                case 0xFFCE: return "SOF14 (Start of Frame 14)";
+                case 0xFFCF: return "SOF15 (Start of Frame 15)";
+                case 0xFFDA: return "SOS (Start of Scan)";
+                case 0xFFDB: return "DQT (Define Quantization Table)";
+                case 0xFFDC: return "DNL (Define Number of Lines)";
+                case 0xFFDD: return "DRI (Define Restart Interval)";
+                case 0xFFDE: return "DHP (Define Huffman Table)";
+                case 0xFFDF: return "EXP (Expand Reference Component)";
+                case 0xFFE0: return "APP0 (Application Segment 0)";
+                case 0xFFE1: return "APP1 (Application Segment 1)";
+                case 0xFFE2: return "APP2 (Application Segment 2)";
+                case 0xFFE3: return "APP3 (Application Segment 3)";
+                case 0xFFE4: return "APP4 (Application Segment 4)";
+                case 0xFFE5: return "APP5 (Application Segment 5)";
+                case 0xFFE6: return "APP6 (Application Segment 6)";
+                case 0xFFE7: return "APP7 (Application Segment 7)";
+                case 0xFFE8: return "APP8 (Application Segment 8)";
+                case 0xFFE9: return "APP9 (Application Segment 9)";
+                case 0xFFEA: return "APP10 (Application Segment 10)";
+                case 0xFFEB: return "APP11 (Application Segment 11)";
+                case 0xFFEC: return "APP12 (Application Segment 12)";
+                case 0xFFED: return "APP13 (Application Segment 13)";
+                case 0xFFEE: return "APP14 (Application Segment 14)";
+                case 0xFFEF: return "APP15 (Application Segment 15)";
+                case 0xFFF0: return "JPG0";
+                case 0xFFF1: return "JPG1";
+                case 0xFFF2: return "JPG2";
+                case 0xFFF3: return "JPG3";
+                case 0xFFF4: return "JPG4";
+                case 0xFFF5: return "JPG5";
+                case 0xFFF6: return "JPG6";
+                case 0xFFF7: return "JPG7";
+                case 0xFFF8: return "JPG8";
+                case 0xFFF9: return "JPG9";
+                case 0xFFFA: return "JPG10";
+                case 0xFFFB: return "JPG11";
+                case 0xFFFC: return "JPG12";
+                case 0xFFFD: return "JPG13";
+                case 0xFFFE: return "COM (Comment)";
+                default: return `Unknown Marker (0x${marker.toString(16).toUpperCase()})`;
+            }
+        }
+    </script>
+</body>
+
+</html>

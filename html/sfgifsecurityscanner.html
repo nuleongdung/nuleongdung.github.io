@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>GIF 파일 보안 분석기</title>
+</head>
+
+<body>
+    <h1>GIF 파일 보안 분석기</h1>
+
+    <div>
+        <h2>파일 분석</h2>
+        <input type="file" id="fileInput" accept=".gif">
+        <button id="analyzeFileButton">파일 분석</button>
+    </div>
+
+    <div>
+        <h2>URL 분석</h2>
+        <input type="text" id="urlInput" placeholder="GIF URL을 입력하세요">
+        <button id="analyzeUrlButton">URL 분석</button>
+    </div>
+
+    <div id="result"></div>
+
+    <script src="sfgifsecurityscanner.js" defer></script>
+    <script>
+        const scanner = new sfGifSecurityScanner();
+
+        // URL 유효성 검사 함수
+        function isValidURL(url) {
+            try {
+                new URL(url);
+                return true;
+            } catch (_) {
+                return false;
+            }
+        }
+
+        // 파일 분석 버튼 클릭 이벤트
+        document.getElementById('analyzeFileButton').addEventListener('click', async () => {
+            const fileInput = document.getElementById('fileInput');
+            const file = fileInput.files[0];
+
+            if (file) {
+                try {
+                    const reader = new FileReader();
+                    reader.onload = async function (event) {
+                        const buffer = new Uint8Array(event.target.result);
+                        const analysisResult = await scanner.analyzeGIF(buffer); // buffer를 직접 전달
+                        console.log(analysisResult);
+                        displayResult(analysisResult); // scanner의 displayResult 호출
+                    };
+                    reader.onerror = (error) => {
+                        console.error('파일 읽기 오류:', error);
+                        alert(`파일 읽기 오류: ${error.message}`);
+                    };
+                    reader.readAsArrayBuffer(file);
+                } catch (error) {
+                    console.error('GIF 분석 중 오류 발생:', error);
+                    alert(`GIF 분석 중 오류 발생: ${error.message}`);
+                }
+            } else {
+                alert('파일을 선택해주세요.');
+            }
+        });
+
+        // URL 분석 버튼 클릭 이벤트
+        document.getElementById('analyzeUrlButton').addEventListener('click', async () => {
+            const imageUrl = document.getElementById('urlInput').value;
+
+            if (imageUrl) {
+                if (!isValidURL(imageUrl)) {
+                    alert('유효하지 않은 URL 형식입니다.');
+                    displayResult({ success: false, error: '유효하지 않은 URL 형식입니다.', reason: 'invalid_url' });
+                    return;
+                }
+
+                try {
+                    const response = await fetch(imageUrl);
+                    if (!response.ok) {
+                        alert(`URL 요청 실패: ${response.status} ${response.statusText}`);
+                        displayResult({ success: false, error: `URL 요청 실패: ${response.status} ${response.statusText}`, reason: 'fetch_failed', status: response.status, statusText: response.statusText });
+                        return;
+                    }
+
+                    const buffer = new Uint8Array(await response.arrayBuffer());
+                    const analysisResult = await scanner.analyzeGIF(buffer); // buffer를 직접 전달
+                    console.log(analysisResult);
+                    displayResult(analysisResult); // scanner의 displayResult 호출
+                } catch (error) {
+                    console.error('URL 분석 중 오류 발생:', error);
+                    alert(`URL 분석 중 오류 발생: ${error.message}`);
+                    displayResult({ success: false, error: `URL에서 데이터를 가져오는 중 오류 발생: ${error.message}`, reason: 'fetch_error', details: error.message });
+                }
+            } else {
+                alert('URL을 입력해주세요.');
+            }
+        });
+
+        // HTML에서 결과를 표시하는 함수
+        function displayResult(result) {
+            const resultDiv = document.getElementById('result');
+            resultDiv.innerHTML = ''; // Clear previous results
+            resultDiv.innerHTML = `<pre>${JSON.stringify(result, null, 2)}</pre>`; // JSON 포맷으로 결과 출력
+        }
+    </script>
+</body>
+
+</html>
