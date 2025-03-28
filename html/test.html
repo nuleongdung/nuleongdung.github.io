@@ -1,43 +1,60 @@
 <!DOCTYPE html>
-<html>
+<html lang="ko">
 
 <head>
-    <title>EXIF 데이터 추출</title>
-    <script src="https://cdn.jsdelivr.net/npm/exif-js"></script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>나의 블로그 게임</title>
+    <style>
+        /* 스타일 정의 */
+        body {
+            font-family: sans-serif;
+            margin: 0;
+            padding: 20px;
+        }
+
+        .game-container {
+            max-width: 1000px;
+            width: 100%;
+            margin: 0 auto;
+        }
+
+        .game-responsive-wrapper {
+            position: relative;
+            padding-bottom: 56.25%;
+            /* 16:9 비율 */
+            height: 0;
+            overflow: hidden;
+        }
+
+        .game-responsive-wrapper iframe {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            border: 0;
+        }
+    </style>
 </head>
 
 <body>
-    <h1>EXIF 데이터 추출</h1>
-    <input type="file" id="fileInput" accept="image/*">
-    <pre id="output"></pre>
 
-    <script>
-        const fileInput = document.getElementById('fileInput');
-        const output = document.getElementById('output');
+    <h1>나의 블로그 게임</h1>
+    <p>Merge Arena 게임을 즐겨보세요!</p>
 
-        fileInput.addEventListener('change', function (e) {
-            const file = e.target.files[0];
+    <div class="outer-container">
+        <iframe id="gameframe"
+            src="https://7f1564ff-b034-44e2-9be3-ca1fd2ce4680.poki-gdn.com/8de2d7de-691f-4152-ba71-424d239655f5/index.html?country=KR&ccpaApplies=0&url_referrer=http%3A%2F%2F127.0.0.1%3A5500%2F&tag=pg-d7bc1b2172dfc13bc2d1ac3b56970987a0ce3251&site_id=48&iso_lang=ko&poki_url=https%3A%2F%2Fpoki.com%2Fkr%2Fg%2Fmerge-arena&hoist=yes&nonPersonalized=n&cloudsavegames=n&familyFriendly=n&categories=3%2C37%2C65%2C66%2C93%2C257%2C1014%2C1126%2C1140%2C1141%2C1147%2C1155%2C1190&ab=d49cbdc88ea12a96bd0405e20eb6d4b587854085&experiment=a-72b79e15&special_condition=landing&game_id=7f1564ff-b034-44e2-9be3-ca1fd2ce4680&game_version_id=8de2d7de-691f-4152-ba71-424d239655f5&inspector=0&csp=1"
+            allow="autoplay; camera; focus-without-user-activation *; monetization; gamepad; keyboard-map *; xr-spatial-tracking; clipboard-write; web-share; accelerometer; magnetometer; gyroscope; display-capture"
+            scrolling="no">
+            <!-- 내부 iframe 스타일 (필요한 경우) -->
 
-            if (file) {
-                const reader = new FileReader();
+        </iframe>
+    </div>
 
-                reader.onload = function (e) {
-                    const img = new Image();
-                    img.onload = function () {
-                        EXIF.getData(img, function () {
-                            const allMetaData = EXIF.getAllTags(this);
-                            output.textContent = JSON.stringify(allMetaData, null, '\t');
-                        });
-                    };
-                    img.src = e.target.result;
-                }
+    <p>재밌게 플레이하셨나요?</p>
 
-                reader.readAsDataURL(file);
-            } else {
-                output.textContent = '파일이 선택되지 않았습니다.';
-            }
-        });
-    </script>
 </body>
 
 </html>

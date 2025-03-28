@@ -4,6 +4,8 @@
 <head>
     <title>sfImageSanitizerJs (다중 파일 처리)</title>
     <script src="../js/sfImageSanitizerJs.js"></script>
+    <script src="../js/sfImageSanitizerJs.js"></script>
+    <link rel="stylesheet" href="https://nuleongdung.github.io/css/20-open-source-browsers.css?v=1.1">
     <style>
         .safe-image {
             max-width: 200px;
@@ -21,6 +23,9 @@
 
 <body>
     <h1>이미지 XSS 스캐너</h1>
+    <div id="sf-sfImageSanitizer">
+
+    </div>
     <input type="file" id="fileInput" multiple onchange="handleFiles(this.files)" />
     <div id="results"></div>
 
