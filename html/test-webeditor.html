@@ -1,0 +1,312 @@
+<!DOCTYPE html>
+<html lang="ko">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>웹 에디터</title>
+    <style>
+        /* 기본 스타일 (선택 사항) */
+        #sfwebeditor {
+            width: 100%;
+            height: 400px;
+            border: 1px solid #ccc;
+            padding: 10px;
+            outline: none;
+            /* 포커스 시 기본 outline 제거 */
+        }
+
+        /* 버튼 스타일 (선택 사항) */
+        button {
+            padding: 5px 10px;
+            margin-right: 5px;
+            cursor: pointer;
+        }
+
+        /* 소스 코드 표시 영역 스타일 (선택 사항) */
+        #sourceCodeArea {
+            width: 100%;
+            height: 300px;
+            border: 1px solid #ccc;
+            padding: 10px;
+            overflow: auto;
+            /* 내용이 넘치면 스크롤 */
+            font-family: monospace;
+            /* 고정폭 글꼴 */
+            outline: none;
+            /* 포커스 시 기본 outline 제거 */
+            white-space: pre-wrap;
+            /* 줄바꿈 유지 */
+        }
+
+        /* 탭 인터페이스 스타일 */
+        .tab-container {
+            border-bottom: 1px solid #ccc;
+            margin-bottom: 10px;
+        }
+
+        .tab-button {
+            padding: 5px 10px;
+            margin-right: 5px;
+            cursor: pointer;
+            border: none;
+            background-color: #eee;
+        }
+
+        .tab-button.active {
+            background-color: #fff;
+            border-bottom: 1px solid #fff;
+        }
+
+        .tab-content {
+            display: none;
+            padding: 10px;
+        }
+
+        .tab-content.active {
+            display: block;
+        }
+
+        /* 유효성 검사 메시지 스타일 */
+        .validation-message {
+            color: red;
+            font-size: 0.8em;
+            margin-top: 5px;
+        }
+    </style>
+</head>
+
+<body>
+
+    <h1>웹 에디터</h1>
+
+    <div class="tab-container">
+        <button id="editorTabBtn" class="tab-button active" data-tab="editor" aria-label="웹 에디터 탭"
+            aria-controls="sfwebeditor">웹 에디터</button>
+        <button id="sourceTabBtn" class="tab-button" data-tab="source" aria-label="소스 코드 탭"
+            aria-controls="sourceCodeArea">소스 코드</button>
+        <button id="removeCSSBtn" title="CSS 제거" data-action="remove-css" aria-label="웹 에디터 내용의 CSS 스타일을 제거합니다.">CSS
+            제거</button>
+    </div>
+
+    <div id="editorTab" class="tab-content active">
+
+        <div id="sfwebeditor" contenteditable="true" style="width: 100%;height:400px" aria-label="웹 에디터" role="textbox"
+            aria-multiline="true" tabindex="0">
+            여기에 내용을 입력하세요.
+        </div>
+    </div>
+
+    <div id="sourceTab" class="tab-content">
+        <h2>HTML 소스 코드</h2>
+        <pre id="sourceCodeArea" contenteditable="true" aria-live="polite" aria-atomic="true" tabindex="0"
+            aria-label="HTML 소스 코드 에디터" role="textbox" aria-multiline="true"></pre>
+        <div id="validationMessage" class="validation-message" aria-live="assertive"></div>
+    </div>
+
+    <script>
+        const webEditor = document.getElementById('sfwebeditor');
+        const removeCSSBtn = document.getElementById('removeCSSBtn');
+        const sourceCodeArea = document.getElementById('sourceCodeArea');
+        const validationMessage = document.getElementById('validationMessage');
+
+        const editorTabBtn = document.getElementById('editorTabBtn');
+        const sourceTabBtn = document.getElementById('sourceTabBtn');
+        const editorTab = document.getElementById('editorTab');
+        const sourceTab = document.getElementById('sourceTab');
+
+        // 탭 전환 함수
+        function showTab(tabId) {
+            // 모든 탭 내용과 버튼 비활성화
+            editorTab.classList.remove('active');
+            sourceTab.classList.remove('active');
+            editorTabBtn.classList.remove('active');
+            sourceTabBtn.classList.remove('active');
+
+            // 선택된 탭 내용과 버튼 활성화
+            if (tabId === 'editor') {
+                editorTab.classList.add('active');
+                editorTabBtn.classList.add('active');
+            } else if (tabId === 'source') {
+                sourceTab.classList.add('active');
+                sourceTabBtn.classList.add('active');
+                // 소스 코드 탭이 활성화될 때 소스 코드 업데이트
+                updateSourceCodeArea();
+            }
+        }
+
+        // 소스 코드 영역 업데이트 및 유효성 검사
+        function updateSourceCodeArea() {
+            let htmlContent = webEditor.innerHTML;
+
+            // HTML 태그 외 모든 요소 제거
+            htmlContent = htmlContent.replace(/<[^>]*>/g, function (tag) {
+                // HTML 태그인지 확인
+                if (tag.startsWith("<") && tag.endsWith(">") && tag.length > 2 && !tag.includes(" ")) {
+                    return tag; // HTML 태그는 그대로 둠
+                } else {
+                    return ""; // HTML 태그가 아니면 제거
+                }
+            });
+
+            // JavaScript 관련 속성 제거 (id, class, onclick 등)
+            htmlContent = htmlContent.replace(/( id|class|onclick)="[^"]*"/g, '');
+
+            // <ms-cmark-node> 태그 제거
+            htmlContent = htmlContent.replace(/<ms-cmark-node[^>]*>|<\/ms-cmark-node>/g, '');
+
+            // 공백 문자 및   제거
+            const compressedHtml = htmlContent
+                .replace(/ /g, '') //   제거
+                .replace(/\s+/g, ' ')     // 연속 공백을 하나의 공백으로
+                .trim();                  // 앞뒤 공백 제거
+
+            sourceCodeArea.textContent = compressedHtml;
+            validateHTML(compressedHtml);
+        }
+
+        // HTML 유효성 검사 함수
+        function validateHTML(html) {
+            try {
+                // 가상 DOM을 사용하여 HTML 파싱 시도
+                const parser = new DOMParser();
+                const doc = parser.parseFromString(html, 'text/html');
+
+                // 파싱 에러 확인
+                const errorNode = doc.querySelector('parsererror');
+                if (errorNode) {
+                    validationMessage.textContent = 'HTML 유효성 검사 실패: ' + errorNode.textContent;
+                } else {
+                    validationMessage.textContent = 'HTML 유효성 검사 통과';
+                    validationMessage.style.color = 'green';
+                    setTimeout(() => {
+                        validationMessage.textContent = '';
+                        validationMessage.style.color = 'red';
+                    }, 3000); // 3초 후에 메시지 지움
+                }
+            } catch (e) {
+                validationMessage.textContent = 'HTML 파싱 오류: ' + e.message;
+            }
+        }
+
+        // 탭 버튼 클릭 이벤트
+        editorTabBtn.addEventListener('click', () => {
+            showTab('editor');
+        });
+
+        sourceTabBtn.addEventListener('click', () => {
+            showTab('source');
+        });
+
+        // "CSS 제거" 버튼 클릭 이벤트
+        removeCSSBtn.addEventListener('click', () => {
+            // 모든 요소의 style 속성을 초기화합니다.
+            const allElements = webEditor.querySelectorAll('*');
+            allElements.forEach(element => {
+                element.style = '';
+            });
+        });
+
+        // 키보드 접근성 향상 (선택 사항)
+        editorTabBtn.addEventListener('keydown', (event) => {
+            if (event.key === 'Enter' || event.key === ' ') {
+                event.preventDefault(); // 기본 동작 방지 (스크롤 등)
+                editorTabBtn.click(); // 버튼 클릭 이벤트 트리거
+            }
+        });
+
+        sourceTabBtn.addEventListener('keydown', (event) => {
+            if (event.key === 'Enter' || event.key === ' ') {
+                event.preventDefault();
+                sourceTabBtn.click();
+            }
+        });
+
+        removeCSSBtn.addEventListener('keydown', (event) => {
+            if (event.key === 'Enter' || event.key === ' ') {
+                event.preventDefault();
+                removeCSSBtn.click();
+            }
+        });
+
+        webEditor.addEventListener('keydown', (event) => {
+            // Tab 키로 포커스 이동을 자연스럽게 처리
+            if (event.key === 'Tab') {
+                event.preventDefault(); // Tab 키의 기본 동작(텍스트 에디터에서 공백 삽입) 방지
+
+                // Shift 키와 함께 눌렀을 경우, 이전 요소로 포커스 이동
+                if (event.shiftKey) {
+                    // 현재 포커스된 요소의 이전 형제 요소 또는 부모의 이전 형제 요소로 이동
+                    if (document.activeElement.previousElementSibling) {
+                        document.activeElement.previousElementSibling.focus();
+                    } else if (document.activeElement.parentNode) {
+                        let parent = document.activeElement.parentNode;
+                        while (parent && !parent.previousElementSibling) {
+                            parent = parent.parentNode;
+                        }
+                        if (parent && parent.previousElementSibling) {
+                            parent.previousElementSibling.focus();
+                        }
+                    }
+                } else {
+                    // 다음 요소로 포커스 이동
+                    if (document.activeElement.nextElementSibling) {
+                        document.activeElement.nextElementSibling.focus();
+                    } else if (document.activeElement.parentNode) {
+                        let parent = document.activeElement.parentNode;
+                        while (parent && !parent.nextElementSibling) {
+                            parent = parent.parentNode;
+                        }
+                        if (parent && parent.nextElementSibling) {
+                            parent.nextElementSibling.focus();
+                        }
+                    }
+                }
+            }
+        });
+
+        sourceCodeArea.addEventListener('keydown', (event) => {
+            // Tab 키로 포커스 이동을 자연스럽게 처리
+            if (event.key === 'Tab') {
+                event.preventDefault(); // Tab 키의 기본 동작(텍스트 에디터에서 공백 삽입) 방지
+
+                // Shift 키와 함께 눌렀을 경우, 이전 요소로 포커스 이동
+                if (event.shiftKey) {
+                    // 현재 포커스된 요소의 이전 형제 요소 또는 부모의 이전 형제 요소로 이동
+                    if (document.activeElement.previousElementSibling) {
+                        document.activeElement.previousElementSibling.focus();
+                    } else if (document.activeElement.parentNode) {
+                        let parent = document.activeElement.parentNode;
+                        while (parent && !parent.previousElementSibling) {
+                            parent = parent.parentNode;
+                        }
+                        if (parent && parent.previousElementSibling) {
+                            parent.previousElementSibling.focus();
+                        }
+                    }
+                } else {
+                    // 다음 요소로 포커스 이동
+                    if (document.activeElement.nextElementSibling) {
+                        document.activeElement.nextElementSibling.focus();
+                    } else if (document.activeElement.parentNode) {
+                        let parent = document.activeElement.parentNode;
+                        while (parent && !parent.nextElementSibling) {
+                            parent = parent.parentNode;
+                        }
+                        if (parent && parent.nextElementSibling) {
+                            parent.nextElementSibling.focus();
+                        }
+                    }
+                }
+            }
+        });
+
+        // 웹 에디터 내용 변경 시 소스 코드 영역 업데이트
+        webEditor.addEventListener('input', () => {
+            updateSourceCodeArea();
+        });
+    </script>
+
+</body>
+
+</html>
