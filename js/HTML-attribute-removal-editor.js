@@ -1,4 +1,4 @@
-// https://nuleongdung.github.io/js/HTML-attribute-removal-editor.js
+// ../js/HTML-attribute-removal-editor.js
 class sfTistoryWebeditor {
     constructor() {
         this.editorTabBtn = document.getElementById('sf-editorTabBtn');
@@ -8,7 +8,7 @@ class sfTistoryWebeditor {
         this.webeditorIframe = document.getElementById('sf-webeditor-iframe');
         this.sourceTab = document.getElementById('sf-sourceTab');
         this.sourceCodeArea = document.getElementById('sf-sourceCodeArea');
-        this.validationMessage = document.getElementById('sf-validationMessage');
+        this.sfCleanBtn = document.getElementById('sf-cleanBtn');
         this.standardHtmlTags = [
             'a', 'abbr', 'address', 'area', 'article', 'aside', 'audio',
             'b', 'base', 'bdi', 'bdo', 'blockquote', 'body', 'br', 'button',
@@ -43,6 +43,7 @@ class sfTistoryWebeditor {
         this.editorTabBtn.addEventListener('click', () => this.showEditorTab());
         this.sourceTabBtn.addEventListener('click', () => this.showSourceTab());
         this.removeCSSBtn.addEventListener('click', () => this.removeNonStandardTags());
+        this.sfCleanBtn.addEventListener('click', () => this.cleanBody());
 
         // iframe 로드 완료 후 초기화
         this.webeditorIframe.onload = () => {
@@ -75,7 +76,7 @@ class sfTistoryWebeditor {
                 if (this.webeditor) {
                     // contenteditable 속성 설정
                     this.webeditor.setAttribute('contenteditable', 'true');
-
+                    this.webeditor.setAttribute('draggable', 'true');
                     // 초기 내용 설정
                     this.webeditor.innerHTML = '';
 
@@ -104,9 +105,6 @@ class sfTistoryWebeditor {
         }
     }
 
-    initIframeContent() {
-        // 이 함수는 이제 필요하지 않으므로 제거하거나 주석 처리합니다.
-    }
 
     showEditorTab() {
         this.editorTabBtn.classList.add('active');
@@ -120,6 +118,7 @@ class sfTistoryWebeditor {
         this.sourceTab.classList.remove('active');
         this.sourceTab.setAttribute('hidden', 'hidden');
         this.editorTab.removeAttribute('hidden');
+        this.updateEditorTab();
     }
 
     showSourceTab() {
@@ -138,6 +137,11 @@ class sfTistoryWebeditor {
         this.updateSourceCode();
     }
 
+    cleanBody() {
+        const iframeDocument = this.webeditorIframe.contentDocument || this.webeditorIframe.contentWindow.document;
+        this.sourceCodeArea.textContent = '';
+        iframeDocument.body.innerHTML = '';
+    }
     removeAllAttributes(element) {
         this.attributesToRemove.forEach(attr => {
             element.removeAttribute(attr);
@@ -172,6 +176,11 @@ class sfTistoryWebeditor {
     updateSourceCode() {
         const iframeDocument = this.webeditorIframe.contentDocument || this.webeditorIframe.contentWindow.document;
         this.sourceCodeArea.textContent = iframeDocument.body.innerHTML;
+    }
+
+    updateEditorTab() {
+        const iframeDocument = this.webeditorIframe.contentDocument || this.webeditorIframe.contentWindow.document;
+        iframeDocument.body.innerHTML = this.sourceCodeArea.textContent;
     }
 }
 
