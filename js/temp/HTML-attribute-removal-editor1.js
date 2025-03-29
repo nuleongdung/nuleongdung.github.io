@@ -2,6 +2,8 @@
 class sfTistoryWebeditor {
     constructor() {
         this.editorTabBtn = document.getElementById('sf-editorTabBtn');
+        console.log("sssssssssss");
+        console.log(this.editorTabBtn);
         this.sourceTabBtn = document.getElementById('sf-sourceTabBtn');
         this.removeCSSBtn = document.getElementById('sf-removeCSSBtn');
         this.editorTab = document.getElementById('sf-editorTab');
@@ -80,7 +82,6 @@ class sfTistoryWebeditor {
                     // 초기 내용 설정
                     this.webeditor.innerHTML = '';
 
-
                     // 이벤트 리스너 연결
                     this.webeditor.addEventListener('input', () => this.updateSourceCode());
                 } else {
@@ -99,7 +100,6 @@ class sfTistoryWebeditor {
 
         // 초기 로드 시 소스 코드 영역 업데이트
         this.updateSourceCode();
-        this.updateEditorTab();
 
         // 웹 에디터 내용 변경 시 소스 코드 영역 업데이트
         if (this.webeditor) {
@@ -186,13 +186,21 @@ class sfTistoryWebeditor {
     }
 }
 
-document.addEventListener('DOMContentLoaded', function () {
-    // CSS 링크를 생성.
-    var link = document.createElement('link');
-    link.rel = 'stylesheet';
-    link.href = 'https://nuleongdung.github.io/css/HTML-attribute-removal-editor.css?v=1.1';
-    document.head.appendChild(link);
 
-    const editor = new sfTistoryWebeditor();
-    editor.init();
+
+
+
+document.addEventListener("readystatechange", function () {
+    if (document.readyState === "complete") {
+        // CSS 링크를 생성.
+        var link = document.createElement('link');
+        link.rel = 'stylesheet';
+        link.href = 'https://nuleongdung.github.io/css/HTML-attribute-removal-editor.css?v=1.1';
+        document.head.appendChild(link);
+        console.log("CSS 링크 추가 완료.");
+        console.log(document.head);
+
+        const editor = new sfTistoryWebeditor();
+        editor.init();
+    }
 });

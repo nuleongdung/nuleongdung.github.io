@@ -1,0 +1,818 @@
+<!doctype html>
+<html lang="ko">
+
+<head>
+    <script type="text/javascript">if (!window.T) { window.T = {} }
+        window.T.config = { "TOP_SSL_URL": "https://www.tistory.com", "PREVIEW": false, "ROLE": "owner", "PREV_PAGE": "", "NEXT_PAGE": "", "BLOG": { "id": 842354, "name": "smartflex", "title": "스마트플렉스", "isDormancy": false, "nickName": "스마트플렉스", "status": "open", "profileStatus": "normal" }, "NEED_COMMENT_LOGIN": false, "COMMENT_LOGIN_CONFIRM_MESSAGE": "", "LOGIN_URL": "https://www.tistory.com/auth/login/?redirectUrl=https://smartflex.tistory.com/entry/HTML-attribute-removal-editor", "DEFAULT_URL": "https://anews.smartflex.org", "USER": { "name": "스마트플렉스", "homepage": "https://anews.smartflex.org", "id": 622555, "profileImage": "https://t1.daumcdn.net/cfile/tistory/2057F6484EAD4EDD39" }, "SUBSCRIPTION": { "status": "none", "isConnected": false, "isPending": false, "isWait": false, "isProcessing": false, "isNone": true }, "IS_LOGIN": true, "HAS_BLOG": true, "IS_SUPPORT": false, "IS_SCRAPABLE": true, "TOP_URL": "http://www.tistory.com", "JOIN_URL": "https://www.tistory.com/member/join", "PHASE": "prod", "ROLE_GROUP": "member" };
+        window.T.entryInfo = { "entryId": 1393, "isAuthor": true, "categoryId": 352235, "categoryLabel": "APP" };
+        window.appInfo = { "domain": "tistory.com", "topUrl": "https://www.tistory.com", "loginUrl": "https://www.tistory.com/auth/login", "logoutUrl": "https://www.tistory.com/auth/logout" };
+        window.initData = { "user": { "id": 622555, "loginId": "xtx9999@gmail.com", "name": "스마트플렉스" } };
+
+        window.TistoryBlog = {
+            basePath: "",
+            url: "https://anews.smartflex.org",
+            tistoryUrl: "https://smartflex.tistory.com",
+            manageUrl: "https://smartflex.tistory.com/manage",
+            token: "eXXIoe+F5HRlL5tBZ6YB0VcfHBZvQ28EiyE3rfmyBAwJ2+9HDFS8xv5GBQnwgcqJ"
+        };
+        var servicePath = "";
+        var blogURL = "";</script>
+
+
+
+
+    <!-- BusinessLicenseInfo - START -->
+
+    <link
+        href="https://tistory1.daumcdn.net/tistory_admin/userblog/userblog-162c8e39a436ad2444f690db8167cec245343d6c/static/plugin/BusinessLicenseInfo/style.css"
+        rel="stylesheet" type="text/css" />
+
+    <script>function switchFold(entryId) {
+            var businessLayer = document.getElementById("businessInfoLayer_" + entryId);
+
+            if (businessLayer) {
+                if (businessLayer.className.indexOf("unfold_license") > 0) {
+                    businessLayer.className = "business_license_layer";
+                } else {
+                    businessLayer.className = "business_license_layer unfold_license";
+                }
+            }
+        }
+    </script>
+
+
+    <!-- BusinessLicenseInfo - END -->
+    <!-- System - START -->
+
+    <!-- System - END -->
+
+    <!-- TistoryProfileLayer - START -->
+    <link
+        href="https://tistory1.daumcdn.net/tistory_admin/userblog/userblog-162c8e39a436ad2444f690db8167cec245343d6c/static/plugin/TistoryProfileLayer/style.css"
+        rel="stylesheet" type="text/css" />
+    <script type="text/javascript"
+        src="https://tistory1.daumcdn.net/tistory_admin/userblog/userblog-162c8e39a436ad2444f690db8167cec245343d6c/static/plugin/TistoryProfileLayer/script.js"></script>
+
+    <!-- TistoryProfileLayer - END -->
+
+
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge">
+    <meta name="format-detection" content="telephone=no">
+    <script src="//t1.daumcdn.net/tistory_admin/lib/jquery/jquery-3.5.1.min.js"
+        integrity="sha256-9/aliU8dGd2tb6OSsuzixeV4y/faTqgFtohetphbbj0=" crossorigin="anonymous"></script>
+    <script type="text/javascript" src="//t1.daumcdn.net/tiara/js/v1/tiara.min.js"></script>
+    <meta name="referrer" content="always" />
+    <meta name="google-adsense-platform-account" content="ca-host-pub-9691043933427338" />
+    <meta name="google-adsense-platform-domain" content="tistory.com" />
+    <meta name="description"
+        content="웹 페이지를 만들다 보면 불필요한 HTML 속성이나 표준에 맞지 않는 태그 때문에 고민될 때가 있습니다. 특히 다른 곳에서 가져온 코드를 사용할 때, 스타일이나 이벤트 핸들러, 불필요한 클래스 등이 덕지덕지 붙어 있어 웹 접근성을 해치거나 유지 보수를 어렵게 만드는 경우가 많습니다.        웹 에디터        소스 코드        속성 제거        모두 지우기                웹 에디터                        HTML 소스 코드                &quot;&gt;웹 에디터 소스 코드 속성 제거 모두 지우기웹 에디터HTML 소스 코드 1. HTML 표준 태그 내 속성 제거기능: HTML 코드에서 style, class, id 와 같이 지정된 속성을 표준 HTML 태.." />
+    <meta property="og:type" content="article" />
+    <meta property="og:url" content="https://anews.smartflex.org/entry/HTML-attribute-removal-editor" />
+    <meta property="og.article.author" content="스마트플렉스" />
+    <meta property="og:site_name" content="스마트플렉스" />
+    <meta property="og:title" content="HTML 속성 제거 에디터" />
+    <meta name="by" content="스마트플렉스" />
+    <meta property="og:description"
+        content="웹 페이지를 만들다 보면 불필요한 HTML 속성이나 표준에 맞지 않는 태그 때문에 고민될 때가 있습니다. 특히 다른 곳에서 가져온 코드를 사용할 때, 스타일이나 이벤트 핸들러, 불필요한 클래스 등이 덕지덕지 붙어 있어 웹 접근성을 해치거나 유지 보수를 어렵게 만드는 경우가 많습니다.        웹 에디터        소스 코드        속성 제거        모두 지우기                웹 에디터                        HTML 소스 코드                &quot;&gt;웹 에디터 소스 코드 속성 제거 모두 지우기웹 에디터HTML 소스 코드 1. HTML 표준 태그 내 속성 제거기능: HTML 코드에서 style, class, id 와 같이 지정된 속성을 표준 HTML 태.." />
+    <meta property="og:image"
+        content="https://img1.daumcdn.net/thumb/R800x0/?scode=mtistory2&fname=https%3A%2F%2Ft1.daumcdn.net%2Ftistory_admin%2Fstatic%2Fimages%2FopenGraph%2Fopengraph.png" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:site" content="@TISTORY" />
+    <meta name="twitter:title" content="HTML 속성 제거 에디터" />
+    <meta name="twitter:description"
+        content="웹 페이지를 만들다 보면 불필요한 HTML 속성이나 표준에 맞지 않는 태그 때문에 고민될 때가 있습니다. 특히 다른 곳에서 가져온 코드를 사용할 때, 스타일이나 이벤트 핸들러, 불필요한 클래스 등이 덕지덕지 붙어 있어 웹 접근성을 해치거나 유지 보수를 어렵게 만드는 경우가 많습니다.        웹 에디터        소스 코드        속성 제거        모두 지우기                웹 에디터                        HTML 소스 코드                &quot;&gt;웹 에디터 소스 코드 속성 제거 모두 지우기웹 에디터HTML 소스 코드 1. HTML 표준 태그 내 속성 제거기능: HTML 코드에서 style, class, id 와 같이 지정된 속성을 표준 HTML 태.." />
+    <meta property="twitter:image"
+        content="https://img1.daumcdn.net/thumb/R800x0/?scode=mtistory2&fname=https%3A%2F%2Ft1.daumcdn.net%2Ftistory_admin%2Fstatic%2Fimages%2FopenGraph%2Fopengraph.png" />
+    <meta content="https://anews.smartflex.org/1393" property="dg:plink" content="https://anews.smartflex.org/1393" />
+    <meta name="plink" />
+    <meta name="title" content="HTML 속성 제거 에디터" />
+    <meta name="article:media_name" content="스마트플렉스" />
+    <meta property="article:mobile_url" content="https://anews.smartflex.org/m/entry/HTML-attribute-removal-editor" />
+    <meta property="article:pc_url" content="https://anews.smartflex.org/entry/HTML-attribute-removal-editor" />
+    <meta property="article:mobile_view_url"
+        content="https://smartflex.tistory.com/m/entry/HTML-attribute-removal-editor" />
+    <meta property="article:pc_view_url" content="https://smartflex.tistory.com/entry/HTML-attribute-removal-editor" />
+    <meta property="article:talk_channel_view_url"
+        content="https://anews.smartflex.org/m/entry/HTML-attribute-removal-editor" />
+    <meta property="article:pc_service_home" content="https://www.tistory.com" />
+    <meta property="article:mobile_service_home" content="https://www.tistory.com/m" />
+    <meta property="article:txid" content="842354_1393" />
+    <meta property="article:published_time" content="2025-03-29T13:55:57+09:00" />
+    <meta property="og:regDate" content="20250329015557" />
+    <meta property="article:modified_time" content="2025-03-29T20:26:09+09:00" />
+    <script type="module"
+        src="https://tistory1.daumcdn.net/tistory_admin/userblog/userblog-162c8e39a436ad2444f690db8167cec245343d6c/static/pc/dist/index.js"
+        defer=""></script>
+    <script type="text/javascript"
+        src="https://tistory1.daumcdn.net/tistory_admin/userblog/userblog-162c8e39a436ad2444f690db8167cec245343d6c/static/pc/dist/index-legacy.js"
+        defer="" nomodule="true"></script>
+    <script type="text/javascript"
+        src="https://tistory1.daumcdn.net/tistory_admin/userblog/userblog-162c8e39a436ad2444f690db8167cec245343d6c/static/pc/dist/polyfills-legacy.js"
+        defer="" nomodule="true"></script>
+    <link rel="stylesheet" type="text/css" href="https://t1.daumcdn.net/tistory_admin/www/style/font.css" />
+    <link rel="stylesheet" type="text/css"
+        href="https://tistory1.daumcdn.net/tistory_admin/userblog/userblog-162c8e39a436ad2444f690db8167cec245343d6c/static/style/content.css" />
+    <link rel="stylesheet" type="text/css"
+        href="https://tistory1.daumcdn.net/tistory_admin/userblog/userblog-162c8e39a436ad2444f690db8167cec245343d6c/static/pc/dist/index.css" />
+    <link rel="stylesheet" type="text/css"
+        href="https://tistory1.daumcdn.net/tistory_admin/userblog/userblog-162c8e39a436ad2444f690db8167cec245343d6c/static/style/uselessPMargin.css" />
+    <script type="text/javascript">(function () {
+            var tjQuery = jQuery.noConflict(true);
+            window.tjQuery = tjQuery;
+            window.orgjQuery = window.jQuery; window.jQuery = tjQuery;
+            window.jQuery = window.orgjQuery; delete window.orgjQuery;
+        })()</script>
+    <script type="text/javascript"
+        src="https://tistory1.daumcdn.net/tistory_admin/userblog/userblog-162c8e39a436ad2444f690db8167cec245343d6c/static/script/base.js"></script>
+    <script type="text/javascript" src="//developers.kakao.com/sdk/js/kakao.min.js"></script>
+
+
+    <meta charset="UTF-8">
+    <meta name="viewport"
+        content="user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, width=device-width">
+    <title>HTML 속성 제거 에디터</title>
+    <link rel="stylesheet" href="https://tistory1.daumcdn.net/tistory/842354/skin/style.css?_version_=1743151970">
+    <link rel="stylesheet" href="https://t1.daumcdn.net/tistory_admin/static/font/SpoqaHanSans/SpoqaHanSans.css" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.js"></script>
+    <!-- sf-tistory-toc.js-->
+    <script
+        src="https://tistory1.daumcdn.net/tistory/842354/skin/images/sf-tistory-toc.js?v=0.1&_version_=1743151970"></script>
+    <!-- d2coding 폰트 로드 -->
+    <link href="https://cdn.jsdelivr.net/gh/webfontbox/D2Coding/d2coding.css" rel="stylesheet" type="text/css">
+    <link rel="stylesheet" href="https://t1.daumcdn.net/tistory_admin/static/font/icomoon/icomoon.css" />
+    <!-- Highlight.js 티스토리에서 하일라이터 플러그인 해제 한다 -->
+    <link rel="stylesheet"
+        href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/styles/base16/default-light.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/highlight.min.js"></script>
+    <!-- sf-highlight.js -->
+    <link href="https://tistory1.daumcdn.net/tistory/842354/skin/images/sf-highlight-dev.css?v=0.3&_version_=1743151970"
+        rel="stylesheet">
+    <script
+        src="https://tistory1.daumcdn.net/tistory/842354/skin/images/sf-highlight-dev.js?v=0.3&_version_=1743151970"></script>
+    <!-- sf-common.js-->
+    <script
+        src="https://tistory1.daumcdn.net/tistory/842354/skin/images/sf-common.js?v=0.3&_version_=1743151970"></script>
+    <!-- 구글 애드센스 -->
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-7831553078502643"
+        crossorigin="anonymous"></script>
+
+    <!-- Google Tag Manager -->
+    <script>(function (w, d, s, l, i) {
+                                           w[l] = w[l] || []; w[l].push({
+                                               'gtm.start':
+                                                   new Date().getTime(), event: 'gtm.js'
+                                           }); var f = d.getElementsByTagName(s)[0],
+                                               j = d.createElement(s), dl = l != 'dataLayer' ? '&l=' + l : ''; j.async = true; j.src =
+                                                   'https://www.googletagmanager.com/gtm.js?id=' + i + dl; f.parentNode.insertBefore(j, f);
+                                       })(window, document, 'script', 'dataLayer', 'GTM-MTLVLJMW');</script>
+    <!-- End Google Tag Manager -->
+
+
+
+
+    <style type="text/css">
+        .another_category {
+            border: 1px solid #E5E5E5;
+            padding: 10px 10px 5px;
+            margin: 10px 0;
+            clear: both;
+        }
+
+        .another_category h4 {
+            font-size: 12px !important;
+            margin: 0 !important;
+            border-bottom: 1px solid #E5E5E5 !important;
+            padding: 2px 0 6px !important;
+        }
+
+        .another_category h4 a {
+            font-weight: bold !important;
+        }
+
+        .another_category table {
+            table-layout: fixed;
+            border-collapse: collapse;
+            width: 100% !important;
+            margin-top: 10px !important;
+        }
+
+        * html .another_category table {
+            width: auto !important;
+        }
+
+        *:first-child+html .another_category table {
+            width: auto !important;
+        }
+
+        .another_category th,
+        .another_category td {
+            padding: 0 0 4px !important;
+        }
+
+        .another_category th {
+            text-align: left;
+            font-size: 12px !important;
+            font-weight: normal;
+            word-break: break-all;
+            overflow: hidden;
+            line-height: 1.5;
+        }
+
+        .another_category td {
+            text-align: right;
+            width: 80px;
+            font-size: 11px;
+        }
+
+        .another_category th a {
+            font-weight: normal;
+            text-decoration: none;
+            border: none !important;
+        }
+
+        .another_category th a.current {
+            font-weight: bold;
+            text-decoration: none !important;
+            border-bottom: 1px solid !important;
+        }
+
+        .another_category th span {
+            font-weight: normal;
+            text-decoration: none;
+            font: 10px Tahoma, Sans-serif;
+            border: none !important;
+        }
+
+        .another_category_color_gray,
+        .another_category_color_gray h4 {
+            border-color: #E5E5E5 !important;
+        }
+
+        .another_category_color_gray * {
+            color: #909090 !important;
+        }
+
+        .another_category_color_gray th a.current {
+            border-color: #909090 !important;
+        }
+
+        .another_category_color_gray h4,
+        .another_category_color_gray h4 a {
+            color: #737373 !important;
+        }
+
+        .another_category_color_red,
+        .another_category_color_red h4 {
+            border-color: #F6D4D3 !important;
+        }
+
+        .another_category_color_red * {
+            color: #E86869 !important;
+        }
+
+        .another_category_color_red th a.current {
+            border-color: #E86869 !important;
+        }
+
+        .another_category_color_red h4,
+        .another_category_color_red h4 a {
+            color: #ED0908 !important;
+        }
+
+        .another_category_color_green,
+        .another_category_color_green h4 {
+            border-color: #CCE7C8 !important;
+        }
+
+        .another_category_color_green * {
+            color: #64C05B !important;
+        }
+
+        .another_category_color_green th a.current {
+            border-color: #64C05B !important;
+        }
+
+        .another_category_color_green h4,
+        .another_category_color_green h4 a {
+            color: #3EA731 !important;
+        }
+
+        .another_category_color_blue,
+        .another_category_color_blue h4 {
+            border-color: #C8DAF2 !important;
+        }
+
+        .another_category_color_blue * {
+            color: #477FD6 !important;
+        }
+
+        .another_category_color_blue th a.current {
+            border-color: #477FD6 !important;
+        }
+
+        .another_category_color_blue h4,
+        .another_category_color_blue h4 a {
+            color: #1960CA !important;
+        }
+
+        .another_category_color_violet,
+        .another_category_color_violet h4 {
+            border-color: #E1CEEC !important;
+        }
+
+        .another_category_color_violet * {
+            color: #9D64C5 !important;
+        }
+
+        .another_category_color_violet th a.current {
+            border-color: #9D64C5 !important;
+        }
+
+        .another_category_color_violet h4,
+        .another_category_color_violet h4 a {
+            color: #7E2CB5 !important;
+        }
+    </style>
+
+
+    <link rel="stylesheet" type="text/css"
+        href="https://tistory1.daumcdn.net/tistory_admin/userblog/userblog-162c8e39a436ad2444f690db8167cec245343d6c/static/style/revenue.css" />
+    <link rel="canonical" href="https://anews.smartflex.org/entry/HTML-attribute-removal-editor" />
+
+    <!-- BEGIN STRUCTURED_DATA -->
+    <script type="application/ld+json">
+    {"@context":"http://schema.org","@type":"BlogPosting","mainEntityOfPage":{"@id":"https://anews.smartflex.org/entry/HTML-attribute-removal-editor","name":null},"url":"https://anews.smartflex.org/entry/HTML-attribute-removal-editor","headline":"HTML 속성 제거 에디터","description":"웹 페이지를 만들다 보면 불필요한 HTML 속성이나 표준에 맞지 않는 태그 때문에 고민될 때가 있습니다. 특히 다른 곳에서 가져온 코드를 사용할 때, 스타일이나 이벤트 핸들러, 불필요한 클래스 등이 덕지덕지 붙어 있어 웹 접근성을 해치거나 유지 보수를 어렵게 만드는 경우가 많습니다.        웹 에디터        소스 코드        속성 제거        모두 지우기                웹 에디터                        HTML 소스 코드                &quot;&gt;웹 에디터 소스 코드 속성 제거 모두 지우기웹 에디터HTML 소스 코드&nbsp;1. HTML 표준 태그 내 속성 제거기능: HTML 코드에서 style, class, id 와 같이 지정된 속성을 표준 HTML 태..","author":{"@type":"Person","name":"스마트플렉스","logo":null},"image":{"@type":"ImageObject","url":"https://img1.daumcdn.net/thumb/R800x0/?scode=mtistory2&fname=https%3A%2F%2Ft1.daumcdn.net%2Ftistory_admin%2Fstatic%2Fimages%2FopenGraph%2Fopengraph.png","width":"800px","height":"800px"},"datePublished":"2025-03-29T13:55:57+09:00","dateModified":"2025-03-29T20:26:09+09:00","publisher":{"@type":"Organization","name":"TISTORY","logo":{"@type":"ImageObject","url":"https://t1.daumcdn.net/tistory_admin/static/images/openGraph/opengraph.png","width":"800px","height":"800px"}}}
+</script>
+    <!-- END STRUCTURED_DATA -->
+    <link rel="stylesheet" type="text/css"
+        href="https://tistory1.daumcdn.net/tistory_admin/userblog/userblog-162c8e39a436ad2444f690db8167cec245343d6c/static/style/dialog.css" />
+    <link rel="stylesheet" type="text/css" href="//t1.daumcdn.net/tistory_admin/www/style/top/font.css" />
+    <link rel="stylesheet" type="text/css"
+        href="https://tistory1.daumcdn.net/tistory_admin/userblog/userblog-162c8e39a436ad2444f690db8167cec245343d6c/static/style/postBtn.css" />
+    <link rel="stylesheet" type="text/css"
+        href="https://tistory1.daumcdn.net/tistory_admin/userblog/userblog-162c8e39a436ad2444f690db8167cec245343d6c/static/style/tistory.css" />
+    <script type="text/javascript"
+        src="https://tistory1.daumcdn.net/tistory_admin/userblog/userblog-162c8e39a436ad2444f690db8167cec245343d6c/static/script/common.js"></script>
+
+
+</head>
+
+<body id="tt-body-page">
+
+
+
+
+    <div id="acc-nav">
+        <a href="#content">본문 바로가기</a>
+    </div>
+    <div id="wrap">
+        <header id="header">
+
+            <button type="button" class="mobile-menu"><span>메뉴</span></button>
+            <div class="menu">
+                <nav id="gnb">
+                    <ul>
+                        <li class="t_menu_home first"><a href="/" target="">HOME</a></li>
+                        <li class="t_menu_category"><a href="/category/%EA%B0%9C%EB%B0%9C" target="">개발</a></li>
+                        <li class="t_menu_category"><a href="/category/%EC%9B%B9%EA%B0%9C%EB%B0%9C" target="">웹개발</a>
+                        </li>
+                        <li class="t_menu_category"><a href="/category/%EB%AC%BC%EB%A6%AC" target="">물리</a></li>
+                        <li class="t_menu_category last"><a href="/category/%EC%A0%95%EC%B9%98%EC%82%AC%ED%9A%8C"
+                                target="">사회</a></li>
+                    </ul>
+                </nav>
+                <div class="social-link">
+
+
+
+
+
+                </div>
+                <p>스마트플렉스</p>
+            </div>
+            <div class="search">
+
+
+                <label for="search" class="screen_out">블로그 내 검색</label>
+                <input id="search" type="text" name="search" value="" placeholder="검색내용을 입력하세요."
+                    onkeypress="if (event.keyCode == 13) { sfSearch(); return false; }">
+                <button type="submit" onclick="sfSearch(); return false;">검색</button>
+
+
+            </div>
+        </header>
+        <hr>
+        <section class="container">
+
+            <article id="content">
+
+
+
+
+
+
+
+
+                <div class="inner">
+
+
+                    <!--  글 목록 리스트 -->
+
+
+
+
+
+
+
+
+                    <!-- 글 보기 영역 -->
+
+
+
+                    <div class="article-body">
+                        <div class="entry-content" id="article-view">
+
+                            <h1 class="title">HTML 속성 제거 에디터</h1>
+                            <div class="post-meta">
+                                <span class="author">스마트플렉스</span>
+                                <span class="date">2025. 3. 29.</span>
+
+                                <span class="my_edit" aria-expanded="false" aria-haspopup="true">
+                                    <button class="btn_etc">
+                                        <svg width="20px" height="20px" viewBox="0 0 21 21" version="1.1"
+                                            xmlns="http://www.w3.org/2000/svg"
+                                            xmlns:xlink="http://www.w3.org/1999/xlink" class="ico_more">
+                                            <title>더보기</title>
+                                            <g id="s07_magazine" transform="translate(-467.000000, -226.000000)">
+                                                <g id="more-copy" transform="translate(467.400000, 226.400000)">
+                                                    <path
+                                                        d="M10.1,0 C15.678076,0 20.2,4.52192403 20.2,10.1 C20.2,15.678076 15.678076,20.2 10.1,20.2 C4.52192403,20.2 0,15.678076 0,10.1 C0,4.52192403 4.52192403,0 10.1,0 Z M10.1,1.2 C5.18466573,1.2 1.2,5.18466573 1.2,10.1 C1.2,15.0153343 5.18466573,19 10.1,19 C15.0153343,19 19,15.0153343 19,10.1 C19,5.18466573 15.0153343,1.2 10.1,1.2 Z M10.1,13.3 C10.7075132,13.3 11.2,13.7924868 11.2,14.4 C11.2,15.0075132 10.7075132,15.5 10.1,15.5 C9.49248678,15.5 9,15.0075132 9,14.4 C9,13.7924868 9.49248678,13.3 10.1,13.3 Z M10.1,9 C10.7075132,9 11.2,9.49248678 11.2,10.1 C11.2,10.7075132 10.7075132,11.2 10.1,11.2 C9.49248678,11.2 9,10.7075132 9,10.1 C9,9.49248678 9.49248678,9 10.1,9 Z M10.1,4.7 C10.7075132,4.7 11.2,5.19248678 11.2,5.8 C11.2,6.40751322 10.7075132,6.9 10.1,6.9 C9.49248678,6.9 9,6.40751322 9,5.8 C9,5.19248678 9.49248678,4.7 10.1,4.7 Z"
+                                                        id="Combined-Shape"></path>
+                                                </g>
+                                            </g>
+                                        </svg>
+                                    </button>
+                                    <span class="layer_edit" role="menu">
+                                        <a href="https://smartflex.tistory.com/manage/post/1393?returnURL=ENTRY"
+                                            role="menuitem" class="btn_g" data-tiara-action-name="상단 옵션 버튼_클릭"
+                                            data-tiara-layer="Edit">수정</a>
+                                        <a class="btn_g" data-tiara-action-name="상단 옵션 버튼_클릭" data-tiara-layer="Setting"
+                                            href="#" role="menuitem"
+                                            onclick="changeVisibility(1393, 0); return false;">비공개로 변경</a>
+                                        <a href="#" onclick="deleteEntry(1393); return false;" role="menuitem"
+                                            class="btn_g" data-tiara-action-name="상단 옵션 버튼_클릭"
+                                            data-tiara-layer="Del">삭제</a>
+                                        <span class="ico_postbtn ico_arrb"></span>
+                                    </span>
+                                </span>
+
+                            </div>
+
+                            <script onerror="changeAdsenseToNaverAd()" async
+                                src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-9527582522912841"
+                                crossorigin="anonymous"></script>
+                            <!-- inventory -->
+                            <ins class="adsbygoogle" style="margin:50px 0; display:block"
+                                data-ad-client="ca-pub-9527582522912841" data-ad-slot="3825649038" data-ad-format="auto"
+                                data-full-width-responsive="true" data-ad-type="inventory"
+                                data-ad-adfit-unit="DAN-nRFiQiN4avFYIKbk"></ins>
+
+                            <script id="adsense_script">
+                                (adsbygoogle = window.adsbygoogle || []).push({});
+                            </script>
+                            <script>
+                                if (window.ObserveAdsenseUnfilledState !== undefined) { ObserveAdsenseUnfilledState(); }
+                            </script>
+                            <div data-tistory-react-app="NaverAd"></div>
+
+                            <!-- System - START -->
+
+                            <!-- System - END -->
+
+                            <div class="tt_article_useless_p_margin contents_style">
+                                <p data-ke-size="size16"><span
+                                        style="background-color: #ffffff; color: #1a1c1e; text-align: start;">웹 페이지를 만들다
+                                        보면 불필요한 HTML 속성이나 표준에 맞지 않는 태그 때문에 고민될 때가 있습니다. 특히 다른 곳에서 가져온 코드를 사용할 때, 스타일이나
+                                        이벤트 핸들러, 불필요한 클래스 등이 덕지덕지 붙어 있어 웹 접근성을 해치거나 유지 보수를 어렵게 만드는 경우가 많습니다.</span></p>
+                                <div id="code_1743247566225" data-ke-type="html"
+                                    data-source="    &lt;div class=&quot;sf-tab-container&quot; role=&quot;tablist&quot; aria-label=&quot;HTML 속성제거 에디터 탭 메뉴&quot;&gt;
+        &lt;button id=&quot;sf-editorTabBtn&quot; class=&quot;sf-tab-button active&quot; data-tab=&quot;editor&quot; aria-selected=&quot;true&quot;
+            aria-controls=&quot;sf-webeditor-iframe&quot; role=&quot;tab&quot; tabindex=&quot;0&quot; title=&quot;HTML 속성제거 에디터 탭&quot;&gt;웹 에디터&lt;/button&gt;
+        &lt;button id=&quot;sf-sourceTabBtn&quot; class=&quot;sf-tab-button&quot; data-tab=&quot;source&quot; aria-selected=&quot;false&quot;
+            aria-controls=&quot;sf-sourceCodeArea&quot; role=&quot;tab&quot; tabindex=&quot;-1&quot; title=&quot;소스 코드 탭&quot;&gt;소스 코드&lt;/button&gt;
+        &lt;button id=&quot;sf-removeCSSBtn&quot; class=&quot;sf-tab-button&quot; data-action=&quot;remove-css&quot; aria-label=&quot;웹 에디터 내용의 속성을 제거합니다.&quot;
+            title=&quot;CSS 제거&quot; tabindex=&quot;0&quot;&gt;속성 제거&lt;/button&gt;
+        &lt;button id=&quot;sf-cleanBtn&quot; class=&quot;sf-tab-button&quot; data-action=&quot;clean&quot; aria-label=&quot;모두 지우기&quot; title=&quot;모두 지우기&quot;
+            tabindex=&quot;0&quot;&gt;모두 지우기&lt;/button&gt;
+    &lt;/div&gt;
+
+    &lt;figure id=&quot;sf-editorTab&quot; class=&quot;sf-tab-content active&quot; role=&quot;group&quot; aria-labelledby=&quot;sf-editorTabBtn&quot;&gt;
+        &lt;figcaption for=&quot;sf-webeditor-iframe&quot;&gt;웹 에디터&lt;/figcaption&gt;
+        &lt;iframe id=&quot;sf-webeditor-iframe&quot; class=&quot;sf-webeditor-iframe&quot; title=&quot;HTML 속성제거 에디터 프레임&quot;
+            aria-label=&quot;HTML 속성제거 에디터 프레임&quot; tabindex=&quot;0&quot;&gt;&lt;/iframe&gt;
+    &lt;/figure&gt;
+
+    &lt;figure id=&quot;sf-sourceTab&quot; class=&quot;sf-tab-content&quot; role=&quot;group&quot; aria-labelledby=&quot;sf-sourceTabBtn&quot; hidden&gt;
+        &lt;figcaption for=&quot;sf-sourceCodeArea&quot;&gt;HTML 소스 코드&lt;/figcaption&gt;
+        &lt;pre id=&quot;sf-sourceCodeArea&quot; class=&quot;sf-sourceCodeArea&quot; contenteditable=&quot;true&quot; aria-live=&quot;polite&quot;
+            aria-atomic=&quot;true&quot; tabindex=&quot;0&quot; aria-label=&quot;HTML 소스 코드 에디터&quot; role=&quot;textbox&quot; aria-multiline=&quot;true&quot;
+            title=&quot;HTML 소스 코드 에디터 영역입니다. 코드를 편집할 수 있습니다.&quot;&gt;&lt;/pre&gt;
+    &lt;/figure&gt;
+    &lt;script src=&quot;https://nuleongdung.github.io/js/HTML-attribute-removal-editor.js?v=1.2&quot;&gt;&lt;/script&gt;">
+                                    <div class="sf-tab-container" role="tablist" aria-label="HTML 속성제거 에디터 탭 메뉴"><button
+                                            id="sf-editorTabBtn" class="sf-tab-button active" tabindex="0"
+                                            title="HTML 속성제거 에디터 탭" role="tab" data-tab="editor" aria-selected="true"
+                                            aria-controls="sf-webeditor-iframe">웹 에디터</button> <button
+                                            id="sf-sourceTabBtn" class="sf-tab-button" tabindex="-1" title="소스 코드 탭"
+                                            role="tab" data-tab="source" aria-selected="false"
+                                            aria-controls="sf-sourceCodeArea">소스 코드</button> <button
+                                            id="sf-removeCSSBtn" class="sf-tab-button" tabindex="0" title="CSS 제거"
+                                            data-action="remove-css" aria-label="웹 에디터 내용의 속성을 제거합니다.">속성 제거</button>
+                                        <button id="sf-cleanBtn" class="sf-tab-button" tabindex="0" title="모두 지우기"
+                                            data-action="clean" aria-label="모두 지우기">모두 지우기</button>
+                                    </div>
+                                    <figure id="sf-editorTab" class="sf-tab-content active" role="group"
+                                        aria-labelledby="sf-editorTabBtn">
+                                        <figcaption>웹 에디터</figcaption>
+                                        <iframe id="sf-webeditor-iframe" aria-label="HTML 속성제거 에디터 프레임"></iframe>
+                                    </figure>
+                                    <figure class="sf-tab-content" role="group" hidden=""
+                                        aria-labelledby="sf-sourceTabBtn">
+                                        <figcaption>HTML 소스 코드</figcaption>
+                                    </figure>
+                                    <pre id="sf-sourceCodeArea" class="sf-sourceCodeArea" tabindex="0"
+                                        title="HTML 소스 코드 에디터 영역입니다. 코드를 편집할 수 있습니다." role="textbox"
+                                        contenteditable="true" aria-live="polite" aria-atomic="true"
+                                        aria-label="HTML 소스 코드 에디터" aria-multiline="true">&nbsp;</pre>
+                                    <script src="../js/temp/HTML-attribute-removal-editor1.js?v=1.2"></script>
+                                </div>
+                                <p data-ke-size="size16"><span
+                                        style="color: #000000; font-size: 1.62em; letter-spacing: -1px;">1. HTML 표준 태그 내
+                                        속성 제거</span></p>
+                                <section aria-label="HTML 표준 태그 내 속성 제거 기능 설명" data-feature-name="section-standard-tag">
+                                    <ul style="list-style-type: disc;" data-ke-list-type="disc">
+                                        <li tabindex="0" title="기능 설명"
+                                            aria-label="HTML 코드에서 style, class, id 와 같이 지정된 속성을 표준 HTML 태그 내에서 일괄적으로 제거합니다."
+                                            data-feature-name="list-item-feature"><b>기능:</b> HTML 코드에서
+                                            <code>style</code>, <code>class</code>, <code>id</code> 와 같이 지정된 속성을 표준 HTML
+                                            태그 내에서 일괄적으로 제거합니다.
+                                        </li>
+                                        <li tabindex="0" title="효과 설명"
+                                            aria-label="불필요한 스타일 속성 제거를 통해 CSS 스타일시트 관리의 효율성을 높이고, 악성 코드 삽입 가능성을 줄입니다."
+                                            data-feature-name="list-item-effect"><b>효과:</b> 불필요한 스타일 속성 제거를 통해 CSS 스타일시트
+                                            관리의 효율성을 높이고, 악성 코드 삽입 가능성을 줄입니다.</li>
+                                    </ul>
+                                </section>
+                                <section aria-label="소스 코드 보기 기능 설명" data-feature-name="section-source-code">
+                                    <h2 tabindex="0" title="소스 코드 보기" data-feature-name="section-title"
+                                        data-ke-size="size26">2. 소스 코드 보기</h2>
+                                    <ul style="list-style-type: disc;" data-ke-list-type="disc">
+                                        <li tabindex="0" title="기능 설명"
+                                            aria-label="웹 에디터 영역에서 편집 중인 HTML 코드를 실시간으로 소스 코드 형태로 보여줍니다."
+                                            data-feature-name="list-item-feature"><b>기능:</b> 웹 에디터 영역에서 편집 중인 HTML 코드를
+                                            실시간으로 소스 코드 형태로 보여줍니다.</li>
+                                        <li tabindex="0" title="효과 설명"
+                                            aria-label="웹 에디터에서 시각적으로 편집하는 내용이 소스 코드에서 어떻게 표현되는지 즉시 확인하여 코드 작성 및 검토를 용이하게 합니다."
+                                            data-feature-name="list-item-effect"><b>효과:</b> 웹 에디터에서 시각적으로 편집하는 내용이 소스
+                                            코드에서 어떻게 표현되는지 즉시 확인하여 코드 작성 및 검토를 용이하게 합니다.</li>
+                                    </ul>
+                                </section>
+                                <section aria-label="이벤트 핸들러 속성 제거 기능 설명" data-feature-name="section-event-handler">
+                                    <h2 tabindex="0" title="이벤트 핸들러 속성 제거" data-feature-name="section-title"
+                                        data-ke-size="size26">3. 이벤트 핸들러 속성 제거</h2>
+                                    <ul style="list-style-type: disc;" data-ke-list-type="disc">
+                                        <li tabindex="0" title="기능 설명"
+                                            aria-label="onclick, onmouseover 등 이벤트 핸들러 속성을 제거합니다."
+                                            data-feature-name="list-item-feature"><b>기능:</b> <code>onclick</code>,
+                                            <code>onmouseover</code> 등 이벤트 핸들러 속성을 제거합니다.
+                                        </li>
+                                        <li tabindex="0" title="효과 설명"
+                                            aria-label="공격자가 이벤트 핸들러 속성을 이용하여 악성 스크립트를 삽입하는 것을 원천적으로 차단하여 보안을 강화합니다."
+                                            data-feature-name="list-item-effect"><b>효과:</b> 공격자가 이벤트 핸들러 속성을 이용하여 악성
+                                            스크립트를 삽입하는 것을 원천적으로 차단하여 보안을 강화합니다.</li>
+                                        <li tabindex="0" title="예시"
+                                            aria-label="button onclick alert 악성코드 와 같은 코드에서 onclick 속성을 제거하면 악성 스크립트 실행을 막을 수 있습니다."
+                                            data-feature-name="list-item-example">'button onclick="alert('악성코드!');"' 와
+                                            같은 코드에서 <code>onclick</code> 속성을 제거하면 악성 스크립트 실행을 막을 수 있습니다.</li>
+                                    </ul>
+                                </section>
+                                <section aria-label="불필요한 id class 속성 제거 기능 설명"
+                                    data-feature-name="section-unnecessary-attributes">
+                                    <h2 tabindex="0" title="불필요한 id, class 속성 제거" data-feature-name="section-title"
+                                        data-ke-size="size26">4. 불필요한 <code>id</code>, <code>class</code> 속성 제거</h2>
+                                    <ul style="list-style-type: disc;" data-ke-list-type="disc">
+                                        <li tabindex="0" title="기능 설명" aria-label="불필요한 id 및 class 속성을 제거합니다."
+                                            data-feature-name="list-item-feature"><b>기능:</b> 불필요한 <code>id</code> 및
+                                            <code>class</code> 속성을 제거합니다.
+                                        </li>
+                                        <li tabindex="0" title="효과 설명"
+                                            aria-label="공격자가 특정 id 또는 class 속성을 가진 요소에 JavaScript 코드를 적용하여 공격하는 것을 어렵게 만들어 보안 취약점을 줄입니다."
+                                            data-feature-name="list-item-effect"><b>효과:</b> 공격자가 특정 <code>id</code> 또는
+                                            <code>class</code> 속성을 가진 요소에 JavaScript 코드를 적용하여 공격하는 것을 어렵게 만들어 보안 취약점을
+                                            줄입니다.
+                                        </li>
+                                        <li tabindex="0" title="주의사항"
+                                            aria-label="필요한 id 및 class 속성은 유지해야 하므로 속성 제거 시 신중해야 합니다."
+                                            data-feature-name="list-item-caution"><b>주의:</b> 필요한 <code>id</code> 및
+                                            <code>class</code> 속성은 유지해야 하므로 속성 제거 시 신중해야 합니다.
+                                        </li>
+                                    </ul>
+                                </section>
+                            </div>
+                            <!-- System - START -->
+
+                            <!-- System - END -->
+
+
+                            <div class="container_postbtn #post_button_group">
+                                <div class="postbtn_like">
+                                    <script>window.ReactionButtonType = 'reaction';
+                                        window.ReactionApiUrl = '//smartflex.tistory.com/reaction';
+                                        window.ReactionReqBody = {
+                                            entryId: 1393
+                                        }</script>
+                                    <div class="wrap_btn" id="reaction-1393" data-tistory-react-app="Reaction"></div>
+                                    <div class="wrap_btn wrap_btn_share"><button type="button"
+                                            class="btn_post sns_btn btn_share" aria-expanded="false"
+                                            data-thumbnail-url="https://t1.daumcdn.net/tistory_admin/static/images/openGraph/opengraph.png"
+                                            data-title="HTML 속성 제거 에디터"
+                                            data-description="웹 페이지를 만들다 보면 불필요한 HTML 속성이나 표준에 맞지 않는 태그 때문에 고민될 때가 있습니다. 특히 다른 곳에서 가져온 코드를 사용할 때, 스타일이나 이벤트 핸들러, 불필요한 클래스 등이 덕지덕지 붙어 있어 웹 접근성을 해치거나 유지 보수를 어렵게 만드는 경우가 많습니다.        웹 에디터        소스 코드        속성 제거        모두 지우기                웹 에디터                        HTML 소스 코드                &quot;&gt;웹 에디터 소스 코드 속성 제거 모두 지우기웹 에디터HTML 소스 코드 1. HTML 표준 태그 내 속성 제거기능: HTML 코드에서 style, class, id 와 같이 지정된 속성을 표준 HTML 태.."
+                                            data-profile-image="https://t1.daumcdn.net/cfile/tistory/2057F6484EAD4EDD39"
+                                            data-profile-name="스마트플렉스"
+                                            data-pc-url="https://anews.smartflex.org/entry/HTML-attribute-removal-editor"
+                                            data-relative-pc-url="/entry/HTML-attribute-removal-editor"
+                                            data-blog-title="스마트플렉스"><span
+                                                class="ico_postbtn ico_share">공유하기</span></button>
+                                        <div class="layer_post" id="tistorySnsLayer"></div>
+                                    </div>
+                                    <div class="wrap_btn"><button type="button" class="btn_post" data-entry-id="1393"
+                                            data-tiara-action-name="글통계_클릭"><span
+                                                class="ico_postbtn ico_statistics">통계</span></button></div>
+                                    <div class="wrap_btn wrap_btn_etc" data-entry-id="1393"
+                                        data-entry-visibility="public" data-category-visibility="public"><button
+                                            type="button" class="btn_post btn_etc1" aria-expanded="false"><span
+                                                class="ico_postbtn ico_etc">게시글 관리</span></button>
+                                        <div class="layer_post" id="tistoryEtcLayer"></div>
+                                    </div>
+                                </div>
+                                <div class="postbtn_ccl" data-ccl-type="2" data-ccl-derive="1">
+                                    <a href="https://creativecommons.org/licenses/by/4.0/deed.ko" target="_blank"
+                                        class="link_ccl" rel="license">
+                                        <span class="bundle_ccl">
+                                            <span class="ico_postbtn ico_ccl1">저작자표시</span>
+                                        </span>
+                                    </a>
+                                </div>
+                                <!--
+<rdf:RDF xmlns="https://web.resource.org/cc/" xmlns:dc="https://purl.org/dc/elements/1.1/" xmlns:rdf="https://www.w3.org/1999/02/22-rdf-syntax-ns#">
+    <Work rdf:about="">
+        <license rdf:resource="https://creativecommons.org/licenses/by/4.0/deed.ko" />
+    </Work>
+    <License rdf:about="https://creativecommons.org/licenses/by/4.0/deed.ko">
+        <permits rdf:resource="https://web.resource.org/cc/Reproduction"/>
+        <permits rdf:resource="https://web.resource.org/cc/Distribution"/>
+        <requires rdf:resource="https://web.resource.org/cc/Notice"/>
+        <requires rdf:resource="https://web.resource.org/cc/Attribution"/>
+        <permits rdf:resource="https://web.resource.org/cc/DerivativeWorks"/>
+
+    </License>
+</rdf:RDF>
+-->
+                                <div data-tistory-react-app="SupportButton"></div>
+                            </div>
+
+                            <!-- PostListinCategory - START -->
+                            <div class="another_category another_category_color_gray">
+                                <h4>'<a href="/category/APP">APP</a>' 카테고리의 다른 글</h4>
+                                <table>
+                                    <tr>
+                                        <th><a href="/entry/Extracting-and-modifying-image-metadata-using-xmp-js">xmp-js를
+                                                이용한 이미지 메타테이터 추출 및 수정</a>&nbsp;&nbsp;<span>(0)</span></th>
+                                        <td>2025.03.24</td>
+                                    </tr>
+                                    <tr>
+                                        <th><a href="/entry/XML-%EC%97%90%EB%94%94%ED%84%B0">XML
+                                                에디터</a>&nbsp;&nbsp;<span>(0)</span></th>
+                                        <td>2011.12.18</td>
+                                    </tr>
+                                    <tr>
+                                        <th><a href="/entry/%EB%8F%99%EC%98%81%EC%83%81-%EB%B6%84%ED%95%A0">동영상
+                                                분할</a>&nbsp;&nbsp;<span>(0)</span></th>
+                                        <td>2011.11.07</td>
+                                    </tr>
+                                    <tr>
+                                        <th><a
+                                                href="/entry/VanDyke-SecureCRT-%EB%B2%84%EC%A0%84%EB%B3%84-%EB%AA%A8%EC%9D%8C">VanDyke-SecureCRT
+                                                버전별 모음</a>&nbsp;&nbsp;<span>(0)</span></th>
+                                        <td>2011.11.06</td>
+                                    </tr>
+                                    <tr>
+                                        <th><a
+                                                href="/entry/SMemo-%EC%9C%88%EB%8F%84%EC%9A%B0-%EC%8A%A4%ED%8B%B1-%EB%A9%94%EB%AA%A8">SMemo
+                                                윈도우 스틱 메모</a>&nbsp;&nbsp;<span>(0)</span></th>
+                                        <td>2011.11.06</td>
+                                    </tr>
+                                </table>
+                            </div>
+
+                            <!-- PostListinCategory - END -->
+
+                        </div>
+
+
+                        <!-- area_tag -->
+                        <div class="sf_body_area_tag">
+                            <div class="tag_content thema_apply"><a href="/tag/Web%20Editor" rel="tag">Web Editor</a>
+                            </div>
+                        </div>
+                        <!-- // area_tag -->
+
+                        <div data-tistory-react-app="Namecard"></div>
+                        <div id="entry1393Comment">
+                            <div class="comments">
+                                <div data-tistory-react-app="Comment"></div>
+
+                            </div>
+                        </div>
+                        <script type="text/javascript">loadedComments[1393] = true;
+                            findFragmentAndHighlight(1393);</script>
+
+                    </div>
+
+
+
+
+
+
+
+                </div>
+
+
+
+
+
+
+
+            </article>
+        </section>
+        <hr>
+
+        <footer id="footer" role="contentinfo" aria-label="추가 정보" class="contentinfo">
+            <div class="footerinfo" aria-label="footerinfo">
+                <div aria-label="Copyright. All Rights Reserved does not exist">
+                    <del>Copyright. All Rights Reserved</del><b>does not exist.</b>
+                </div>
+                <div>
+                    <span class="copyright">
+                        <a href="https://anews.smartflex.org/" title="스마트플렉스 블로그 바로가기" aria-label="스마트플렉스 블로그"
+                            data-blog-link="https://anews.smartflex.org/" tabindex="0">
+                            스마트플렉스
+                        </a>
+                    </span>
+                </div>
+
+                <div aria-label="추가 정보" class="contentinfo">
+                    <a href="" title="개인정보처리방침 바로가기" aria-label="개인정보처리방침" tabindex="0">개인정보처리방침</a>
+                </div>
+
+
+                <div aria-label="추가 정보" class="contentinfo">
+                    <a href="https://smartflex.tistory.com/pages/Terms" title="이용약관 바로가기" aria-label="이용약관"
+                        tabindex="0">이용약관</a>
+                </div>
+
+            </div>
+        </footer>
+    </div>
+    <script src="https://tistory1.daumcdn.net/tistory/842354/skin/images/script.js?_version_=1743151970"></script>
+
+    <div class="#menubar menu_toolbar ">
+        <h2 class="screen_out">티스토리툴바</h2>
+    </div>
+    <div class="#menubar menu_toolbar "></div>
+    <div class="layer_tooltip">
+        <div class="inner_layer_tooltip">
+            <p class="desc_g"></p>
+        </div>
+    </div>
+    <div id="editEntry" style="position:absolute;width:1px;height:1px;left:-100px;top:-100px"></div>
+
+
+    <div style="margin:0; padding:0; border:none; background:none; float:none; clear:none; z-index:0"></div>
+    <script type="text/javascript"
+        src="https://tistory1.daumcdn.net/tistory_admin/userblog/userblog-162c8e39a436ad2444f690db8167cec245343d6c/static/script/common.js"></script>
+    <script
+        type="text/javascript">window.roosevelt_params_queue = window.roosevelt_params_queue || [{ channel_id: 'dk', channel_label: '{tistory}' }]</script>
+    <script type="text/javascript" src="//t1.daumcdn.net/midas/rt/dk_bt/roosevelt_dk_bt.js" async="async"></script>
+
+
+    <script>window.tiara = { "svcDomain": "user.tistory.com", "section": "글뷰", "trackPage": "글뷰_보기", "page": "글뷰", "key": "842354-1393", "customProps": { "userId": "622555", "blogId": "842354", "entryId": "1393", "role": "owner", "trackPage": "글뷰_보기", "filterTarget": false }, "entry": { "entryId": "1393", "entryTitle": "HTML 속성 제거 에디터", "entryType": "POST", "categoryName": "APP", "categoryId": "352235", "serviceCategoryName": null, "serviceCategoryId": null, "author": "622555", "authorNickname": "스마트플렉스", "blogNmae": "스마트플렉스", "image": "", "plink": "/entry/HTML-attribute-removal-editor", "tags": ["Web Editor"] }, "kakaoAppKey": "3e6ddd834b023f24221217e370daed18", "appUserId": "2352596059" }</script>
+    <script type="module" src="https://t1.daumcdn.net/tistory_admin/frontend/tiara/v1.0.5/index.js"></script>
+    <script src="https://t1.daumcdn.net/tistory_admin/frontend/tiara/v1.0.5/polyfills-legacy.js" nomodule="true"
+        defer="true"></script>
+    <script src="https://t1.daumcdn.net/tistory_admin/frontend/tiara/v1.0.5/index-legacy.js" nomodule="true"
+        defer="true"></script>
+
+</body>
+
+</html>
