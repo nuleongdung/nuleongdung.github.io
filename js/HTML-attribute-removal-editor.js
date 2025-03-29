@@ -176,6 +176,10 @@ class sfTistoryWebeditor {
 }
 
 document.addEventListener('DOMContentLoaded', function () {
+    // CSS 링크를 생성합니다.
+    var link = document.createElement('link');
+    link.rel = 'stylesheet';
+    link.href = 'https://nuleongdung.github.io/css/HTML-attribute-removal-editor.css?v=1.1';
     const editor = new sfTistoryWebeditor();
     editor.init();
 });
