@@ -174,3 +174,8 @@ class sfTistoryWebeditor {
         this.sourceCodeArea.textContent = iframeDocument.body.innerHTML;
     }
 }
+
+document.addEventListener('DOMContentLoaded', function () {
+    const editor = new sfTistoryWebeditor();
+    editor.init();
+});
