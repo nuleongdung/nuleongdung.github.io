@@ -9,68 +9,9 @@
 </head>
 
 <body>
-    <style>
-        /* 기본적인 스타일 (예시) */
-        .sf-tab-container {
-            margin-bottom: 10px;
-        }
-
-        .sf-tab-button {
-            padding: 8px 16px;
-            border: 1px solid #ccc;
-            background-color: #f0f0f0;
-            cursor: pointer;
-        }
-
-        .sf-tab-button.active {
-            background-color: #ddd;
-        }
-
-        .sf-tab-content {
-            display: none;
-            min-height: 200px;
-            height: 100%;
-            padding: 0px;
-            margin: 0px;
-            border: 0px;
-        }
-
-        .sf-tab-content figcaption {
-            font-weight: bolder;
-            font-size: small;
-            margin: 0px;
-            padding: 0px;
-        }
-
-        .sf-tab-content.active {
-            display: block;
-        }
-
-        .sf-webeditor {
-            margin: 0px 0px 0px 0px;
-            min-height: 400px;
-            padding: 0px;
-            border: 1px solid #ccc;
-            overflow: auto;
-        }
-
-        .sf-webeditor-iframe {
-            width: 90%;
-            height: 100%;
-            padding: 8px;
-            border: 1px solid #ccc;
-            white-space: pre-wrap;
-        }
-
-        .sf-sourceCodeArea {
-            width: 90%;
-            height: 100%;
-            padding: 8px;
-            border: 1px solid #ccc;
-            white-space: pre-wrap;
-        }
-    </style>
     <h1>HTML 속성제거 에디터</h1>
+    <link rel="stylesheet" href="https://nuleongdung.github.io/css/HTML-attribute-removal-editor.css?v=1.1">
+
 
     <div class="sf-tab-container" role="tablist" aria-label="HTML 속성제거 에디터 탭 메뉴">
         <button id="sf-editorTabBtn" class="sf-tab-button active" data-tab="editor" aria-selected="true"
@@ -95,7 +36,7 @@
     </figure>
 
 
-    <script src="../js/tistory-webeditor.js"></script>
+    <script src="https://nuleongdung.github.io/js/HTML-attribute-removal-editor.js"></script>
     <script>
         document.addEventListener('DOMContentLoaded', function () {
             const editor = new sfTistoryWebeditor();

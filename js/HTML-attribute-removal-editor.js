@@ -1,3 +1,4 @@
+// https://nuleongdung.github.io/js/HTML-attribute-removal-editor.js
 class sfTistoryWebeditor {
     constructor() {
         this.editorTabBtn = document.getElementById('sf-editorTabBtn');

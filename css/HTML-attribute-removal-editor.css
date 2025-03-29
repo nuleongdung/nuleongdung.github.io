@@ -1,0 +1,58 @@
+.sf-tab-container {
+    margin-bottom: 10px;
+}
+
+.sf-tab-button {
+    padding: 8px 16px;
+    border: 1px solid #ccc;
+    background-color: #f0f0f0;
+    cursor: pointer;
+}
+
+.sf-tab-button.active {
+    background-color: #ddd;
+}
+
+.sf-tab-content {
+    display: none;
+    min-height: 200px;
+    height: 100%;
+    padding: 0px;
+    margin: 0px;
+    border: 0px;
+}
+
+.sf-tab-content figcaption {
+    font-weight: bolder;
+    font-size: small;
+    margin: 0px;
+    padding: 0px;
+}
+
+.sf-tab-content.active {
+    display: block;
+}
+
+.sf-webeditor {
+    margin: 0px 0px 0px 0px;
+    min-height: 400px;
+    padding: 0px;
+    border: 1px solid #ccc;
+    overflow: auto;
+}
+
+.sf-webeditor-iframe {
+    width: 90%;
+    height: 100%;
+    padding: 8px;
+    border: 1px solid #ccc;
+    white-space: pre-wrap;
+}
+
+.sf-sourceCodeArea {
+    width: 90%;
+    height: 100%;
+    padding: 8px;
+    border: 1px solid #ccc;
+    white-space: pre-wrap;
+}
