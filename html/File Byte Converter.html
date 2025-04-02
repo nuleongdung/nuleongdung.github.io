@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="ko">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>파일 덤프 변환기</title>
+</head>
+
+<body style="font-family: Arial, sans-serif; margin: 20px;">
+
+    <h1 style="font-size: 24px; margin-bottom: 20px;">파일 덤프 변환기</h1>
+
+    <div style="margin-bottom: 20px;">
+        <label for="sf-file-upload" style="display: block; margin-bottom: 5px;">
+            파일 선택:
+        </label>
+        <input type="file" id="sf-file-upload" aria-describedby="sf-file-upload-desc"
+            style="padding: 10px; border: 1px solid #ccc; border-radius: 4px;" />
+        <div id="sf-file-upload-desc" style="font-size: 12px; color: #777;">
+            덤프할 파일을 선택해주세요.
+        </div>
+    </div>
+
+    <button id="sf-convert-button" type="button" aria-label="파일 덤프 변환 시작"
+        style="background-color: #4CAF50; color: white; padding: 12px 20px; border: none; border-radius: 4px; cursor: pointer;">
+        변환
+    </button>
+
+    <div id="sf-result"
+        style="margin-top: 20px; padding: 15px; border: 1px solid #ddd; border-radius: 5px; display:none;">
+        <h2 style="font-size: 18px; margin-bottom: 10px;">덤프 결과</h2>
+        <pre id="sf-result-text" style="white-space: pre-wrap; word-break: break-all;"></pre>
+    </div>
+
+    <script>
+        document.getElementById('sf-convert-button').addEventListener('click', function () {
+            const fileInput = document.getElementById('sf-file-upload');
+            const resultText = document.getElementById('sf-result-text');
+            const resultDiv = document.getElementById('sf-result');
+
+            const file = fileInput.files[0];
+
+            if (!file) {
+                alert('파일을 선택해주세요.');
+                return;
+            }
+
+            const reader = new FileReader();
+
+            reader.onload = function (event) {
+                const arrayBuffer = event.target.result;
+                const uint8Array = new Uint8Array(arrayBuffer);
+
+                let dumpText = '';
+                for (let i = 0; i < uint8Array.length; i++) {
+                    const hex = uint8Array[i].toString(16).toUpperCase().padStart(2, '0');
+                    dumpText += hex + ' ';
+
+                    // 16바이트마다 줄바꿈
+                    if ((i + 1) % 16 === 0) {
+                        dumpText += '\n';
+                    }
+                }
+
+                resultText.textContent = dumpText;
+                resultDiv.style.display = 'block';
+            };
+
+            reader.onerror = function () {
+                alert('파일 읽기 오류');
+            };
+
+            reader.readAsArrayBuffer(file);
+        });
+    </script>
+
+</body>
+
+</html>

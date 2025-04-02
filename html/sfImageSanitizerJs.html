@@ -3,8 +3,7 @@
 
 <head>
     <title>sfImageSanitizerJs (다중 파일 처리)</title>
-    <script src="../js/sfImageSanitizerJs.js"></script>
-    <script src="../js/sfImageSanitizerJs.js"></script>
+
     <link rel="stylesheet" href="https://nuleongdung.github.io/css/20-open-source-browsers.css?v=1.1">
     <style>
         .safe-image {
@@ -28,7 +27,7 @@
     </div>
     <input type="file" id="fileInput" multiple onchange="handleFiles(this.files)" />
     <div id="results"></div>
-
+    <script src="../js/sfImageSanitizerJs.js"></script>
     <script>
         async function handleFiles(files) {
             const sanitizer = new sfImageSanitizerJs();

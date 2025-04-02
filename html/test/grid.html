@@ -1,0 +1,109 @@
+<html>
+
+<body>
+    <!--
+    // 파일 선택 입력 필드 생성
+    this.fileInput = document.createElement('input');
+    this.fileInput.setAttribute('type', 'file');
+    this.fileInput.setAttribute('id', 'sf-file-upload');
+    this.fileInput.setAttribute('aria-describedby', 'sf-file-upload-desc');
+    this.fileInput.style = "width:90%; padding: 10px; border: 1px solid rgb(204, 204, 204); border-radius: 4px;";
+
+
+    // 파일 설명 div 생성
+    const fileDesc = document.createElement('div');
+    fileDesc.style = "font-size: 12px; color: rgb(119, 119, 119);";
+    fileDesc.textContent = '덤프할 파일을 선택또는 드래그 하세요.';
+
+    .container {
+        display: grid;
+        grid-template-rows: 1fr 2fr;
+        /* 두 행으로 나눕니다. */
+        gap: 20px;
+        padding: 20px;
+    }
+
+    .file-area {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        /* 두 열로 나눕니다. */
+        gap: 10px;
+    }
+
+.container {
+  display: flex; /* flexbox 사용 */
+  flex-direction: column; /* 세로 방향으로 정렬 */
+}
+
+.row {
+  display: flex; /* flexbox 사용 */
+}
+
+.node {
+  /* 노드 스타일 */
+}
+<div class="container">
+  <div class="row">
+    <div class="node">1</div>
+    <div class="node">2</div>
+  </div>
+  <div class="row">
+    <div class="node">3</div>
+  </div>
+</div>
+  display: flex;flex-direction: column;
+
+    const fileContainer = document.createElement('div');
+    fileContainer.style = "display: flex;flex-direction: column;";
+    fileContainer.setAttribute('aria-label', '출력 옵션 선택');
+
+    const fileInputContainer = document.createElement('div');
+    fileInputContainer.style = "display: flex;";
+    
+    fileContainer.appendChild(fileInputContainer);
+
+-->
+    <div style="display: flex;flex-direction: column;" aria-label="출력 옵션 선택">
+        <div style="display: flex;">
+            <input type="file" id="sf-file-upload" aria-describedby="sf-file-upload-desc"
+                style="width:80%; padding: 10px; border: 1px solid rgb(204, 204, 204); border-radius: 4px;">
+            <button id="sf-convert-button" type="button" aria-label="파일 덤프 변환 시작"
+                style="background-color: rgb(76, 175, 80); color: white; padding: 12px 20px; border: none; border-radius: 4px; cursor: pointer; margin-left: 10px;">변환</button>
+        </div>
+        <div style="font-size: 12px; color: rgb(119, 119, 119);">덤프할 파일을 선택또는 드래그 하세요.</div>
+    </div>
+
+    <div style="display: flex;flex-flow: row wrap;" aria-label="출력 옵션 선택">
+        <fieldset>
+            <legend>출력 라인제한:</legend>
+            <select id="sf-line-limit-select" aria-label="출력 라인 제한 선택"
+                style="padding: 10px; border: 1px solid rgb(204, 204, 204); border-radius: 4px; width: 150px;">
+                <option value="10" selected="selected">10 라인</option>
+                <option value="20">20 라인</option>
+                <option value="50">50 라인</option>
+                <option value="100">100 라인</option>
+                <option value="0">제한 없음</option>
+            </select>
+            <button id="sf-convert-button" type="button" aria-label="파일 덤프 변환 시작"
+                style="background-color: rgb(76, 175, 80); color: white; padding: 12px 20px; border: none; border-radius: 4px; cursor: pointer; margin-left: 10px;">변환</button>
+        </fieldset>
+
+        <fieldset>
+            <legend for="sf-base-select">진수 선택:</legend>
+            <select id="sf-base-select" aria-label="진수 선택"
+                style="padding: 10px; border: 1px solid rgb(204, 204, 204); border-radius: 4px; width: 150px;">
+                <option value="8">8진수</option>
+                <option value="16" selected="selected">16진수</option>
+                <option value="32">32진수</option>
+            </select>
+        </fieldset>
+
+
+
+    </div>
+
+
+
+</body>
+
+</html>

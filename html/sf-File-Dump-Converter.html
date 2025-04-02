@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="ko">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>파일 덤프 변환기</title>
+</head>
+
+<body style="font-family: Arial, sans-serif; margin: 20px;">
+
+    <h1 style="font-size: 24px; margin-bottom: 20px;">파일 덤프 변환기</h1>
+
+    <div class="sf-File-Dump-Converter"></div>
+    <script src="../js/sf-File-Dump-Converter.js"></script>
+    <script>
+        // 문서가 로드되고 난후에 실행
+        document.addEventListener('DOMContentLoaded', async () => {
+            const sfFileDumpconverter = new sfFileDumpConverter('.sf-File-Dump-Converter');
+        });
+    </script>
+
+</body>
+
+</html>

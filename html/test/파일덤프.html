@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="ko">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>sfFileDumpConverter - 파일 덤프 분석 도구</title>
+</head>
+
+<body>
+
+    <header>
+        <h1>sfFileDumpConverter</h1>
+        <p>파일 덤프 분석 도구 (8진수, 16진수, 32진수 지원)</p>
+    </header>
+
+    <main>
+        <h2>sfFileDumpConverter</h2>
+        <p>파일 덤프 분석 도구 (8진수, 16진수, 32진수 지원)</p>
+        < <section>
+            <h2 id="sf-usage-area" tabindex="0">소프트웨어 활용 분야</h2>
+            <p>이 섹션에서는 sfFileDumpConverter 소프트웨어가 다양한 분야에서 어떻게 활용될 수 있는지 설명합니다.</p>
+            <ul>
+                <li>
+                    <h3 tabindex="0">소프트웨어 개발 및 디버깅</h3>
+                    <p>소프트웨어 개발 및 디버깅 과정에서 메모리 분석, 파일 형식 분석, 코드 역분석 등에 활용됩니다.</p>
+                    <ul>
+                        <li>
+                            <h4 tabindex="0">메모리 분석</h4>
+                            <p>프로그램 실행 중 메모리 내용을 덤프하여 변수의 값, 데이터 구조 등을 확인하고 오류의 원인을 파악합니다.</p>
+                        </li>
+                        <li>
+                            <h4 tabindex="0">파일 형식 분석</h4>
+                            <p>특정 파일 형식이 어떻게 구성되어 있는지 분석하고, 파일 파싱 과정에서 발생하는 문제를 디버깅합니다.</p>
+                        </li>
+                        <li>
+                            <h4 tabindex="0">코드 역분석</h4>
+                            <p>실행 파일의 덤프를 분석하여 프로그램의 동작 방식을 이해하고, 보안 취약점을 찾습니다.</p>
+                        </li>
+                    </ul>
+                </li>
+                <li>
+                    <h3 tabindex="0">정보 보안</h3>
+                    <p>정보 보안 분야에서 악성코드 분석, 취약점 분석, 침해 사고 분석 등에 활용됩니다.</p>
+                    <ul>
+                        <li>
+                            <h4 tabindex="0">악성코드 분석</h4>
+                            <p>악성코드의 실행 파일이나 DLL 파일을 덤프하여 악성코드의 동작 방식, 감염 경로, 암호화 알고리즘 등을 분석합니다.</p>
+                        </li>
+                        <li>
+                            <h4 tabindex="0">취약점 분석</h4>
+                            <p>시스템 또는 프로그램의 덤프를 분석하여 버퍼 오버플로우, SQL 인젝션과 같은 보안 취약점을 찾습니다.</p>
+                        </li>
+                        <li>
+                            <h4 tabindex="0">침해 사고 분석</h4>
+                            <p>침해 사고 발생 시 시스템의 메모리 덤프를 분석하여 공격자의 침투 경로, 사용된 악성코드, 탈취된 정보 등을 파악합니다.</p>
+                        </li>
+                    </ul>
+                </li>
+                <li>
+                    <h3 tabindex="0">데이터 복구</h3>
+                    <p>데이터 복구 분야에서 파일 시스템 복구, 저장 장치 복구 등에 활용됩니다.</p>
+                    <ul>
+                        <li>
+                            <h4 tabindex="0">파일 시스템 복구</h4>
+                            <p>손상된 파일 시스템의 덤프를 분석하여 손실된 파일이나 디렉터리를 복구합니다.</p>
+                        </li>
+                        <li>
+                            <h4 tabindex="0">저장 장치 복구</h4>
+                            <p>하드 디스크, SSD, USB 드라이브 등 저장 장치의 덤프를 분석하여 삭제된 데이터나 손상된 데이터를 복구합니다.</p>
+                        </li>
+                    </ul>
+                </li>
+                <li>
+                    <h3 tabindex="0">교육 및 연구</h3>
+                    <p>교육 및 연구 분야에서 컴퓨터 구조 학습, 운영체제 학습 등에 활용됩니다.</p>
+                    <ul>
+                        <li>
+                            <h4 tabindex="0">컴퓨터 구조 학습</h4>
+                            <p>메모리 구조, CPU 레지스터, 명령어 집합 등을 이해하기 위해 메모리 덤프를 분석합니다.</p>
+                        </li>
+                        <li>
+                            <h4 tabindex="0">운영체제 학습</h4>
+                            <p>프로세스 관리, 메모리 관리, 파일 시스템 등 운영체제의 내부 동작 방식을 이해하기 위해 커널 덤프를 분석합니다.</p>
+                        </li>
+                    </ul>
+                </li>
+            </ul>
+            </section>
+
+            <section>
+                <h2 id="sf-usage-instructions" tabindex="0">사용 방법</h2>
+                <p>이 섹션에서는 sfFileDumpConverter를 사용하는 방법에 대해 자세히 설명합니다.</p>
+                <ol>
+                    <li>
+                        <button id="sf-file-select-button"
+                            aria-labelledby="sf-usage-instructions sf-file-select-button-label"
+                            aria-describedby="sf-file-select-button-desc">파일 선택</button>
+                        <span id="sf-file-select-button-label">덤프할 파일을 선택합니다.</span>
+                        <p id="sf-file-select-button-desc">"파일 선택" 버튼을 클릭하여 덤프할 파일을 선택하십시오.</p>
+                    </li>
+                    <li>
+                        <label for="sf-radix-select">진수 선택:</label>
+                        <p id="sf-radix-select-desc">8진수, 16진수, 32진수 중 하나를 선택하십시오.</p>
+                    </li>
+                    <li>
+                        <label for="sf-line-limit-select">출력 라인 제한:</label>
+                        <p id="sf-line-limit-select-desc">원하는 라인 수를 선택하십시오. "제한 없음"을 선택하면 파일 전체가 덤프됩니다.</p>
+                    </li>
+                    <li>
+                        <button id="sf-convert-button" aria-labelledby="sf-usage-instructions sf-convert-button-label"
+                            aria-describedby="sf-convert-button-desc">변환</button>
+                        <span id="sf-convert-button-label">선택한 파일의 덤프를 변환합니다.</span>
+                        <p id="sf-convert-button-desc">"변환" 버튼을 클릭하여 덤프를 실행하십시오.</p>
+                    </li>
+                    <li>
+                        <div id="sf-dump-result" aria-live="polite" role="region" aria-label="덤프 결과">
+                            <p>덤프 결과 (주소 포함)가 표시됩니다.</p>
+                        </div>
+                    </li>
+                </ol>
+            </section>
+
+            <section>
+                <h2 id="sf-precautions" tabindex="0">주의 사항</h2>
+                <p>sfFileDumpConverter 사용 시 주의해야 할 사항들을 설명합니다.</p>
+                <ul>
+                    <li>큰 파일을 덤프할 경우, 브라우저 성능에 따라 시간이 오래 걸릴 수 있습니다.</li>
+                    <li>덤프된 데이터는 민감한 정보를 포함할 수 있으므로, 보안에 유의하여 관리해야 합니다.</li>
+                    <li>32진수 인코딩은 완벽하게 표준화된 방식이 아닐 수 있습니다.</li>
+                </ul>
+            </section>
+    </main>
+
+
+</body>
+
+</html>
